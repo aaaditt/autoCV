@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pricing — ResumeAI</title>
+  <link rel="stylesheet" href="/static/css/global.css"/>
+  <style>
+    .pricing-card { padding:32px;text-align:center; }
+    .pricing-card.featured { background:var(--blue);color:#fff;border-color:var(--blue); }
+    .pricing-card.featured p,.pricing-card.featured li,.pricing-card.featured .text-muted { color:rgba(255,255,255,0.8); }
+    .price-big { font-size:44px;font-weight:700;letter-spacing:-0.03em;line-height:1; }
+    .price-per { font-size:15px;font-weight:400;opacity:0.65; }
+    .feature-list { list-style:none;text-align:left;margin:20px 0;display:flex;flex-direction:column;gap:10px; }
+    .feature-list li { display:flex;gap:8px;font-size:14px;align-items:flex-start; }
+    .feature-list li .check { flex-shrink:0;margin-top:1px; }
+    .pricing-card.featured .check { color:rgba(255,255,255,0.9); }
+    .check { color:var(--green);font-weight:700; }
+    .popular-badge { background:rgba(255,255,255,0.2);color:#fff;font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:3px 10px;border-radius:980px;display:inline-block;margin-bottom:12px; }
+    .compare-table { width:100%;border-collapse:collapse;margin-top:48px; }
+    .compare-table th { padding:12px 16px;text-align:left;font-size:13px;font-weight:600;color:var(--text-2);border-bottom:1px solid var(--border); }
+    .compare-table td { padding:14px 16px;font-size:14px;border-bottom:1px solid var(--border-2); }
+    .compare-table tr:last-child td { border:none; }
+    .compare-table .center { text-align:center; }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">ResumeAI</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/pages/pricing.html" class="text-blue" style="font-weight:500;">Pricing</a>
+    </div>
+    <div id="nav-cta">
+      <button class="btn btn-primary btn-sm" onclick="window.location.href='/'">Get Started Free</button>
+    </div>
+  </div>
+</nav>
+
+<section class="section section-alt">
+  <div class="container text-center">
+    <h1 style="margin-bottom:16px;">Simple, honest pricing</h1>
+    <p style="font-size:19px;max-width:440px;margin:0 auto 48px;">Pay once per resume, or go unlimited with Pro. No surprises.</p>
+
+    <div class="grid-3" style="max-width:860px;margin:0 auto;align-items:start;">
+      <!-- Free -->
+      <div class="card pricing-card">
+        <div style="font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">Free</div>
+        <div class="price-big">$0</div>
+        <p style="font-size:14px;margin-top:8px;">Start for free, no card needed</p>
+        <ul class="feature-list mt-16">
+          <li><span class="check">✓</span>3 keyword analyses</li>
+          <li><span class="check">✓</span>ATS match score</li>
+          <li><span class="check">✓</span>Top 3 matched keywords</li>
+          <li style="color:var(--text-3);"><span style="flex-shrink:0;">✗</span>AI resume rewrite</li>
+          <li style="color:var(--text-3);"><span style="flex-shrink:0;">✗</span>Download optimized file</li>
+          <li style="color:var(--text-3);"><span style="flex-shrink:0;">✗</span>Full keyword list</li>
+        </ul>
+        <button class="btn btn-outline btn-full" onclick="window.location.href='/'">Get Started</button>
+      </div>
+
+      <!-- Single — featured -->
+      <div class="card pricing-card featured">
+        <span class="popular-badge">Most Popular</span>
+        <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">Single Resume</div>
+        <div class="price-big">$19 <span class="price-per">one-time</span></div>
+        <p style="font-size:14px;margin-top:8px;">Perfect for one application</p>
+        <ul class="feature-list mt-16">
+          <li><span class="check">✓</span>Full AI resume rewrite</li>
+          <li><span class="check">✓</span>All missing keywords added</li>
+          <li><span class="check">✓</span>Download PDF + DOCX</li>
+          <li><span class="check">✓</span>Before/after comparison</li>
+          <li><span class="check">✓</span>30-day result storage</li>
+          <li><span class="check">✓</span>ATS score improvement report</li>
+        </ul>
+        <button class="btn btn-full mt-4" style="background:#fff;color:var(--blue);font-weight:600;" onclick="startCheckout('single')">Optimize Now →</button>
+        <div style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:10px;">Secure payment via Stripe</div>
+      </div>
+
+      <!-- Pro -->
+      <div class="card pricing-card">
+        <div style="font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">Pro</div>
+        <div class="price-big">$29 <span class="price-per">/mo</span></div>
+        <p style="font-size:14px;margin-top:8px;">Best for active job seekers</p>
+        <ul class="feature-list mt-16">
+          <li><span class="check">✓</span>Unlimited rewrites</li>
+          <li><span class="check">✓</span>Full history dashboard</li>
+          <li><span class="check">✓</span>Priority AI processing</li>
+          <li><span class="check">✓</span>Early access to features</li>
+          <li><span class="check">✓</span>Cancel anytime</li>
+          <li><span class="check">✓</span>Email support</li>
+        </ul>
+        <button class="btn btn-primary btn-full" onclick="startCheckout('pro')">Go Pro →</button>
+        <div style="font-size:12px;color:var(--text-3);margin-top:10px;">Cancel anytime, no questions</div>
+      </div>
+    </div>
+
+    <!-- Comparison table -->
+    <div style="max-width:680px;margin:0 auto;overflow-x:auto;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="center">Free</th>
+            <th class="center" style="color:var(--blue);">Single $19</th>
+            <th class="center">Pro $29/mo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Keyword analyses</td><td class="center">3</td><td class="center">1</td><td class="center">Unlimited</td></tr>
+          <tr><td>ATS match score</td><td class="center">✓</td><td class="center">✓</td><td class="center">✓</td></tr>
+          <tr><td>AI resume rewrite</td><td class="center" style="color:var(--text-3);">—</td><td class="center">✓</td><td class="center">✓</td></tr>
+          <tr><td>Full keyword list</td><td class="center" style="color:var(--text-3);">—</td><td class="center">✓</td><td class="center">✓</td></tr>
+          <tr><td>PDF + DOCX download</td><td class="center" style="color:var(--text-3);">—</td><td class="center">✓</td><td class="center">✓</td></tr>
+          <tr><td>History dashboard</td><td class="center" style="color:var(--text-3);">—</td><td class="center" style="color:var(--text-3);">—</td><td class="center">✓</td></tr>
+          <tr><td>Priority processing</td><td class="center" style="color:var(--text-3);">—</td><td class="center" style="color:var(--text-3);">—</td><td class="center">✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container" style="max-width:640px;">
+    <h2 class="text-center mb-24">Questions</h2>
+    <div class="accordion-item">
+      <button class="accordion-trigger">Is my payment secure?<span class="accordion-chevron">↓</span></button>
+      <div class="accordion-body">Yes. All payments are processed by Stripe — the same system used by Amazon and Shopify. We never see your card details.</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger">Can I get a refund?<span class="accordion-chevron">↓</span></button>
+      <div class="accordion-body">Yes. Email support@resumeai.co within 7 days of purchase for a full refund. No questions asked.</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger">How do I cancel Pro?<span class="accordion-chevron">↓</span></button>
+      <div class="accordion-body">Go to Account → Subscription → Cancel. You keep access until the end of your billing period.</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger">What's the difference between Single and Pro?<span class="accordion-chevron">↓</span></button>
+      <div class="accordion-body">Single is a one-time purchase for one resume optimization. Pro is a monthly subscription with unlimited optimizations — ideal if you're applying to multiple roles.</div>
+    </div>
+  </div>
+</section>
+
+<footer style="background:var(--surface);border-top:1px solid var(--border);padding:40px 0;">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+      <span style="font-weight:700;font-size:16px;letter-spacing:-0.02em;">ResumeAI</span>
+      <div style="display:flex;gap:24px;font-size:13px;">
+        <a href="/pages/privacy.html" style="color:var(--text-2);text-decoration:none;">Privacy</a>
+        <a href="/pages/terms.html" style="color:var(--text-2);text-decoration:none;">Terms</a>
+        <a href="mailto:support@resumeai.co" style="color:var(--text-2);text-decoration:none;">Support</a>
+      </div>
+      <span style="font-size:13px;color:var(--text-3);">© 2026 ResumeAI</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/static/js/app.js"></script>
+<script>
+  initAccordions();
+</script>
+</body>
+</html>

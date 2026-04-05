@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#c8c6c8",
+                        "surface-container-highest": "#e3e2e7",
+                        "primary": "#0059b5",
+                        "primary-fixed": "#d7e2ff",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#008633",
+                        "on-surface-variant": "#414753",
+                        "primary-container": "#0071e3",
+                        "surface-container": "#efedf3",
+                        "on-background": "#1a1b1f",
+                        "inverse-surface": "#2f3034",
+                        "surface-container-high": "#e9e7ed",
+                        "primary-fixed-dim": "#abc7ff",
+                        "on-secondary-fixed-variant": "#474649",
+                        "surface-container-low": "#f4f3f8",
+                        "on-tertiary-fixed": "#002107",
+                        "surface-tint": "#005cbb",
+                        "tertiary-fixed-dim": "#53e16f",
+                        "on-surface": "#1a1b1f",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#72fe88",
+                        "on-secondary-fixed": "#1b1b1d",
+                        "outline": "#717785",
+                        "on-tertiary-container": "#f1ffec",
+                        "on-error-container": "#93000a",
+                        "secondary": "#5f5e60",
+                        "secondary-container": "#e2dfe1",
+                        "on-primary-fixed": "#001b3f",
+                        "inverse-primary": "#abc7ff",
+                        "outline-variant": "#c1c6d6",
+                        "on-primary-fixed-variant": "#00458f",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "background": "#faf8fe",
+                        "on-primary-container": "#fcfbff",
+                        "on-tertiary-fixed-variant": "#00531c",
+                        "inverse-on-surface": "#f1f0f6",
+                        "on-secondary-container": "#636264",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#faf8fe",
+                        "tertiary": "#006a26",
+                        "surface-variant": "#e3e2e7",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#dbd9df",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#faf8fe",
+                        "secondary-fixed": "#e4e2e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ghost-border { outline: 1px solid rgba(193, 198, 214, 0.15); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl">
+<div class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
+<div class="text-xl font-semibold tracking-tighter text-slate-900">ResumeAI</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-sans tracking-tight text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors duration-200" href="#">Features</a>
+<a class="font-sans tracking-tight text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors duration-200" href="#">Pricing</a>
+<a class="font-sans tracking-tight text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors duration-200" href="#">About</a>
+<div class="h-4 w-px bg-surface-container"></div>
+<button class="font-sans tracking-tight text-sm font-medium text-blue-600 hover:opacity-80">Sign In</button>
+<button class="bg-primary-container text-on-primary-container px-5 py-2 rounded-full font-sans tracking-tight text-sm font-medium hover:opacity-90 transition-all scale-95 duration-150 ease-in-out">Get Started</button>
+</div>
+</div>
+</nav>
+<div class="flex pt-16 min-h-screen">
+<!-- SideNavBar -->
+<aside class="h-[calc(100vh-64px)] w-64 border-r border-slate-100 bg-slate-50 sticky top-16 hidden md:flex flex-col p-4 gap-2">
+<div class="px-4 py-6 mb-2">
+<div class="text-lg font-bold text-slate-900">ResumeAI</div>
+<div class="text-xs text-on-secondary-container font-medium uppercase tracking-wider">Pro Plan</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 text-slate-500 px-4 py-2 hover:bg-slate-100 transition-all font-sans text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-3 text-slate-500 px-4 py-2 hover:bg-slate-100 transition-all font-sans text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+                    Resumes
+                </a>
+<a class="flex items-center gap-3 text-slate-500 px-4 py-2 hover:bg-slate-100 transition-all font-sans text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+                    Analysis
+                </a>
+<!-- Active Item: Settings/Account -->
+<a class="flex items-center gap-3 bg-white text-blue-600 shadow-sm rounded-lg px-4 py-2 font-sans text-sm font-semibold border-l-4 border-primary" href="#">
+<span class="material-symbols-outlined text-blue-600" data-icon="settings">settings</span>
+                    Settings
+                </a>
+<a class="flex items-center gap-3 text-slate-500 px-4 py-2 hover:bg-slate-100 transition-all font-sans text-sm font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                    Help
+                </a>
+</nav>
+<div class="mt-auto pt-6 border-t border-slate-200">
+<div class="bg-primary-container/10 p-4 rounded-xl mb-4">
+<p class="text-xs font-semibold text-primary mb-2">Power User</p>
+<p class="text-[10px] text-slate-600 mb-3 leading-relaxed">Unlock advanced AI analysis and unlimited exports.</p>
+<button class="w-full py-2 bg-primary text-white text-xs rounded-full font-bold">Upgrade Now</button>
+</div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 text-slate-400 px-4 py-1 text-xs hover:underline" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="gavel">gavel</span>
+                        Legal
+                    </a>
+<a class="flex items-center gap-3 text-slate-400 px-4 py-1 text-xs hover:underline" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="lock">lock</span>
+                        Privacy
+                    </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto px-8 md:px-24 py-16 bg-surface">
+<div class="max-w-[800px] mx-auto space-y-24">
+<!-- Section 1: Profile -->
+<section class="space-y-6">
+<h2 class="text-[2rem] font-bold tracking-tight text-on-surface">Profile</h2>
+<div class="bg-surface-container-lowest rounded-lg p-8 flex items-center justify-between ghost-border">
+<div class="flex items-center gap-6">
+<div class="w-20 h-20 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center text-3xl font-bold">
+                                J
+                            </div>
+<div class="space-y-1">
+<h3 class="text-xl font-bold text-on-surface">Julianne Smith</h3>
+<p class="text-on-secondary-container text-sm font-medium">julianne.smith@example.com</p>
+</div>
+</div>
+<button class="px-6 py-2 border border-outline-variant rounded-full text-sm font-semibold text-on-surface hover:bg-surface-container-low transition-colors">
+                            Edit Profile
+                        </button>
+</div>
+</section>
+<!-- Section 2: Current Plan -->
+<section class="space-y-6">
+<h2 class="text-[2rem] font-bold tracking-tight text-on-surface">Subscription</h2>
+<div class="bg-surface-container-lowest rounded-lg p-8 space-y-8 ghost-border">
+<div class="flex justify-between items-start">
+<div class="space-y-4">
+<span class="inline-flex items-center px-4 py-1 rounded-full text-xs font-bold bg-primary-container text-on-primary-container">
+                                    Pro Plan
+                                </span>
+<p class="text-sm font-medium text-on-secondary-container">Next billing date: May 1, 2026</p>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="text-sm font-bold text-on-surface">Usage bar</span>
+<span class="text-xs font-medium text-primary">Unlimited optimizations</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="w-full h-full bg-primary"></div>
+</div>
+</div>
+<div class="flex items-center gap-4 pt-4">
+<button class="px-6 py-2 border border-outline-variant rounded-full text-sm font-semibold text-on-surface hover:bg-surface-container-low transition-colors">
+                                View Invoices
+                            </button>
+<button class="text-sm font-semibold text-[#FF3B30] hover:underline px-2 transition-all">
+                                Cancel Subscription
+                            </button>
+</div>
+</div>
+</section>
+<!-- Section 3: Payment Method -->
+<section class="space-y-6">
+<h2 class="text-[2rem] font-bold tracking-tight text-on-surface">Payment</h2>
+<div class="bg-surface-container-lowest rounded-lg p-8 flex items-center justify-between ghost-border">
+<div class="flex items-center gap-5">
+<div class="w-12 h-8 bg-surface-container rounded-md flex items-center justify-center border border-outline-variant/20">
+<span class="material-symbols-outlined text-slate-600" data-icon="credit_card">credit_card</span>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Visa ending in 4242</p>
+<p class="text-xs font-medium text-on-secondary-container">Expires 08/28</p>
+</div>
+</div>
+<button class="px-6 py-2 border border-outline-variant rounded-full text-sm font-semibold text-on-surface hover:bg-surface-container-low transition-colors">
+                            Update Payment Method
+                        </button>
+</div>
+</section>
+<!-- Section 4: Danger Zone -->
+<section class="space-y-6 pb-24">
+<h2 class="text-[2rem] font-bold tracking-tight text-on-surface">Data &amp; Privacy</h2>
+<div class="bg-surface-container-lowest rounded-lg p-8 space-y-4 border-l-4 border-error ghost-border">
+<div class="flex flex-col gap-4">
+<a class="text-sm font-semibold text-primary hover:underline flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-base" data-icon="download">download</span>
+                                Download my data
+                            </a>
+<a class="text-sm font-semibold text-[#FF3B30] hover:underline flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-base" data-icon="delete">delete</span>
+                                Delete my account
+                            </a>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="w-full py-12 bg-white border-t border-slate-100">
+<div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-xs font-light text-slate-400">© 2024 ResumeAI. Built with Precision.</p>
+<div class="flex gap-6">
+<a class="text-xs font-light text-slate-400 hover:underline" href="#">Privacy Policy</a>
+<a class="text-xs font-light text-slate-400 hover:underline" href="#">Terms of Service</a>
+<a class="text-xs font-light text-slate-400 hover:underline" href="#">Cookie Policy</a>
+<a class="text-xs font-light text-slate-400 hover:underline" href="#">Support</a>
+</div>
+</div>
+</footer>
+</body></html>

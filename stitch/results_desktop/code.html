@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#008633",
+                    "on-secondary": "#ffffff",
+                    "outline": "#717785",
+                    "surface-variant": "#e3e2e7",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#e9e7ed",
+                    "primary-fixed-dim": "#abc7ff",
+                    "secondary": "#5f5e60",
+                    "on-primary-fixed": "#001b3f",
+                    "on-secondary-container": "#636264",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed-variant": "#00458f",
+                    "primary-container": "#0071e3",
+                    "outline-variant": "#c1c6d6",
+                    "inverse-surface": "#2f3034",
+                    "inverse-primary": "#abc7ff",
+                    "on-secondary-fixed-variant": "#474649",
+                    "tertiary": "#006a26",
+                    "on-tertiary-fixed-variant": "#00531c",
+                    "on-tertiary-fixed": "#002107",
+                    "surface-container-low": "#f4f3f8",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed": "#d7e2ff",
+                    "on-error": "#ffffff",
+                    "surface-container": "#efedf3",
+                    "surface": "#faf8fe",
+                    "secondary-fixed": "#e4e2e4",
+                    "background": "#faf8fe",
+                    "surface-tint": "#005cbb",
+                    "surface-bright": "#faf8fe",
+                    "on-primary-container": "#fcfbff",
+                    "inverse-on-surface": "#f1f0f6",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#53e16f",
+                    "on-secondary-fixed": "#1b1b1d",
+                    "surface-dim": "#dbd9df",
+                    "secondary-fixed-dim": "#c8c6c8",
+                    "on-tertiary-container": "#f1ffec",
+                    "tertiary-fixed": "#72fe88",
+                    "surface-container-highest": "#e3e2e7",
+                    "on-surface": "#1a1b1f",
+                    "on-surface-variant": "#414753",
+                    "primary": "#0059b5",
+                    "surface-container-lowest": "#ffffff",
+                    "on-background": "#1a1b1f",
+                    "secondary-container": "#e2dfe1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .resume-shadow {
+            box-shadow: 0 10px 40px rgba(29, 29, 31, 0.06);
+        }
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+<!-- Top Success Banner -->
+<div class="bg-[#34C759] text-white py-3 px-8 text-center flex items-center justify-center gap-2 relative z-[60]">
+<span class="material-symbols-outlined text-xl" data-weight="fill">check_circle</span>
+<span class="text-sm font-medium tracking-wide">Optimization Complete: Your resume is now ATS-optimized for Senior Software Engineer roles.</span>
+</div>
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-12 w-full z-50 glass-nav bg-white/70 dark:bg-slate-900/70 shadow-[0_10px_40px_rgba(29,29,31,0.06)] h-16 transition-opacity duration-200 ease-in-out">
+<div class="flex justify-between items-center px-8 h-full max-w-[1440px] mx-auto">
+<div class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">ResumeAI</div>
+<div class="flex items-center gap-8">
+<a class="text-slate-600 dark:text-slate-400 hover:opacity-80 transition-opacity font-medium" href="#">Pricing</a>
+<div class="flex items-center gap-4">
+<button class="text-slate-600 dark:text-slate-400 hover:opacity-80 transition-opacity font-medium">Login</button>
+<button class="bg-primary-container text-white px-6 py-2 rounded-full font-semibold hover:opacity-80 transition-opacity">Get Started</button>
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-40 max-w-[980px] mx-auto px-6">
+<!-- Hero: Score Improvement Section -->
+<section class="flex flex-col md:flex-row items-center justify-between gap-12 mb-16">
+<div class="flex-1 text-center md:text-left">
+<span class="text-primary font-bold tracking-widest text-xs uppercase mb-4 block">Optimization Results</span>
+<h1 class="text-5xl font-extrabold tracking-tight mb-6 leading-tight">Your Resume Is <br/><span class="text-primary">Market Ready.</span></h1>
+<div class="flex items-center gap-3 justify-center md:justify-start">
+<div class="bg-tertiary/10 text-tertiary px-4 py-2 rounded-full flex items-center gap-2 font-bold">
+<span class="material-symbols-outlined text-lg">trending_up</span>
+                        +57 point improvement
+                    </div>
+</div>
+</div>
+<div class="relative flex items-center justify-center">
+<!-- Rings Visual -->
+<div class="relative w-48 h-48 md:w-56 md:h-56">
+<svg class="w-full h-full transform -rotate-90">
+<!-- Outer Ring (Current) -->
+<circle class="text-surface-container-high" cx="50%" cy="50%" fill="none" r="45%" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-primary" cx="50%" cy="50%" fill="none" r="45%" stroke="currentColor" stroke-dasharray="283" stroke-dashoffset="25" stroke-width="12"></circle>
+<!-- Inner Ring (Old) -->
+<circle class="text-surface-container-high" cx="50%" cy="50%" fill="none" r="32%" stroke="currentColor" stroke-width="10"></circle>
+<circle class="text-slate-300" cx="50%" cy="50%" fill="none" r="32%" stroke="currentColor" stroke-dasharray="201" stroke-dashoffset="132" stroke-width="10"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-3xl md:text-4xl font-extrabold text-on-surface">91%</span>
+<span class="text-[10px] uppercase tracking-tighter text-on-secondary-container font-bold">ATS Score</span>
+</div>
+</div>
+<!-- Comparison Label -->
+<div class="absolute -bottom-4 bg-white shadow-xl px-6 py-3 rounded-2xl flex gap-6 divide-x divide-outline-variant/20 border border-outline-variant/10">
+<div class="flex flex-col items-center">
+<span class="text-[10px] text-on-secondary-container uppercase font-bold">Previous</span>
+<span class="text-lg font-bold text-slate-400">34%</span>
+</div>
+<div class="flex flex-col items-center pl-6">
+<span class="text-[10px] text-primary uppercase font-bold">Optimized</span>
+<span class="text-lg font-bold text-primary">91%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Centered Pill Tabs -->
+<div class="flex justify-center mb-8">
+<div class="bg-surface-container-high p-1.5 rounded-full flex gap-1">
+<button class="px-6 py-2 rounded-full text-sm font-semibold transition-colors text-on-secondary-container hover:bg-surface-container-highest">Original Resume</button>
+<button class="px-6 py-2 rounded-full text-sm font-semibold transition-colors bg-white text-on-surface shadow-sm">Optimized Resume</button>
+<button class="px-6 py-2 rounded-full text-sm font-semibold transition-colors text-on-secondary-container hover:bg-surface-container-highest">Changes Made</button>
+</div>
+</div>
+<!-- Content Area: Optimized Resume Card -->
+<div class="bg-white rounded-lg resume-shadow p-12 md:p-20 relative overflow-hidden">
+<!-- Professional Header -->
+<header class="mb-12 text-center">
+<h2 class="text-3xl font-bold tracking-tight mb-2">Alex Thompson</h2>
+<p class="text-on-secondary-container text-sm tracking-wide">alex.thompson@email.com • San Francisco, CA • linkedin.com/in/alex-t</p>
+</header>
+<div class="space-y-10">
+<!-- Summary -->
+<section>
+<h3 class="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-4">Professional Summary</h3>
+<p class="text-on-surface leading-relaxed">
+                        Results-driven Senior Software Engineer with 8+ years of experience in <span class="bg-[#D1FAE5] text-tertiary px-1 rounded">full-stack development</span>. Proven track record of <span class="bg-[#D1FAE5] text-tertiary px-1 rounded">scaling distributed systems</span> and leading cross-functional teams to deliver <span class="bg-[#D1FAE5] text-tertiary px-1 rounded">high-availability cloud solutions</span>.
+                    </p>
+</section>
+<!-- Experience -->
+<section>
+<h3 class="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-4">Experience</h3>
+<div class="space-y-8">
+<div>
+<div class="flex justify-between items-baseline mb-2">
+<h4 class="font-bold text-lg">Lead Engineer @ CloudPulse</h4>
+<span class="text-sm text-on-secondary-container italic">2020 – Present</span>
+</div>
+<ul class="list-disc ml-4 space-y-3 text-on-surface leading-relaxed">
+<li>Architected a <span class="bg-[#D1FAE5] text-tertiary px-1 rounded">microservices architecture</span> using Node.js and Kubernetes, reducing latency by 45%.</li>
+<li>Implemented <span class="bg-[#D1FAE5] text-tertiary px-1 rounded">CI/CD pipelines</span> resulting in a 3x increase in deployment frequency.</li>
+<li>Managed a team of 12 engineers, fostering <span class="bg-[#D1FAE5] text-tertiary px-1 rounded">Agile methodologies</span> and code review standards.</li>
+</ul>
+</div>
+<div>
+<div class="flex justify-between items-baseline mb-2">
+<h4 class="font-bold text-lg">Software Developer @ DataStream</h4>
+<span class="text-sm text-on-secondary-container italic">2017 – 2020</span>
+</div>
+<ul class="list-disc ml-4 space-y-3 text-on-surface leading-relaxed">
+<li>Developed real-time <span class="bg-[#D1FAE5] text-tertiary px-1 rounded">data visualization dashboards</span> using React and GraphQL.</li>
+<li>Optimized <span class="bg-[#D1FAE5] text-tertiary px-1 rounded">PostgreSQL queries</span> improving database throughput by 60%.</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Skills -->
+<section>
+<h3 class="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-4">Technical Skills</h3>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-surface-container rounded-md text-sm font-medium">TypeScript</span>
+<span class="px-3 py-1 bg-surface-container rounded-md text-sm font-medium">Python</span>
+<span class="px-3 py-1 bg-[#D1FAE5] text-tertiary rounded-md text-sm font-bold">AWS (Lambda, S3, RDS)</span>
+<span class="px-3 py-1 bg-surface-container rounded-md text-sm font-medium">Docker</span>
+<span class="px-3 py-1 bg-[#D1FAE5] text-tertiary rounded-md text-sm font-bold">System Design</span>
+<span class="px-3 py-1 bg-surface-container rounded-md text-sm font-medium">Redis</span>
+</div>
+</section>
+</div>
+<!-- Page Watermark Style Decoration -->
+<div class="absolute top-0 right-0 p-8 opacity-5">
+<span class="material-symbols-outlined text-9xl">auto_fix_high</span>
+</div>
+</div>
+</main>
+<!-- BottomNavBar / Download Bar (Shared Component) -->
+<div class="fixed bottom-0 left-0 w-full z-50 glass-nav bg-white/80 dark:bg-slate-900/80 shadow-2xl border-t border-slate-200/15">
+<div class="flex justify-between items-center py-5 px-10 max-w-[1440px] mx-auto">
+<div class="flex items-center gap-4">
+<button class="bg-blue-600 text-white rounded-full px-8 py-3 flex items-center gap-2 font-bold uppercase tracking-wider text-xs hover:brightness-110 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-lg" data-icon="download">download</span>
+                    Download PDF
+                </button>
+<button class="bg-surface-container-high text-primary rounded-full px-8 py-3 flex items-center gap-2 font-bold uppercase tracking-wider text-xs hover:brightness-105 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-lg" data-icon="description">description</span>
+                    Download DOCX
+                </button>
+</div>
+<button class="flex items-center gap-2 text-slate-600 font-bold uppercase tracking-wider text-xs hover:text-primary transition-colors">
+                Optimize Another Resume
+                <span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Footer (Shared Component) -->
+<footer class="w-full py-12 border-t border-slate-100 dark:border-slate-900 bg-white dark:bg-slate-950">
+<div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="text-xs font-['Inter'] text-slate-400">© 2024 ResumeAI. All rights reserved.</div>
+<div class="flex gap-8">
+<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="#">Privacy</a>
+<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="#">Terms</a>
+<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="#">Support</a>
+<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="#">Contact</a>
+</div>
+</div>
+</footer>
+</body></html>

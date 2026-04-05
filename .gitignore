@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+env/
+venv/
+.env
+
+# Node
+node_modules/
+dist/
+
+# OS/IDEs
+.DS_Store
+.vscode/
+.idea/
+
+# PDF/Temp files
+*.pdf
+*.docx
+tmp/

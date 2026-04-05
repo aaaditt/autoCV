@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Welcome — ResumeAI</title>
+  <link rel="stylesheet" href="../static/css/design-system.css"/>
+  <style>
+    body { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; background:var(--bg-secondary); }
+    .welcome-card { background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-xl); padding:56px 48px; max-width:680px; width:100%; margin:24px; text-align:center; box-shadow:var(--shadow-md); }
+    .success-circle { width:72px;height:72px;border-radius:50%;background:var(--success-light);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:2rem; }
+    .onboard-steps { display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:40px 0; }
+    .onboard-step { background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px 16px;text-align:center;transition:border-color var(--transition); }
+    .onboard-step.highlighted { border-color:var(--accent);background:var(--accent-light); }
+    .onboard-step-num { font-size:0.8125rem;font-weight:700;color:var(--accent);margin-bottom:8px; }
+    .onboard-step-title { font-size:0.9rem;font-weight:600;margin-bottom:4px; }
+    .onboard-step-desc { font-size:0.8rem;color:var(--text-secondary); }
+    @media(max-width:600px){ .onboard-steps{grid-template-columns:1fr;} .welcome-card{padding:40px 24px;} }
+  </style>
+</head>
+<body>
+  <div class="welcome-card">
+    <div class="success-circle">✓</div>
+    <h1 style="font-size:2.25rem;margin-bottom:8px">You're in, <span id="user-first-name">there</span>.</h1>
+    <p class="text-muted" style="font-size:1.0625rem">Let's get your first resume optimized. It takes about 60 seconds.</p>
+
+    <div class="onboard-steps">
+      <div class="onboard-step highlighted">
+        <div class="onboard-step-num">01</div>
+        <div class="onboard-step-title">Upload resume</div>
+        <div class="onboard-step-desc">PDF or DOCX, any format</div>
+      </div>
+      <div class="onboard-step">
+        <div class="onboard-step-num">02</div>
+        <div class="onboard-step-title">Paste job description</div>
+        <div class="onboard-step-desc">From any job board</div>
+      </div>
+      <div class="onboard-step">
+        <div class="onboard-step-num">03</div>
+        <div class="onboard-step-title">Download optimized</div>
+        <div class="onboard-step-desc">AI rewrites to match</div>
+      </div>
+    </div>
+
+    <a href="optimize.html" class="btn btn-primary btn-lg" style="display:inline-flex">Optimize My First Resume →</a>
+    <br/>
+    <a href="dashboard.html" class="text-sm text-muted" style="display:inline-block;margin-top:16px">Or explore your dashboard first →</a>
+  </div>
+  <script src="../static/js/app.js"></script>
+  <script>
+    auth.init().then(() => {
+      if (auth.user) {
+        const first = (auth.user.name || '').split(' ')[0];
+        if (first) document.getElementById('user-first-name').textContent = first;
+      }
+    });
+  </script>
+</body>
+</html>

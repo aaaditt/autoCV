@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#474649",
+                    "tertiary-fixed": "#72fe88",
+                    "on-tertiary-fixed": "#002107",
+                    "surface-container": "#efedf3",
+                    "tertiary-container": "#008633",
+                    "surface-variant": "#e3e2e7",
+                    "surface": "#faf8fe",
+                    "tertiary-fixed-dim": "#53e16f",
+                    "secondary-fixed": "#e4e2e4",
+                    "on-primary-fixed": "#001b3f",
+                    "on-primary-container": "#fcfbff",
+                    "primary-fixed": "#d7e2ff",
+                    "tertiary": "#006a26",
+                    "secondary": "#5f5e60",
+                    "secondary-container": "#e2dfe1",
+                    "surface-dim": "#dbd9df",
+                    "primary-container": "#0071e3",
+                    "primary": "#0059b5",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed-variant": "#00531c",
+                    "surface-container-highest": "#e3e2e7",
+                    "outline-variant": "#c1c6d6",
+                    "inverse-primary": "#abc7ff",
+                    "error": "#ba1a1a",
+                    "surface-container-low": "#f4f3f8",
+                    "on-surface": "#1a1b1f",
+                    "surface-container-low": "#f4f3f8",
+                    "on-surface-variant": "#414753",
+                    "surface-tint": "#005cbb",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "background": "#faf8fe",
+                    "on-background": "#1a1b1f",
+                    "surface-bright": "#faf8fe",
+                    "inverse-on-surface": "#f1f0f6",
+                    "secondary-fixed-dim": "#c8c6c8",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-container": "#f1ffec",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-glass {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-container-low font-body text-on-surface antialiased min-h-screen">
+<!-- Top Navigation Anchor -->
+<header class="fixed top-0 w-full z-50 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-xl shadow-[0_10px_40px_rgba(29,29,31,0.06)] flex justify-between items-center px-6 h-16 w-full">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-blue-600 dark:text-blue-400">menu</span>
+<h1 class="text-xl font-bold tracking-tighter text-zinc-900 dark:text-zinc-50 font-['Inter'] antialiased tracking-tight">ResumeAI</h1>
+</div>
+<div class="w-8 h-8 rounded-full overflow-hidden ring-2 ring-primary/10">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Professional studio headshot of a smiling young creative professional with soft ambient lighting and neutral gray background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjQt_mWV7KGmbT1NOQnNjdeFFsMiEGqBvXupZcjc-_qecgFUj1if5IFQUa0hXIuMPesuPP1b3XpE2QtxbhPCZZrc4rpOLlIR3IbJDS3chpE40OJ6b9ZKYjv3Wm3J1a6yHY-76zrIVwiC9LZmBkysUawXy7cYnjFwa1Cu2voMj4pETG1vV1BxqC1ZjduIOEaIr_48YhyKW62sy5OBv0MfdQ1vBNmjMwqZIx1V7ddjqpv1odZB1ndAC0cdV_t-G6hlIUi8RbgI6KMgQ"/>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-lg mx-auto">
+<!-- Section: Header -->
+<header class="mb-10 text-center">
+<h2 class="text-3xl font-extrabold tracking-tight text-on-surface mb-2">Account Settings</h2>
+<p class="text-on-secondary-container text-sm">Manage your AI-powered career growth assets</p>
+</header>
+<!-- Profile Section -->
+<section class="mb-8">
+<div class="flex items-center justify-between mb-4">
+<span class="label-md font-bold tracking-widest text-on-secondary-container opacity-60">PROFILE</span>
+<button class="text-primary text-sm font-semibold hover:opacity-80 transition-opacity">Edit</button>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-outline-variant/15">
+<div class="flex items-center gap-4 mb-6">
+<div class="relative">
+<img alt="Avatar" class="w-16 h-16 rounded-full object-cover" data-alt="Detailed close-up of a friendly professional face with clean skin and natural lighting in a modern workspace" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnYu9znW1gXv8MlxpGypeOJQj_agt3EMdUxDI3ZH3BdIbRqXGcODLy64VWDdbzBWjNjr5-ZesN2Jai_m7Jxtjv6veg8Wgx4J2mNzHnXWqxERnBz_jNkXTWx-uEdTnXZ4oNTpSFRpKBHDJX98KWFfgm1S6tk5J-OvG7gKGID0yevv02vAoQmrUXIclEnmpfjNkRos_rSdW4l4CuhA5dxIoRmAl6-qi3fcY_fWMfGMS5KXx9x-I-5Aaxw_t_tJkRVEwhql8S1j_XVgg"/>
+<div class="absolute bottom-0 right-0 bg-primary p-1 rounded-full border-2 border-surface-container-lowest">
+<span class="material-symbols-outlined text-[14px] text-white" data-weight="fill">verified</span>
+</div>
+</div>
+<div>
+<h3 class="text-lg font-bold">Alex Thompson</h3>
+<p class="text-on-secondary-container text-sm">alex.t@creativecloud.io</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center py-2">
+<span class="text-sm text-on-secondary-container">Professional Title</span>
+<span class="text-sm font-medium">Senior UI/UX Designer</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-sm text-on-secondary-container">Location</span>
+<span class="text-sm font-medium">San Francisco, CA</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Subscription Section -->
+<section class="mb-8">
+<div class="flex items-center justify-between mb-4">
+<span class="label-md font-bold tracking-widest text-on-secondary-container opacity-60">SUBSCRIPTION</span>
+<span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full">PRO PLAN</span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-outline-variant/15">
+<div class="mb-6">
+<div class="flex justify-between items-end mb-2">
+<p class="text-sm font-semibold">AI Credits Usage</p>
+<p class="text-xs text-on-secondary-container"><span class="text-on-surface font-bold">842</span> / 1,000</p>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[84%] transition-all duration-1000"></div>
+</div>
+<p class="mt-3 text-[11px] text-on-secondary-container">Resets on Oct 12, 2024</p>
+</div>
+<button class="w-full py-3 px-4 bg-surface-container-high text-primary font-bold rounded-full text-sm hover:opacity-80 transition-all">
+                    Manage Subscription
+                </button>
+</div>
+</section>
+<!-- Payment Method Section -->
+<section class="mb-8">
+<div class="flex items-center justify-between mb-4">
+<span class="label-md font-bold tracking-widest text-on-secondary-container opacity-60">PAYMENT METHOD</span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-outline-variant/15 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="bg-surface-container-high px-2 py-1 rounded-md">
+<span class="material-symbols-outlined text-on-surface-variant">credit_card</span>
+</div>
+<div>
+<p class="text-sm font-bold">•••• 8829</p>
+<p class="text-xs text-on-secondary-container">Expires 09/27</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+</section>
+<!-- Data & Privacy Section -->
+<section class="mb-12">
+<div class="flex items-center justify-between mb-4">
+<span class="label-md font-bold tracking-widest text-on-secondary-container opacity-60">DATA &amp; PRIVACY</span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-outline-variant/15">
+<button class="w-full p-5 flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant">visibility</span>
+<span class="text-sm font-medium">Profile Visibility</span>
+</div>
+<div class="w-10 h-6 bg-primary rounded-full relative p-1 flex justify-end">
+<div class="w-4 h-4 bg-white rounded-full"></div>
+</div>
+</button>
+<div class="h-[1px] bg-outline-variant/10 mx-5"></div>
+<button class="w-full p-5 flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant">download</span>
+<span class="text-sm font-medium">Export My Data</span>
+</div>
+<span class="material-symbols-outlined text-outline text-sm">open_in_new</span>
+</button>
+<div class="h-[1px] bg-outline-variant/10 mx-5"></div>
+<button class="w-full p-5 flex items-center justify-between hover:bg-error/5 group transition-colors">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-error">delete_forever</span>
+<span class="text-sm font-medium text-error">Delete Account</span>
+</div>
+<span class="material-symbols-outlined text-error/40 text-sm">chevron_right</span>
+</button>
+</div>
+</section>
+<footer class="text-center opacity-40 mb-10">
+<p class="text-[10px] font-bold tracking-widest uppercase">ResumeAI v2.4.1</p>
+</footer>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pt-2 pb-safe-offset-2 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-xl border-t border-zinc-200/15 dark:border-zinc-800/15 shadow-[0_-4px_20px_rgba(0,0,0,0.03)] z-50">
+<div class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 active:scale-90 transition-all">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['Inter'] text-[11px] font-medium uppercase tracking-wider mt-1">Dashboard</span>
+</div>
+<div class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 active:scale-90 transition-all">
+<span class="material-symbols-outlined" data-icon="auto_fix_high">auto_fix_high</span>
+<span class="font-['Inter'] text-[11px] font-medium uppercase tracking-wider mt-1">Optimizer</span>
+</div>
+<div class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 active:scale-90 transition-all">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-['Inter'] text-[11px] font-medium uppercase tracking-wider mt-1">History</span>
+</div>
+<div class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20 rounded-full px-4 py-1 active:scale-90 transition-all">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Inter'] text-[11px] font-medium uppercase tracking-wider mt-1">Account</span>
+</div>
+</nav>
+</body></html>

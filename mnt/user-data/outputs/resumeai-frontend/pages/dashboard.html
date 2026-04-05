@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Dashboard — ResumeAI</title>
+  <link rel="stylesheet" href="../static/css/design-system.css"/>
+  <style>
+    .main-content{padding:40px 32px}
+    .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
+    .stat-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px}
+    .stat-value{font-size:1.75rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px}
+    .history-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+    .history-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px;cursor:pointer;transition:box-shadow var(--transition)}
+    .history-card:hover{box-shadow:var(--shadow-md)}
+    .history-score{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.875rem;font-weight:700;flex-shrink:0}
+    .new-card{background:var(--bg-secondary);border:2px dashed var(--border);border-radius:var(--radius-md);padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;cursor:pointer;transition:all var(--transition);min-height:130px}
+    .new-card:hover{border-color:var(--accent);background:var(--accent-light)}
+    .upgrade-banner{background:var(--bg);border:1px solid var(--border);border-left:4px solid var(--warning);border-radius:var(--radius-md);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+    @media(max-width:768px){.stats-row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">ResumeAI</a>
+    <div class="nav-links">
+      <a href="optimize.html" class="nav-link">Optimize</a>
+      <a href="pricing.html" class="nav-link">Pricing</a>
+      <a href="account.html" class="nav-link">Account</a>
+      <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.875rem;font-weight:600;cursor:pointer" id="nav-avatar" onclick="auth.logout()">U</div>
+    </div>
+  </div>
+</nav>
+
+<div class="app-layout">
+  <aside class="sidebar">
+    <a href="optimize.html" class="btn btn-primary" style="margin-bottom:8px;justify-content:center">+ New Optimization</a>
+    <div style="height:1px;background:var(--border);margin:12px 0"></div>
+    <div class="sidebar-label">Navigation</div>
+    <a href="dashboard.html" class="sidebar-link active">Dashboard</a>
+    <a href="optimize.html" class="sidebar-link">Optimizer</a>
+    <a href="pricing.html" class="sidebar-link">Pricing</a>
+    <a href="account.html" class="sidebar-link">Account</a>
+    <div class="sidebar-bottom">
+      <div class="sidebar-plan">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span class="text-xs font-semibold">Free Plan</span>
+          <span class="text-xs text-muted">2 / 3 used</span>
+        </div>
+        <div class="plan-bar"><div class="plan-bar-fill" style="width:66%"></div></div>
+        <a href="pricing.html" class="text-xs text-accent font-medium">Upgrade to Pro →</a>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div style="margin-bottom:32px">
+      <h2 style="font-size:1.75rem;margin-bottom:4px">Good morning, <span id="greeting-name">there</span> 👋</h2>
+      <p class="text-muted">Ready to optimize your next application?</p>
+    </div>
+
+    <div class="upgrade-banner">
+      <div>
+        <p class="text-xs font-semibold" style="color:var(--warning);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px">⚠ 1 free analysis remaining</p>
+        <h3 style="font-size:1rem;margin-bottom:2px">Upgrade to keep optimizing</h3>
+        <p class="text-sm text-muted">Pro users get unlimited rewrites and priority AI processing.</p>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <div style="font-size:1.375rem;font-weight:700;margin-bottom:6px">$29<span class="text-muted text-sm font-normal">/mo</span></div>
+        <a href="pricing.html" class="btn btn-primary btn-sm">Start Pro →</a>
+        <div class="text-xs text-muted" style="margin-top:6px"><a href="pricing.html" class="text-accent">or $19 per resume</a></div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-value">2</div><div class="stat-label text-muted text-sm">Resumes optimized</div></div>
+      <div class="stat-card"><div class="stat-value">+54%</div><div class="stat-label text-muted text-sm">Avg improvement</div></div>
+      <div class="stat-card"><div class="stat-value" style="font-size:1rem"><span class="badge badge-gray">Free Plan</span></div><div class="text-muted text-sm" style="margin-top:8px">1 analysis left</div></div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <h3>Your optimizations</h3>
+    </div>
+    <div class="history-grid">
+      <div class="history-card" onclick="location.href='results.html'">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px">
+          <div class="history-score" style="background:var(--success-light);color:#1a7d38">91%</div>
+          <div style="flex:1;min-width:0">
+            <div class="font-semibold text-sm" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Google_Resume_V3.pdf</div>
+            <div class="text-xs text-muted">Software Engineer @ Google</div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span class="badge badge-green">34% → 91%</span>
+          <span class="text-xs text-muted">2 days ago</span>
+        </div>
+      </div>
+
+      <div class="history-card" onclick="location.href='results.html'">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px">
+          <div class="history-score" style="background:var(--warning-light);color:#b56a00">78%</div>
+          <div style="flex:1;min-width:0">
+            <div class="font-semibold text-sm" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Resume_Meta_PM.docx</div>
+            <div class="text-xs text-muted">Product Manager @ Meta</div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span class="badge badge-orange">41% → 78%</span>
+          <span class="text-xs text-muted">5 days ago</span>
+        </div>
+      </div>
+
+      <div class="new-card" onclick="location.href='optimize.html'">
+        <div style="font-size:1.75rem;color:var(--text-tertiary);font-weight:300">+</div>
+        <div class="text-sm font-medium text-muted">New optimization</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="../static/js/app.js"></script>
+<script>
+  auth.init().then(() => {
+    if (auth.user) {
+      const first = (auth.user.name||'').split(' ')[0];
+      document.getElementById('greeting-name').textContent = first || 'there';
+    }
+  });
+</script>
+</body>
+</html>

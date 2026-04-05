@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Welcome to ResumeAI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#474649",
+                    "tertiary-fixed": "#72fe88",
+                    "on-tertiary-fixed": "#002107",
+                    "surface-container": "#efedf3",
+                    "tertiary-container": "#008633",
+                    "surface-variant": "#e3e2e7",
+                    "surface": "#faf8fe",
+                    "tertiary-fixed-dim": "#53e16f",
+                    "secondary-fixed": "#e4e2e4",
+                    "on-primary-fixed": "#001b3f",
+                    "on-primary-container": "#fcfbff",
+                    "primary-fixed": "#d7e2ff",
+                    "tertiary": "#006a26",
+                    "secondary": "#5f5e60",
+                    "secondary-container": "#e2dfe1",
+                    "surface-dim": "#dbd9df",
+                    "primary-container": "#0071e3",
+                    "primary": "#0059b5",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed-variant": "#00531c",
+                    "surface-container-highest": "#e3e2e7",
+                    "outline-variant": "#c1c6d6",
+                    "inverse-primary": "#abc7ff",
+                    "error": "#ba1a1a",
+                    "surface-container-low": "#f4f3f8",
+                    "on-surface": "#1a1b1f",
+                    "surface-container-low": "#f4f3f8",
+                    "on-surface-variant": "#414753",
+                    "surface-tint": "#005cbb",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "background": "#faf8fe",
+                    "on-background": "#1a1b1f",
+                    "surface-bright": "#faf8fe",
+                    "inverse-on-surface": "#f1f0f6",
+                    "secondary-fixed-dim": "#c8c6c8",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-container": "#f1ffec",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+        }
+        .hero-gradient {
+            background: linear-gradient(180deg, #FFFFFF 0%, #FAF8FE 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface selection:bg-primary/10 antialiased">
+<!-- TopAppBar Suppressed for Transactional/Onboarding focus -->
+<main class="min-h-screen flex flex-col px-6 pt-20 pb-12 max-w-md mx-auto">
+<!-- Hero Section -->
+<div class="flex flex-col items-center text-center space-y-8 mb-12">
+<!-- Success Icon Anchor -->
+<div class="relative">
+<div class="absolute inset-0 bg-primary/10 blur-3xl rounded-full scale-150"></div>
+<div class="relative h-20 w-20 bg-primary-container text-white rounded-full flex items-center justify-center shadow-[0_10px_40px_rgba(0,89,181,0.2)]">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<div class="space-y-3">
+<h1 class="text-4xl font-extrabold tracking-tight text-on-surface">You're in, Alex</h1>
+<p class="text-on-secondary-container text-lg leading-relaxed max-w-[280px] mx-auto">
+                    Your professional AI assistant is ready to transform your career path.
+                </p>
+</div>
+</div>
+<!-- Progress/Step Cards Section -->
+<div class="flex flex-col space-y-4 mb-16">
+<!-- Step 1 -->
+<div class="group flex items-center p-5 bg-surface-container-lowest rounded-DEFAULT transition-all duration-300 hover:shadow-[0_10px_40px_rgba(29,29,31,0.06)] ring-1 ring-outline-variant/15">
+<div class="h-12 w-12 flex-shrink-0 bg-primary/5 rounded-full flex items-center justify-center text-primary mr-4">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">upload_file</span>
+</div>
+<div class="flex-grow">
+<p class="text-xs font-bold uppercase tracking-widest text-primary mb-0.5">Step 1</p>
+<h3 class="font-bold text-on-surface">Upload your Resume</h3>
+<p class="text-sm text-on-secondary-container leading-snug">Import your existing PDF or Docx file.</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+<!-- Step 2 -->
+<div class="group flex items-center p-5 bg-surface-container-lowest rounded-DEFAULT transition-all duration-300 hover:shadow-[0_10px_40px_rgba(29,29,31,0.06)] ring-1 ring-outline-variant/15">
+<div class="h-12 w-12 flex-shrink-0 bg-primary/5 rounded-full flex items-center justify-center text-primary mr-4">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_fix_high</span>
+</div>
+<div class="flex-grow">
+<p class="text-xs font-bold uppercase tracking-widest text-primary mb-0.5">Step 2</p>
+<h3 class="font-bold text-on-surface">AI Optimization</h3>
+<p class="text-sm text-on-secondary-container leading-snug">Let ResumeAI polish your bullet points.</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+<!-- Step 3 -->
+<div class="group flex items-center p-5 bg-surface-container-lowest rounded-DEFAULT transition-all duration-300 hover:shadow-[0_10px_40px_rgba(29,29,31,0.06)] ring-1 ring-outline-variant/15">
+<div class="h-12 w-12 flex-shrink-0 bg-primary/5 rounded-full flex items-center justify-center text-primary mr-4">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+</div>
+<div class="flex-grow">
+<p class="text-xs font-bold uppercase tracking-widest text-primary mb-0.5">Step 3</p>
+<h3 class="font-bold text-on-surface">Apply with Confidence</h3>
+<p class="text-sm text-on-secondary-container leading-snug">Tailor your resume for specific job ads.</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+</div>
+<!-- Action Section -->
+<div class="mt-auto flex flex-col space-y-4">
+<button class="w-full h-14 bg-gradient-to-r from-primary to-primary-container text-white font-bold rounded-full shadow-[0_10px_30px_rgba(0,89,181,0.25)] active:scale-95 transition-all duration-200">
+                Get Started
+            </button>
+<button class="w-full h-14 bg-surface-container-high text-primary font-bold rounded-full active:scale-95 transition-all duration-200">
+                Take the Tour
+            </button>
+</div>
+<!-- Bottom Graphic Decorative Element -->
+<div class="mt-12 flex justify-center opacity-30">
+<div class="flex -space-x-4">
+<div class="h-10 w-10 rounded-full border-2 border-white overflow-hidden">
+<img class="h-full w-full object-cover" data-alt="portrait of a young professional woman smiling in soft daylight with urban background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIWE_im7q0biLuopSiBjQq5U1HtaDwRe3hpxbPn3PxUObzXzlHgBdCi5N-8ubkLfwraRiEl-7Bhj75c3DwZs8GreOMDTFdsKnPbgPbVHoj1Dfsh6D8TjJBd98YdQW599YU9ng47o7T4vrYiMHAh9CGoIVGq9Rf24XDDTc60OB5Me6XTHs0Lvqj1sk-h3ICN2EkDDxvySVScpDs6WSGO-9RRzTMbGptjQRzelhv054YmlEIt-gIq7uCq9SLz-eh2AbSPaUBscrx3HE"/>
+</div>
+<div class="h-10 w-10 rounded-full border-2 border-white overflow-hidden">
+<img class="h-full w-full object-cover" data-alt="portrait of a confident male professional in a smart blazer with a bright studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUUIwL72nLpfdpZ-RMYkop4uy960XEH5a7qCeJlX3JQej_oAzkl81feumNU_jVryTvfrCh08GHJiS8uLF9MS5ccAGYlVbvP4tN_6IQa6EdbeCqmOhksvXQbumNAYH_k80se46YAfd3e_aSZ-10Re2XciXH-GW-tXlYMZSMj8-H8OYiyVhEf-Kvl-Zff5ajwTbF-qT1WwEudRi4dqHyxT3Hg-PwCBorAax-YwdduXffrJ8QoE4bGrOaVOH0wSWvgmrZNPHSJOBlLPI"/>
+</div>
+<div class="h-10 w-10 rounded-full border-2 border-white overflow-hidden bg-primary-container flex items-center justify-center text-[10px] text-white font-bold">
+                    +12k
+                </div>
+</div>
+</div>
+<p class="text-center text-[10px] uppercase tracking-[0.2em] text-on-secondary-container/60 mt-4">Joined 12,000+ professionals this week</p>
+</main>
+<!-- BottomNavBar Suppressed for Onboarding context to focus on user journey -->
+</body></html>

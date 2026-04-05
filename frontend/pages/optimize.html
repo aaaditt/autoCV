@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ResumeAI Optimizer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "tertiary-container": "#008633",
+                "on-secondary": "#ffffff",
+                "outline": "#717785",
+                "surface-variant": "#e3e2e7",
+                "on-primary": "#ffffff",
+                "surface-container-high": "#e9e7ed",
+                "primary-fixed-dim": "#abc7ff",
+                "secondary": "#5f5e60",
+                "on-primary-fixed": "#001b3f",
+                "on-secondary-container": "#636264",
+                "error": "#ba1a1a",
+                "on-primary-fixed-variant": "#00458f",
+                "primary-container": "#0071e3",
+                "outline-variant": "#c1c6d6",
+                "inverse-surface": "#2f3034",
+                "inverse-primary": "#abc7ff",
+                "on-secondary-fixed-variant": "#474649",
+                "tertiary": "#006a26",
+                "on-tertiary-fixed-variant": "#00531c",
+                "on-tertiary-fixed": "#002107",
+                "surface-container-low": "#f4f3f8",
+                "on-error-container": "#93000a",
+                "on-tertiary": "#ffffff",
+                "primary-fixed": "#d7e2ff",
+                "on-error": "#ffffff",
+                "surface-container": "#efedf3",
+                "surface": "#faf8fe",
+                "secondary-fixed": "#e4e2e4",
+                "background": "#faf8fe",
+                "surface-tint": "#005cbb",
+                "surface-bright": "#faf8fe",
+                "on-primary-container": "#fcfbff",
+                "inverse-on-surface": "#f1f0f6",
+                "error-container": "#ffdad6",
+                "tertiary-fixed-dim": "#53e16f",
+                "on-secondary-fixed": "#1b1b1d",
+                "surface-dim": "#dbd9df",
+                "secondary-fixed-dim": "#c8c6c8",
+                "on-tertiary-container": "#f1ffec",
+                "tertiary-fixed": "#72fe88",
+                "surface-container-highest": "#e3e2e7",
+                "on-surface": "#1a1b1f",
+                "on-surface-variant": "#414753",
+                "primary": "#0059b5",
+                "surface-container-lowest": "#ffffff",
+                "on-background": "#1a1b1f",
+                "secondary-container": "#e2dfe1"
+            },
+            "borderRadius": {
+                "DEFAULT": "1rem",
+                "lg": "2rem",
+                "xl": "3rem",
+                "full": "9999px"
+            },
+            "fontFamily": {
+                "headline": ["Inter"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e3e2e7; border-radius: 10px; }
+        .glass-blur { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+    </style>
+
+<style>
+    /* Global Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-page {
+        animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    
+    /* Button Hover Enhancements */
+    button, a.btn, a[class*="bg-primary"], a[class*="bg-surface"] {
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, opacity 0.2s ease !important;
+    }
+    button:hover, a.btn:hover {
+        transform: translateY(-2px);
+    }
+</style>
+
+</head>
+<body class="bg-surface font-body text-on-surface antialiased overflow-hidden h-screen flex flex-col">
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-[0_10px_40px_rgba(29,29,31,0.06)] h-16">
+<div class="flex justify-between items-center px-8 h-full max-w-[1440px] mx-auto font-['Inter'] antialiased">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">ResumeAI</span>
+<div class="hidden md:flex gap-6">
+<a class="text-blue-600 dark:text-blue-400 font-semibold transition-opacity duration-200 ease-in-out" href="pricing.html">Pricing</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-600 dark:text-slate-400 hover:opacity-80 transition-opacity duration-200 ease-in-out">Login</button>
+<button class="bg-primary text-white px-5 py-2 rounded-full font-medium hover:opacity-80 transition-opacity duration-200 ease-in-out">Get Started</button>
+</div>
+</div>
+</nav>
+<!-- Sub-Header / Progress Bar -->
+<header class="mt-16 bg-surface-container-lowest px-8 py-4 border-b border-outline-variant/15 flex items-center justify-between z-40">
+<div class="flex items-center gap-2 text-primary font-medium hover:opacity-70 transition-opacity cursor-pointer">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+<span class="text-sm">Dashboard</span>
+</div>
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2 group">
+<span class="w-6 h-6 flex items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold">1</span>
+<span class="text-sm font-semibold text-on-surface">Upload</span>
+<span class="text-primary text-[6px]">●</span>
+</div>
+<div class="flex items-center gap-2 opacity-40">
+<span class="w-6 h-6 flex items-center justify-center rounded-full border border-outline text-[10px] font-bold">2</span>
+<span class="text-sm font-medium">Analyze</span>
+<span class="text-[14px]">○</span>
+</div>
+<div class="flex items-center gap-2 opacity-40">
+<span class="w-6 h-6 flex items-center justify-center rounded-full border border-outline text-[10px] font-bold">3</span>
+<span class="text-sm font-medium">Download</span>
+<span class="text-[14px]">○</span>
+</div>
+</div>
+<div class="w-24"></div> <!-- Spacer for symmetry -->
+</header>
+<!-- Main Content: Two Panel Layout -->
+<main class="flex-1 flex overflow-hidden">
+<!-- Left Panel: Input (42%) -->
+<section class="w-[42%] bg-surface-container-lowest overflow-y-auto p-10 flex flex-col gap-8">
+<div class="max-w-xl mx-auto w-full space-y-8">
+<div>
+<h1 class="text-2xl font-bold tracking-tight mb-2">Resume Optimizer</h1>
+<p class="text-on-secondary-container text-sm">Upload your resume and paste the job description to see your ATS compatibility score.</p>
+</div>
+<!-- Upload Zone -->
+<div class="group relative">
+<div class="w-full h-48 border-2 border-dashed border-surface-container-high rounded-xl flex flex-col items-center justify-center gap-3 bg-surface hover:border-primary-container transition-colors cursor-pointer p-6 text-center">
+<div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[28px]">upload_file</span>
+</div>
+<div>
+<p class="text-sm font-semibold">Drop your resume here</p>
+<p class="text-xs text-on-secondary-container mt-1">Supports PDF, DOCX (Max 5MB)</p>
+</div>
+</div>
+</div>
+<!-- Job Description Input -->
+<div class="flex flex-col gap-3">
+<div class="flex justify-between items-end">
+<label class="text-xs font-bold uppercase tracking-wider text-on-secondary-container">Job Description</label>
+<span class="text-[10px] text-outline font-medium">0 / 5000 characters</span>
+</div>
+<textarea class="w-full h-64 bg-surface border-none border-b-2 border-surface-container-high focus:ring-0 focus:border-primary transition-all p-4 text-sm rounded-t-lg resize-none" placeholder="Paste the target job description here..."></textarea>
+</div>
+<!-- Action Button -->
+<button class="w-full bg-primary-container text-on-primary-container py-4 rounded-full font-bold flex items-center justify-center gap-2 hover:brightness-110 transition-all shadow-lg shadow-primary-container/20">
+                    Analyze My Resume Free
+                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- Right Panel: Results View (58%) -->
+<section class="w-[58%] bg-surface-container-low overflow-y-auto p-10 flex flex-col items-center">
+<div class="max-w-2xl w-full space-y-8">
+<!-- ATS Score Card -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-sm flex items-center gap-10">
+<div class="relative flex items-center justify-center w-32 h-32">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary transition-all duration-1000 ease-out" cx="64" cy="64" fill="transparent" r="58" stroke="currentColor" stroke-dasharray="364" stroke-dashoffset="100" stroke-width="8"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="text-3xl font-extrabold">72</span>
+<span class="text-[10px] uppercase font-bold text-on-secondary-container tracking-widest">Score</span>
+</div>
+</div>
+<div class="flex-1">
+<h3 class="text-lg font-bold mb-1">Good Start!</h3>
+<p class="text-sm text-on-secondary-container leading-relaxed">Your resume matches several key requirements, but missing critical keywords is holding you back from a 90+ score.</p>
+<div class="flex gap-4 mt-4">
+<div class="flex items-center gap-1.5 text-tertiary font-semibold text-xs">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+                                14 Matched
+                            </div>
+<div class="flex items-center gap-1.5 text-error font-semibold text-xs">
+<span class="material-symbols-outlined text-[16px]">cancel</span>
+                                8 Missing
+                            </div>
+</div>
+</div>
+</div>
+<!-- Keywords Section -->
+<div class="grid grid-cols-2 gap-6">
+<!-- Matched -->
+<div class="space-y-4">
+<h4 class="text-xs font-bold uppercase tracking-wider text-on-secondary-container">Matched Keywords</h4>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1.5 bg-tertiary-container/10 text-tertiary text-[11px] font-bold rounded-full">Python</span>
+<span class="px-3 py-1.5 bg-tertiary-container/10 text-tertiary text-[11px] font-bold rounded-full">Agile</span>
+<span class="px-3 py-1.5 bg-tertiary-container/10 text-tertiary text-[11px] font-bold rounded-full">React</span>
+<span class="px-3 py-1.5 bg-tertiary-container/10 text-tertiary text-[11px] font-bold rounded-full">SQL</span>
+</div>
+</div>
+<!-- Missing (Locked/Blurred) -->
+<div class="space-y-4">
+<h4 class="text-xs font-bold uppercase tracking-wider text-on-secondary-container">Critical Gaps</h4>
+<div class="flex flex-wrap gap-2 relative">
+<span class="px-3 py-1.5 bg-surface-container-high text-on-secondary-container text-[11px] font-bold rounded-full blur-[3px] select-none">Distributed Systems</span>
+<span class="px-3 py-1.5 bg-surface-container-high text-on-secondary-container text-[11px] font-bold rounded-full blur-[4px] select-none">Kubernetes</span>
+<span class="px-3 py-1.5 bg-surface-container-high text-on-secondary-container text-[11px] font-bold rounded-full blur-[2px] select-none">Go</span>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[20px]">lock</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Upgrade Prompt Card (Bento Style) -->
+<div class="relative overflow-hidden bg-primary rounded-xl p-8 text-white shadow-xl shadow-primary/20">
+<div class="relative z-10 flex flex-col md:flex-row gap-8 items-center">
+<div class="flex-1 space-y-4">
+<h2 class="text-2xl font-bold leading-tight">Unlock AI Tailoring &amp; Full Keyword List</h2>
+<ul class="space-y-2">
+<li class="flex items-center gap-2 text-sm text-white/90">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+                                    See all 8 missing critical keywords
+                                </li>
+<li class="flex items-center gap-2 text-sm text-white/90">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+                                    Generate AI-optimized bullet points
+                                </li>
+<li class="flex items-center gap-2 text-sm text-white/90">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+                                    Unlimited ATS checks for 30 days
+                                </li>
+</ul>
+</div>
+<div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center min-w-[160px] border border-white/20">
+<p class="text-xs font-bold uppercase tracking-widest opacity-70 mb-1">One-time</p>
+<h4 class="text-4xl font-extrabold mb-4">$19</h4>
+<button class="w-full bg-white text-primary px-4 py-2 rounded-full text-sm font-bold hover:bg-surface-container-lowest transition-colors">
+                                Upgrade Now
+                            </button>
+</div>
+</div>
+<!-- Decorative background flare -->
+<div class="absolute -right-20 -bottom-20 w-64 h-64 bg-primary-container blur-3xl rounded-full opacity-50"></div>
+</div>
+<!-- History / Recent Saves -->
+<div class="pt-4">
+<h4 class="text-xs font-bold uppercase tracking-wider text-on-secondary-container mb-4">Previous Versions</h4>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-xl border border-transparent hover:border-outline-variant/30 transition-all cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-[20px]">description</span>
+</div>
+<div>
+<p class="text-xs font-bold">Software_Engineer_V2.pdf</p>
+<p class="text-[10px] text-on-secondary-container">Scored 64% • 2 days ago</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px]">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Shared Component - Conditional for 'Download' intent) -->
+<!-- Hidden by default until analysis complete, but included as per requirements -->
+<div class="fixed bottom-0 left-0 w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-t border-slate-200/15 shadow-2xl flex justify-center items-center py-4 px-6 md:hidden">
+<button class="bg-blue-600 text-white rounded-full px-8 py-3 flex items-center gap-2 font-bold uppercase tracking-wider text-xs hover:brightness-110 scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">download</span>
+            Download PDF
+        </button>
+</div>
+
+<script src="../static/js/config.js"></script>
+<script src="../static/js/app.js"></script>
+
+<script>
+    // Reveal animations on scroll
+    document.addEventListener("DOMContentLoaded", () => {
+        document.body.classList.add('animate-page');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section, .animate-on-scroll').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(15px)';
+            el.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+            observer.observe(el);
+        });
+    });
+</script>
+
+</body>
+</html>

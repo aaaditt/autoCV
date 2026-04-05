@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Privacy Policy — ResumeAI</title>
+  <link rel="stylesheet" href="/static/css/global.css"/>
+  <style>
+    .legal-body { max-width:720px; margin:0 auto; padding:48px 24px 96px; }
+    .legal-body h3 { font-size:18px; margin:32px 0 12px; }
+    .legal-body p, .legal-body li { font-size:15px; color:var(--text-2); line-height:1.75; margin-bottom:12px; }
+    .legal-body ul { padding-left:20px; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">ResumeAI</a>
+    <div class="nav-links"><a href="/">Home</a><a href="/pages/pricing.html">Pricing</a></div>
+    <button class="btn btn-primary btn-sm" onclick="window.location.href='/'">Get Started</button>
+  </div>
+</nav>
+
+<div class="legal-body">
+  <div style="font-size:13px;color:var(--text-3);margin-bottom:8px;">ResumeAI › Privacy Policy</div>
+  <h1 style="font-size:36px;margin-bottom:8px;">Privacy Policy</h1>
+  <p style="font-size:14px;color:var(--text-3);">Last updated: April 2026</p>
+
+  <h3>1. What data we collect</h3>
+  <p>When you use ResumeAI, we collect:</p>
+  <ul>
+    <li>Your email address and name (from Google OAuth)</li>
+    <li>Resume text content — processed temporarily during optimization</li>
+    <li>Job description text — used for keyword analysis</li>
+    <li>Usage data — number of analyses run, optimization scores</li>
+    <li>Payment information — handled entirely by Stripe, we never see card details</li>
+  </ul>
+
+  <h3>2. How we use your data</h3>
+  <p>Your data is used solely to:</p>
+  <ul>
+    <li>Provide the resume optimization service</li>
+    <li>Store your optimization history (paid users, 30 days)</li>
+    <li>Send transactional emails (payment confirmation, results)</li>
+    <li>Improve our keyword analysis models — only in aggregate, never personally identifiable</li>
+  </ul>
+  <p>We do not sell your data. We do not use your resume content for advertising. We do not share your information with third parties except as required to operate the service (Stripe for payments, Supabase for authentication and storage).</p>
+
+  <h3>3. Data retention</h3>
+  <p>Free tier: Resume and job description text is processed in memory and not stored permanently.</p>
+  <p>Paid users: Optimization results are stored for 30 days so you can re-download. After 30 days, resume text is deleted. Account data (email, name, plan status) is retained until you delete your account.</p>
+
+  <h3>4. Your rights</h3>
+  <ul>
+    <li>Request a copy of your data — email support@resumeai.co</li>
+    <li>Delete your account and all associated data — Account → Data & Privacy</li>
+    <li>Opt out of any non-essential communications</li>
+  </ul>
+
+  <h3>5. Security</h3>
+  <p>All data is transmitted over HTTPS. We use Supabase (SOC 2 compliant) for data storage and Stripe for payment processing. Resume files are never stored on disk — they are processed in memory only.</p>
+
+  <h3>6. Contact</h3>
+  <p>Questions about privacy? Email <a href="mailto:privacy@resumeai.co" style="color:var(--blue);">privacy@resumeai.co</a></p>
+</div>
+
+<footer style="background:var(--surface);border-top:1px solid var(--border);padding:32px 0;">
+  <div class="container text-center">
+    <span style="font-size:13px;color:var(--text-3);">© 2026 ResumeAI · <a href="/pages/terms.html" style="color:var(--text-3);">Terms</a></span>
+  </div>
+</footer>
+</body>
+</html>

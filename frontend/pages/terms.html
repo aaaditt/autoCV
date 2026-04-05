@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Terms of Service — ResumeAI</title>
+  <link rel="stylesheet" href="../static/css/design-system.css"/>
+  <style>
+    .legal-body{max-width:720px;margin:0 auto;padding:64px 24px}
+    .legal-body h2{font-size:1.25rem;margin:36px 0 12px}
+    .legal-body p,.legal-body li{font-size:0.9375rem;line-height:1.8;color:var(--text-secondary)}
+    .legal-body ul{padding-left:24px;display:flex;flex-direction:column;gap:6px;margin-top:8px}
+    .legal-body a{color:var(--accent)}
+  </style>
+
+<style>
+    /* Global Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-page {
+        animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    
+    /* Button Hover Enhancements */
+    button, a.btn, a[class*="bg-primary"], a[class*="bg-surface"] {
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, opacity 0.2s ease !important;
+    }
+    button:hover, a.btn:hover {
+        transform: translateY(-2px);
+    }
+</style>
+
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">ResumeAI</a>
+    <div class="nav-links"><a href="../index.html" class="nav-link">← Home</a></div>
+  </div>
+</nav>
+
+<div class="legal-body">
+  <p class="text-xs text-muted" style="margin-bottom:8px">ResumeAI › Terms of Service</p>
+  <h1 style="font-size:2rem;margin-bottom:8px">Terms of Service</h1>
+  <p class="text-muted text-sm">Last updated: April 2026</p>
+
+  <h2>1. Acceptance of terms</h2>
+  <p>By accessing or using ResumeAI ("the Service"), you agree to be bound by these Terms of Service. If you do not agree, do not use the Service.</p>
+
+  <h2>2. Description of service</h2>
+  <p>ResumeAI is an AI-powered resume optimization tool that analyzes job descriptions and rewrites resumes to improve their match score against Applicant Tracking Systems (ATS). The Service is provided on a free and paid basis as described on our Pricing page.</p>
+
+  <h2>3. User accounts</h2>
+  <ul>
+    <li>You must be 16 years or older to use the Service.</li>
+    <li>You are responsible for maintaining the security of your account.</li>
+    <li>You may not share your account credentials with others.</li>
+    <li>We reserve the right to terminate accounts that violate these terms.</li>
+  </ul>
+
+  <h2>4. Acceptable use</h2>
+  <p>You agree not to:</p>
+  <ul>
+    <li>Use the Service to create false or misleading resume content.</li>
+    <li>Attempt to circumvent usage limits through technical means.</li>
+    <li>Reverse engineer, scrape, or extract the underlying AI systems.</li>
+    <li>Use the Service for any unlawful purpose.</li>
+    <li>Upload files containing malware or malicious code.</li>
+  </ul>
+
+  <h2>5. Payments and refunds</h2>
+  <ul>
+    <li>Single ($19) and Pro ($29/mo) plans are processed via Stripe.</li>
+    <li>The single plan is a one-time charge per optimization session.</li>
+    <li>Pro subscriptions renew monthly and can be cancelled at any time.</li>
+    <li>Refunds are available within 7 days if the optimization did not improve your ATS score. Contact support@resumeai.co.</li>
+    <li>Chargebacks initiated without first contacting support may result in account suspension.</li>
+  </ul>
+
+  <h2>6. Intellectual property</h2>
+  <p>You retain full ownership of your resume content. We do not claim ownership over any content you upload. The optimized resume output is yours to use freely. The ResumeAI platform, design, and underlying systems are owned by ResumeAI and protected by copyright.</p>
+
+  <h2>7. Disclaimer of warranties</h2>
+  <p>The Service is provided "as is" without warranty of any kind. We do not guarantee that optimized resumes will result in job interviews or offers. ATS systems vary across companies and our optimization is based on generally accepted best practices.</p>
+
+  <h2>8. Limitation of liability</h2>
+  <p>ResumeAI's liability is limited to the amount you paid for the Service in the 30 days prior to the claim. We are not liable for indirect, incidental, or consequential damages.</p>
+
+  <h2>9. Changes to terms</h2>
+  <p>We may update these terms from time to time. Continued use of the Service after changes constitutes acceptance of the new terms. We will notify users of material changes via email.</p>
+
+  <h2>10. Contact</h2>
+  <p>Questions about these terms? Email <a href="mailto:legal@resumeai.co">legal@resumeai.co</a>.</p>
+</div>
+
+<footer style="border-top:1px solid var(--border);padding:40px 0">
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+    <div class="nav-logo">ResumeAI</div>
+    <div style="display:flex;gap:24px"><a href="privacy.html" class="nav-link">Privacy</a><a href="terms.html" class="nav-link">Terms</a></div>
+    <p class="text-muted text-sm">© 2026 ResumeAI</p>
+  </div>
+</footer>
+
+<script>
+    // Reveal animations on scroll
+    document.addEventListener("DOMContentLoaded", () => {
+        document.body.classList.add('animate-page');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section, .animate-on-scroll').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(15px)';
+            el.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+            observer.observe(el);
+        });
+    });
+</script>
+
+</body>
+</html>

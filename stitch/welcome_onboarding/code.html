@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Welcome to ResumeAI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#c8c6c8",
+                        "surface-container-highest": "#e3e2e7",
+                        "primary": "#0059b5",
+                        "primary-fixed": "#d7e2ff",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#008633",
+                        "on-surface-variant": "#414753",
+                        "primary-container": "#0071e3",
+                        "surface-container": "#efedf3",
+                        "on-background": "#1a1b1f",
+                        "inverse-surface": "#2f3034",
+                        "surface-container-high": "#e9e7ed",
+                        "primary-fixed-dim": "#abc7ff",
+                        "on-secondary-fixed-variant": "#474649",
+                        "surface-container-low": "#f4f3f8",
+                        "on-tertiary-fixed": "#002107",
+                        "surface-tint": "#005cbb",
+                        "tertiary-fixed-dim": "#53e16f",
+                        "on-surface": "#1a1b1f",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#72fe88",
+                        "on-secondary-fixed": "#1b1b1d",
+                        "outline": "#717785",
+                        "on-tertiary-container": "#f1ffec",
+                        "on-error-container": "#93000a",
+                        "secondary": "#5f5e60",
+                        "secondary-container": "#e2dfe1",
+                        "on-primary-fixed": "#001b3f",
+                        "inverse-primary": "#abc7ff",
+                        "outline-variant": "#c1c6d6",
+                        "on-primary-fixed-variant": "#00458f",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "background": "#faf8fe",
+                        "on-primary-container": "#fcfbff",
+                        "on-tertiary-fixed-variant": "#00531c",
+                        "inverse-on-surface": "#f1f0f6",
+                        "on-secondary-container": "#636264",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#faf8fe",
+                        "tertiary": "#006a26",
+                        "surface-variant": "#e3e2e7",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#dbd9df",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#faf8fe",
+                        "secondary-fixed": "#e4e2e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.75rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #faf8fe;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .step-card {
+            transition: all 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col items-center">
+<!-- Top Navigation Suppression: Onboarding flow -->
+<header class="w-full py-8 flex justify-center">
+<h1 class="text-xl font-bold tracking-tighter text-on-surface">ResumeAI</h1>
+</header>
+<main class="max-w-4xl w-full px-6 flex flex-col items-center text-center mt-12 mb-24">
+<!-- Celebration Icon -->
+<div class="mb-8 flex justify-center">
+<div class="w-20 h-20 bg-[#34C759] rounded-full flex items-center justify-center shadow-lg shadow-[#34C759]/20">
+<span class="material-symbols-outlined text-white text-5xl" style="font-variation-settings: 'FILL' 0, 'wght' 600;">check</span>
+</div>
+</div>
+<!-- Hero Text -->
+<h2 class="text-5xl md:text-[48px] font-extrabold tracking-tight text-on-surface mb-4">
+            You're in, Aadit.
+        </h2>
+<p class="text-lg md:text-[20px] text-on-secondary-container font-medium mb-16 max-w-lg">
+            Let's get your first resume optimized. It takes about 60 seconds.
+        </p>
+<!-- Horizontal Step Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mb-16">
+<!-- Step 01 - Active -->
+<div class="step-card bg-surface-container-lowest p-8 rounded-DEFAULT border-2 border-primary shadow-sm flex flex-col items-start text-left">
+<span class="text-primary font-bold text-sm tracking-widest mb-4">01</span>
+<h3 class="text-lg font-bold text-on-surface mb-2">Upload your resume</h3>
+<p class="text-on-secondary-container text-sm leading-relaxed">PDF or DOCX, any format</p>
+</div>
+<!-- Step 02 - Inactive -->
+<div class="step-card bg-surface-container-lowest p-8 rounded-DEFAULT border border-outline-variant/30 flex flex-col items-start text-left">
+<span class="text-on-secondary-container font-bold text-sm tracking-widest mb-4">02</span>
+<h3 class="text-lg font-bold text-on-surface mb-2">Paste a job description</h3>
+<p class="text-on-secondary-container text-sm leading-relaxed">From any job board</p>
+</div>
+<!-- Step 03 - Inactive -->
+<div class="step-card bg-surface-container-lowest p-8 rounded-DEFAULT border border-outline-variant/30 flex flex-col items-start text-left">
+<span class="text-on-secondary-container font-bold text-sm tracking-widest mb-4">03</span>
+<h3 class="text-lg font-bold text-on-surface mb-2">Download optimized</h3>
+<p class="text-on-secondary-container text-sm leading-relaxed">AI rewrites to match</p>
+</div>
+</div>
+<!-- Action Section -->
+<div class="flex flex-col items-center gap-6">
+<button class="bg-primary-container text-on-primary-container px-10 py-4 rounded-full font-semibold text-lg flex items-center gap-2 hover:brightness-95 transition-all shadow-md">
+                Optimize My First Resume →
+            </button>
+<a class="text-primary font-semibold text-sm hover:underline" href="/dashboard">
+                Or explore your dashboard first →
+            </a>
+</div>
+</main>
+<!-- Footer Suppression Logic: Minimalist focused experience -->
+<footer class="mt-auto w-full max-w-7xl px-8 py-12 flex flex-col md:flex-row justify-between items-center border-t border-transparent text-on-secondary-container opacity-40">
+<span class="text-xs font-light">© 2024 ResumeAI. Built with Precision.</span>
+<div class="flex gap-6">
+<span class="text-xs font-light">Privacy Policy</span>
+<span class="text-xs font-light">Terms of Service</span>
+</div>
+</footer>
+</body></html>

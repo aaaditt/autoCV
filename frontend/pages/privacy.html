@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#c8c6c8",
+                        "surface-container-highest": "#e3e2e7",
+                        "primary": "#0059b5",
+                        "primary-fixed": "#d7e2ff",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#008633",
+                        "on-surface-variant": "#414753",
+                        "primary-container": "#0071e3",
+                        "surface-container": "#efedf3",
+                        "on-background": "#1a1b1f",
+                        "inverse-surface": "#2f3034",
+                        "surface-container-high": "#e9e7ed",
+                        "primary-fixed-dim": "#abc7ff",
+                        "on-secondary-fixed-variant": "#474649",
+                        "surface-container-low": "#f4f3f8",
+                        "on-tertiary-fixed": "#002107",
+                        "surface-tint": "#005cbb",
+                        "tertiary-fixed-dim": "#53e16f",
+                        "on-surface": "#1a1b1f",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#72fe88",
+                        "on-secondary-fixed": "#1b1b1d",
+                        "outline": "#717785",
+                        "on-tertiary-container": "#f1ffec",
+                        "on-error-container": "#93000a",
+                        "secondary": "#5f5e60",
+                        "secondary-container": "#e2dfe1",
+                        "on-primary-fixed": "#001b3f",
+                        "inverse-primary": "#abc7ff",
+                        "outline-variant": "#c1c6d6",
+                        "on-primary-fixed-variant": "#00458f",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "background": "#faf8fe",
+                        "on-primary-container": "#fcfbff",
+                        "on-tertiary-fixed-variant": "#00531c",
+                        "inverse-on-surface": "#f1f0f6",
+                        "on-secondary-container": "#636264",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#faf8fe",
+                        "tertiary": "#006a26",
+                        "surface-variant": "#e3e2e7",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#dbd9df",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#faf8fe",
+                        "secondary-fixed": "#e4e2e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* No-Line Rule Implementation */
+        .no-line-rule { border: none !important; }
+        /* Tonal Layering for Navigation */
+        .glass-nav {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+
+<style>
+    /* Global Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-page {
+        animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    
+    /* Button Hover Enhancements */
+    button, a.btn, a[class*="bg-primary"], a[class*="bg-surface"] {
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, opacity 0.2s ease !important;
+    }
+    button:hover, a.btn:hover {
+        transform: translateY(-2px);
+    }
+</style>
+
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar (Shared Component) -->
+<!-- Suppression logic: Rendered as this is the primary ecosystem navigation -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl no-line-rule">
+<div class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
+<div class="text-xl font-semibold tracking-tighter text-slate-900">ResumeAI</div>
+<div class="hidden md:flex items-center gap-8 font-sans tracking-tight text-sm font-medium">
+<a class="text-slate-500 hover:text-blue-600 transition-colors duration-200" href="index.html#features">Features</a>
+<a class="text-slate-500 hover:text-blue-600 transition-colors duration-200" href="pricing.html">Pricing</a>
+<a class="text-slate-500 hover:text-blue-600 transition-colors duration-200" href="index.html#about">About</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-500 font-sans text-sm font-medium hover:text-blue-600 transition-colors duration-200">Sign In</button>
+<button class="bg-primary-container text-on-primary-container px-5 py-2 rounded-full text-sm font-medium scale-95 duration-150 ease-in-out active:scale-90">Get Started</button>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-32 pb-24 px-6">
+<div class="max-w-[720px] mx-auto">
+<!-- Breadcrumb -->
+<nav class="mb-12">
+<p class="text-sm font-label tracking-tight text-on-secondary-container flex items-center gap-1">
+<span>ResumeAI</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface font-medium">Privacy Policy</span>
+</p>
+</nav>
+<!-- Headline Section -->
+<header class="mb-16">
+<h1 class="text-[3.5rem] font-bold tracking-tight leading-[1.1] mb-4 text-on-surface">
+                    Privacy Policy
+                </h1>
+<p class="text-sm font-label text-on-secondary-container tracking-wider uppercase">
+                    Last updated: April 2026
+                </p>
+</header>
+<!-- Legal Content Sections -->
+<div class="space-y-16">
+<section>
+<h2 class="text-[1.125rem] font-bold text-on-surface mb-6 tracking-tight">1. What data we collect</h2>
+<div class="space-y-4">
+<p class="text-[1rem] leading-[1.7] text-[#1D1D1F]">
+                            We collect personal information that you voluntarily provide to us when you register on the Services, express an interest in obtaining information about us or our products, or when you participate in activities on the Services.
+                        </p>
+<p class="text-[1rem] leading-[1.7] text-[#1D1D1F]">
+                            The personal information we collect may include names, email addresses, contact preferences, and resume data uploaded through our artificial intelligence analysis engine.
+                        </p>
+</div>
+</section>
+<!-- Visual Separator (Background Tonal Shift - No Lines) -->
+<div class="h-1 bg-surface-container-low rounded-full w-24"></div>
+<section>
+<h2 class="text-[1.125rem] font-bold text-on-surface mb-6 tracking-tight">2. How we use your data</h2>
+<div class="space-y-4">
+<p class="text-[1rem] leading-[1.7] text-[#1D1D1F]">
+                            We process your information for purposes based on legitimate business interests, the fulfillment of our contract with you, compliance with our legal obligations, and your explicit consent.
+                        </p>
+<p class="text-[1rem] leading-[1.7] text-[#1D1D1F]">
+                            Specifically, we use the data to generate AI-driven resume improvements, manage user accounts, and provide high-quality professional career insights based on industry standards.
+                        </p>
+</div>
+</section>
+<div class="h-1 bg-surface-container-low rounded-full w-24"></div>
+<section>
+<h2 class="text-[1.125rem] font-bold text-on-surface mb-6 tracking-tight">3. Your rights</h2>
+<div class="space-y-4">
+<p class="text-[1rem] leading-[1.7] text-[#1D1D1F]">
+                            In some regions, such as the European Economic Area (EEA) and United Kingdom (UK), you have rights that allow you greater access to and control over your personal information.
+                        </p>
+<p class="text-[1rem] leading-[1.7] text-[#1D1D1F]">
+                            You may review, change, or terminate your account at any time. If you are a resident in the EEA or UK and believe we are unlawfully processing your personal information, you have the right to complain to your local data protection authority.
+                        </p>
+</div>
+</section>
+<div class="h-1 bg-surface-container-low rounded-full w-24"></div>
+<section>
+<h2 class="text-[1.125rem] font-bold text-on-surface mb-6 tracking-tight">4. Security of your information</h2>
+<div class="space-y-4">
+<p class="text-[1rem] leading-[1.7] text-[#1D1D1F]">
+                            We have implemented appropriate technical and organizational security measures designed to protect the security of any personal information we process.
+                        </p>
+<p class="text-[1rem] leading-[1.7] text-[#1D1D1F]">
+                            However, despite our safeguards and efforts to secure your information, no electronic transmission over the Internet or information storage technology can be guaranteed to be 100% secure.
+                        </p>
+</div>
+</section>
+</div>
+<!-- Focus CTA for Legal Questions -->
+<div class="mt-24 p-12 bg-surface-container-low rounded-xl text-center">
+<p class="text-on-secondary-container text-sm font-medium mb-4">Have questions regarding our legal terms?</p>
+<a class="text-primary font-semibold hover:underline" href="mailto:privacy@resumeai.com">Contact our Legal Team</a>
+</div>
+</div>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="w-full py-12 mt-24 bg-white dark:bg-slate-950 no-line-rule">
+<div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="text-xs font-light text-slate-400">© 2024 ResumeAI. Built with Precision.</div>
+<div class="flex gap-6">
+<a class="text-xs font-light text-slate-900 hover:underline" href="privacy.html">Privacy Policy</a>
+<a class="text-xs font-light text-slate-400 hover:underline" href="terms.html">Terms of Service</a>
+<a class="text-xs font-light text-slate-400 hover:underline" href="privacy.html">Cookie Policy</a>
+<a class="text-xs font-light text-slate-400 hover:underline" href="mailto:support@resumeai.co">Support</a>
+</div>
+</div>
+</footer>
+<!-- No FAB on legal/privacy page as per suppression logic -->
+
+<script src="../static/js/config.js"></script>
+<script src="../static/js/app.js"></script>
+
+<script>
+    // Reveal animations on scroll
+    document.addEventListener("DOMContentLoaded", () => {
+        document.body.classList.add('animate-page');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section, .animate-on-scroll').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(15px)';
+            el.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+            observer.observe(el);
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Optimizing... — ResumeAI</title>
+  <link rel="stylesheet" href="../static/css/design-system.css"/>
+  <style>
+    body{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:var(--bg-secondary)}
+    .page{text-align:center;max-width:520px;width:100%;margin:24px}
+    .success-icon{width:80px;height:80px;border-radius:50%;background:var(--success-light);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 24px}
+    .processing-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;margin:28px 0;text-align:left}
+    .p-step{display:flex;align-items:center;gap:14px;padding:10px 0}
+    .p-step+.p-step{border-top:1px solid var(--border-light)}
+    .p-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0;transition:all 0.3s}
+    .p-icon.done{background:var(--success-light);color:var(--success);font-weight:700}
+    .p-icon.active{background:var(--accent-light)}
+    .p-icon.pending{background:var(--bg-secondary);color:var(--text-tertiary)}
+    .prog-wrap{height:4px;background:var(--bg-secondary);border-radius:2px;overflow:hidden;margin:20px 0 6px}
+    .prog-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 1.2s ease}
+  </style>
+</head>
+<body>
+<div class="page">
+  <div class="success-icon">✓</div>
+  <h1 style="font-size:2rem;margin-bottom:8px">Payment confirmed.</h1>
+  <p class="text-muted">Your resume is being optimized right now.</p>
+  <div class="processing-card">
+    <p class="text-xs font-semibold text-muted" style="text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">AI Optimization in Progress</p>
+    <div class="p-step"><div class="p-icon done">✓</div><span class="text-sm font-medium">Resume uploaded</span></div>
+    <div class="p-step">
+      <div class="p-icon active" id="i2"><div class="spinner spinner-sm"></div></div>
+      <span class="text-sm font-medium" id="l2">Analyzing job description keywords...</span>
+    </div>
+    <div class="p-step">
+      <div class="p-icon pending" id="i3">○</div>
+      <span class="text-sm" id="l3" style="color:var(--text-secondary)">Rewriting resume with AI</span>
+    </div>
+    <div class="prog-wrap"><div class="prog-fill" id="prog" style="width:30%"></div></div>
+    <p class="text-xs text-muted">Estimated time: 30–60 seconds</p>
+  </div>
+  <p class="text-sm text-muted" id="wait-msg">Results will appear automatically when ready.</p>
+</div>
+<script src="../static/js/app.js"></script>
+<script>
+const params = new URLSearchParams(location.search);
+const sessionId = params.get('session_id');
+
+async function run() {
+  if (!sessionId) { location.href='optimize.html'; return; }
+  try {
+    const v = await api.get(`/verify/${sessionId}`);
+    if (!v.paid) { toast('Payment not confirmed.','error'); return; }
+
+    setTimeout(() => {
+      document.getElementById('prog').style.width='55%';
+      document.getElementById('i2').className='p-icon done'; document.getElementById('i2').textContent='✓';
+      document.getElementById('l2').textContent='Keywords analyzed';
+      document.getElementById('i3').className='p-icon active'; document.getElementById('i3').innerHTML='<div class="spinner spinner-sm"></div>';
+      document.getElementById('l3').style.color=''; document.getElementById('l3').textContent='Rewriting resume with AI...';
+    }, 1500);
+
+    const r = await api.post('/optimize', {});
+    document.getElementById('prog').style.width='100%';
+    document.getElementById('i3').className='p-icon done'; document.getElementById('i3').textContent='✓';
+
+    sessionStorage.setItem('opt_result', JSON.stringify(r));
+    setTimeout(() => location.href='results.html', 700);
+
+  } catch(err) {
+    document.querySelector('.processing-card').innerHTML=`
+      <div style="text-align:center;padding:8px">
+        <div style="font-size:1.5rem;margin-bottom:12px">⏳</div>
+        <p class="font-semibold" style="margin-bottom:6px">This is taking longer than usual...</p>
+        <p class="text-sm text-muted" style="margin-bottom:16px">Your resume is still being processed. We'll email you when it's ready.</p>
+        <a href="dashboard.html" class="btn btn-outline btn-sm">Go to dashboard →</a>
+        <p class="text-xs text-muted" style="margin-top:12px">Questions? support@resumeai.co</p>
+      </div>`;
+    document.getElementById('wait-msg').textContent='';
+  }
+}
+run();
+</script>
+</body>
+</html>

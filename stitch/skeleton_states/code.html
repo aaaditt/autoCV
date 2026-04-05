@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#c8c6c8",
+                        "surface-container-highest": "#e3e2e7",
+                        "primary": "#0059b5",
+                        "primary-fixed": "#d7e2ff",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#008633",
+                        "on-surface-variant": "#414753",
+                        "primary-container": "#0071e3",
+                        "surface-container": "#efedf3",
+                        "on-background": "#1a1b1f",
+                        "inverse-surface": "#2f3034",
+                        "surface-container-high": "#e9e7ed",
+                        "primary-fixed-dim": "#abc7ff",
+                        "on-secondary-fixed-variant": "#474649",
+                        "surface-container-low": "#f4f3f8",
+                        "on-tertiary-fixed": "#002107",
+                        "surface-tint": "#005cbb",
+                        "tertiary-fixed-dim": "#53e16f",
+                        "on-surface": "#1a1b1f",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#72fe88",
+                        "on-secondary-fixed": "#1b1b1d",
+                        "outline": "#717785",
+                        "on-tertiary-container": "#f1ffec",
+                        "on-error-container": "#93000a",
+                        "secondary": "#5f5e60",
+                        "secondary-container": "#e2dfe1",
+                        "on-primary-fixed": "#001b3f",
+                        "inverse-primary": "#abc7ff",
+                        "outline-variant": "#c1c6d6",
+                        "on-primary-fixed-variant": "#00458f",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "background": "#faf8fe",
+                        "on-primary-container": "#fcfbff",
+                        "on-tertiary-fixed-variant": "#00531c",
+                        "inverse-on-surface": "#f1f0f6",
+                        "on-secondary-container": "#636264",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#faf8fe",
+                        "tertiary": "#006a26",
+                        "surface-variant": "#e3e2e7",
+                        "on-primary": "#ffffff",
+                        "surface-dim": "#dbd9df",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#faf8fe",
+                        "secondary-fixed": "#e4e2e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                },
+            }
+        }
+    </script>
+<style>
+        .skeleton-shimmer {
+            background: linear-gradient(90deg, #f4f3f8 25%, #efedf3 50%, #f4f3f8 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite linear;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .no-line-rule { border: none !important; }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl flex justify-between items-center px-6 py-4 max-w-7xl mx-auto left-0 right-0 no-line-rule">
+<div class="text-xl font-semibold tracking-tighter text-slate-900">ResumeAI</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-slate-500 font-sans tracking-tight text-sm font-medium hover:text-blue-600 transition-colors duration-200" href="#">Features</a>
+<a class="text-slate-500 font-sans tracking-tight text-sm font-medium hover:text-blue-600 transition-colors duration-200" href="#">Pricing</a>
+<a class="text-slate-500 font-sans tracking-tight text-sm font-medium hover:text-blue-600 transition-colors duration-200" href="#">About</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-500 font-sans tracking-tight text-sm font-medium px-4 py-2 hover:text-blue-600 transition-colors duration-200">Sign In</button>
+<button class="bg-primary-container text-on-primary-container rounded-full px-6 py-2 text-sm font-medium font-sans tracking-tight hover:brightness-90 transition-all scale-95 duration-150 ease-in-out">Get Started</button>
+</div>
+</nav>
+<!-- Sidebar Layout Container -->
+<div class="flex pt-20 h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 border-r border-slate-100 flex flex-col p-4 gap-2 bg-slate-50 shrink-0">
+<div class="mb-8 px-4">
+<div class="text-lg font-bold text-slate-900">ResumeAI</div>
+<div class="text-xs text-on-secondary-container">Pro Plan</div>
+</div>
+<nav class="flex-1 flex flex-col gap-2">
+<div class="flex items-center gap-3 bg-white text-blue-600 shadow-sm rounded-lg px-4 py-2 font-sans text-sm font-medium">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                    Dashboard
+                </div>
+<div class="flex items-center gap-3 text-slate-500 px-4 py-2 font-sans text-sm font-medium hover:bg-slate-100 transition-all">
+<span class="material-symbols-outlined">description</span>
+                    Resumes
+                </div>
+<div class="flex items-center gap-3 text-slate-500 px-4 py-2 font-sans text-sm font-medium hover:bg-slate-100 transition-all">
+<span class="material-symbols-outlined">analytics</span>
+                    Analysis
+                </div>
+<div class="flex items-center gap-3 text-slate-500 px-4 py-2 font-sans text-sm font-medium hover:bg-slate-100 transition-all">
+<span class="material-symbols-outlined">settings</span>
+                    Settings
+                </div>
+<div class="flex items-center gap-3 text-slate-500 px-4 py-2 font-sans text-sm font-medium hover:bg-slate-100 transition-all">
+<span class="material-symbols-outlined">help</span>
+                    Help
+                </div>
+</nav>
+<div class="mt-auto p-4 bg-primary-fixed rounded-xl mb-4">
+<div class="text-xs font-bold text-on-primary-fixed mb-2">Upgrade Now</div>
+<div class="w-full h-1.5 bg-white/50 rounded-full overflow-hidden">
+<div class="w-3/4 h-full bg-primary"></div>
+</div>
+</div>
+<div class="border-t border-slate-200 pt-4 flex flex-col gap-1">
+<div class="flex items-center gap-3 text-slate-400 px-4 py-2 text-xs">
+<span class="material-symbols-outlined text-sm">gavel</span>
+                    Legal
+                </div>
+<div class="flex items-center gap-3 text-slate-400 px-4 py-2 text-xs">
+<span class="material-symbols-outlined text-sm">lock</span>
+                    Privacy
+                </div>
+</div>
+</aside>
+<!-- Main Dashboard Content -->
+<main class="flex-1 overflow-y-auto px-12 py-12">
+<div class="max-w-6xl mx-auto grid grid-cols-12 gap-12">
+<!-- Left: Dashboard History Skeleton -->
+<div class="col-span-12 lg:col-span-8">
+<div class="mb-12">
+<h1 class="text-3xl font-bold tracking-tight mb-4">Recent Projects</h1>
+<div class="w-32 h-1 bg-primary-container rounded-full"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Skeleton Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col gap-4">
+<div class="skeleton-shimmer h-40 w-full rounded-lg"></div>
+<div class="flex flex-col gap-2">
+<div class="skeleton-shimmer h-6 w-3/4 rounded-md"></div>
+<div class="skeleton-shimmer h-4 w-1/2 rounded-md"></div>
+</div>
+<div class="mt-4 flex justify-between items-center">
+<div class="skeleton-shimmer h-8 w-24 rounded-full"></div>
+<div class="skeleton-shimmer h-8 w-8 rounded-full"></div>
+</div>
+</div>
+<!-- Skeleton Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col gap-4">
+<div class="skeleton-shimmer h-40 w-full rounded-lg"></div>
+<div class="flex flex-col gap-2">
+<div class="skeleton-shimmer h-6 w-2/3 rounded-md"></div>
+<div class="skeleton-shimmer h-4 w-1/3 rounded-md"></div>
+</div>
+<div class="mt-4 flex justify-between items-center">
+<div class="skeleton-shimmer h-8 w-24 rounded-full"></div>
+<div class="skeleton-shimmer h-8 w-8 rounded-full"></div>
+</div>
+</div>
+<!-- Skeleton Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col gap-4">
+<div class="skeleton-shimmer h-40 w-full rounded-lg"></div>
+<div class="flex flex-col gap-2">
+<div class="skeleton-shimmer h-6 w-4/5 rounded-md"></div>
+<div class="skeleton-shimmer h-4 w-2/5 rounded-md"></div>
+</div>
+<div class="mt-4 flex justify-between items-center">
+<div class="skeleton-shimmer h-8 w-24 rounded-full"></div>
+<div class="skeleton-shimmer h-8 w-8 rounded-full"></div>
+</div>
+</div>
+<!-- Skeleton Card 4 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col gap-4">
+<div class="skeleton-shimmer h-40 w-full rounded-lg"></div>
+<div class="flex flex-col gap-2">
+<div class="skeleton-shimmer h-6 w-1/2 rounded-md"></div>
+<div class="skeleton-shimmer h-4 w-1/4 rounded-md"></div>
+</div>
+<div class="mt-4 flex justify-between items-center">
+<div class="skeleton-shimmer h-8 w-24 rounded-full"></div>
+<div class="skeleton-shimmer h-8 w-8 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Optimizer Panel Skeleton -->
+<aside class="col-span-12 lg:col-span-4">
+<div class="sticky top-12 bg-surface-container-low rounded-xl p-8 flex flex-col gap-8 shadow-sm">
+<!-- Score Ring Area Skeleton -->
+<div class="flex flex-col items-center gap-4 py-4">
+<div class="skeleton-shimmer h-48 w-48 rounded-full flex items-center justify-center">
+<div class="bg-surface-container-low h-36 w-36 rounded-full"></div>
+</div>
+<div class="skeleton-shimmer h-6 w-32 rounded-md"></div>
+</div>
+<!-- Keywords Section Skeleton -->
+<div class="flex flex-col gap-6">
+<div class="skeleton-shimmer h-5 w-40 rounded-md"></div>
+<!-- Row 1 -->
+<div class="flex flex-wrap gap-2">
+<div class="skeleton-shimmer h-8 w-24 rounded-full"></div>
+<div class="skeleton-shimmer h-8 w-32 rounded-full"></div>
+<div class="skeleton-shimmer h-8 w-20 rounded-full"></div>
+</div>
+<!-- Row 2 -->
+<div class="flex flex-wrap gap-2">
+<div class="skeleton-shimmer h-8 w-28 rounded-full"></div>
+<div class="skeleton-shimmer h-8 w-24 rounded-full"></div>
+<div class="skeleton-shimmer h-8 w-36 rounded-full"></div>
+</div>
+<!-- Row 3 -->
+<div class="flex flex-wrap gap-2">
+<div class="skeleton-shimmer h-8 w-32 rounded-full"></div>
+<div class="skeleton-shimmer h-8 w-16 rounded-full"></div>
+<div class="skeleton-shimmer h-8 w-28 rounded-full"></div>
+</div>
+</div>
+<!-- Summary Content Skeleton -->
+<div class="flex flex-col gap-4 mt-4">
+<div class="skeleton-shimmer h-4 w-full rounded-sm"></div>
+<div class="skeleton-shimmer h-4 w-full rounded-sm"></div>
+<div class="skeleton-shimmer h-4 w-4/5 rounded-sm"></div>
+</div>
+<!-- CTA Skeleton -->
+<div class="mt-6">
+<div class="skeleton-shimmer h-12 w-full rounded-full"></div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="w-full py-12 mt-24 bg-white">
+<div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="text-xs font-light text-slate-400">© 2024 ResumeAI. Built with Precision.</div>
+<div class="flex gap-6">
+<a class="text-xs font-light text-slate-400 hover:underline" href="#">Privacy Policy</a>
+<a class="text-xs font-light text-slate-400 hover:underline" href="#">Terms of Service</a>
+<a class="text-xs font-light text-slate-400 hover:underline" href="#">Cookie Policy</a>
+<a class="text-xs font-light text-slate-400 hover:underline" href="#">Support</a>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Results — ResumeAI</title>
+  <link rel="stylesheet" href="../static/css/design-system.css"/>
+  <style>
+    .success-banner{background:var(--success);color:#fff;padding:14px 24px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:0.9375rem;font-weight:500}
+    .scores-hero{background:var(--bg);border-bottom:1px solid var(--border);padding:40px;text-align:center}
+    .score-comparison{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:24px}
+    .score-arrow{font-size:1.5rem;color:var(--success)}
+    .result-body{max-width:860px;margin:0 auto;padding:32px 24px 100px}
+    .resume-text{font-family:monospace;font-size:0.875rem;line-height:1.8;white-space:pre-wrap;background:var(--bg-secondary);border-radius:var(--radius-md);padding:24px;max-height:520px;overflow-y:auto}
+    .diff-view{font-family:monospace;font-size:0.875rem;line-height:1.8;background:var(--bg-secondary);border-radius:var(--radius-md);padding:24px;max-height:520px;overflow-y:auto}
+    .diff-added{background:#d1fae5;color:#065f46;display:block;padding:0 4px;border-radius:2px}
+    .diff-removed{background:#fee2e2;color:#991b1b;text-decoration:line-through;display:block;padding:0 4px;border-radius:2px}
+    .download-bar{position:fixed;bottom:0;left:0;right:0;background:var(--bg);border-top:1px solid var(--border);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;z-index:50}
+    @media(max-width:600px){.score-comparison{flex-direction:column;gap:12px}.download-bar{flex-direction:column}}
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">ResumeAI</a>
+    <div class="nav-links">
+      <a href="dashboard.html" class="nav-link">Dashboard</a>
+      <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.875rem;font-weight:600" id="nav-avatar">U</div>
+    </div>
+  </div>
+</nav>
+
+<div class="success-banner">✓ &nbsp;Your resume has been optimized</div>
+
+<!-- Score hero -->
+<div class="scores-hero">
+  <h2 style="font-size:1.5rem;margin-bottom:4px">Optimization complete</h2>
+  <p class="text-muted text-sm">Your resume is now ATS-ready</p>
+  <div class="score-comparison">
+    <div>
+      <div class="score-ring" id="ring-before" style="position:relative"></div>
+      <p class="text-xs text-muted" style="margin-top:8px">Before</p>
+    </div>
+    <div class="score-arrow">→</div>
+    <div>
+      <div class="score-ring" id="ring-after" style="position:relative"></div>
+      <p class="text-xs text-muted" style="margin-top:8px">After</p>
+    </div>
+    <div style="background:var(--success-light);border-radius:var(--radius-md);padding:16px 24px;margin-left:8px">
+      <div style="font-size:1.75rem;font-weight:700;color:var(--success)" id="improvement-num">+0</div>
+      <div class="text-xs text-muted">point improvement</div>
+    </div>
+  </div>
+</div>
+
+<!-- Tabs -->
+<div class="result-body">
+  <div data-tabs="results" class="tabs" style="margin-bottom:0">
+    <button class="tab active" data-target="tab-optimized">Optimized Resume</button>
+    <button class="tab" data-target="tab-original">Original Resume</button>
+    <button class="tab" data-target="tab-changes">Changes Made</button>
+  </div>
+
+  <div id="tab-optimized" class="tab-content active" data-tab-content="results">
+    <div class="resume-text" id="optimized-text-view">Loading...</div>
+  </div>
+  <div id="tab-original" class="tab-content" data-tab-content="results">
+    <div class="resume-text" id="original-text-view">Loading...</div>
+  </div>
+  <div id="tab-changes" class="tab-content" data-tab-content="results">
+    <div class="diff-view" id="diff-view">Loading...</div>
+  </div>
+</div>
+
+<!-- Sticky download bar -->
+<div class="download-bar">
+  <span class="text-sm font-medium">Your optimized resume is ready</span>
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+    <a href="#" class="btn btn-secondary btn-sm" onclick="downloadFile('pdf')">⬇ Download PDF</a>
+    <a href="#" class="btn btn-primary btn-sm" onclick="downloadFile('docx')">⬇ Download DOCX</a>
+    <a href="optimize.html" class="text-sm text-accent font-medium" style="margin-left:8px">Optimize another →</a>
+  </div>
+</div>
+
+<script src="../static/js/app.js"></script>
+<script>
+  setupTabs('results');
+
+  // Load from sessionStorage (set by payment-success page)
+  const stored = sessionStorage.getItem('opt_result');
+  const r = stored ? JSON.parse(stored) : null;
+
+  if (r) {
+    document.getElementById('optimized-text-view').textContent = r.optimized_text || '';
+    document.getElementById('original-text-view').textContent = r.original_text || '';
+    document.getElementById('diff-view').innerHTML = generateDiff(r.original_text||'', r.optimized_text||'');
+
+    renderScoreRing(document.getElementById('ring-before'), r.original_score || 0);
+    setTimeout(() => renderScoreRing(document.getElementById('ring-after'), r.optimized_score || 0), 400);
+    const imp = (r.optimized_score||0) - (r.original_score||0);
+    document.getElementById('improvement-num').textContent = (imp > 0 ? '+' : '') + imp;
+  } else {
+    // Fallback demo data
+    const demoText = 'John Doe\njohn@email.com | LinkedIn: johndoe\n\nEXPERIENCE\nSoftware Engineer — Acme Corp (2022–Present)\n• Built REST APIs using Python and Flask\n• Deployed services on AWS EC2\n• Collaborated with cross-functional teams\n\nSKILLS\nPython, JavaScript, AWS, Git, SQL';
+    document.getElementById('optimized-text-view').textContent = demoText;
+    document.getElementById('original-text-view').textContent = demoText;
+    document.getElementById('diff-view').innerHTML = '<p class="text-muted text-sm">No diff data available.</p>';
+    renderScoreRing(document.getElementById('ring-before'), 34);
+    setTimeout(() => renderScoreRing(document.getElementById('ring-after'), 91), 400);
+    document.getElementById('improvement-num').textContent = '+57';
+  }
+
+  async function downloadFile(fmt) {
+    try {
+      const res = await fetch(`${API}/download/${fmt}`, { credentials: 'include' });
+      if (!res.ok) { toast('Download failed. Please try again.', 'error'); return; }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `optimized_resume.${fmt}`; a.click();
+      URL.revokeObjectURL(url);
+    } catch { toast('Download failed. Please try again.', 'error'); }
+  }
+</script>
+</body>
+</html>
