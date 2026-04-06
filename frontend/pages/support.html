@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Support | AutoCV</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0059b5",
+                        "primary-container": "#0071e3",
+                        background: "#faf8fe",
+                        surface: "#ffffff",
+                        "on-surface": "#1a1b1f",
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #faf8fe; color: #1a1b1f; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-header { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); }
+        .glass-card { background: white; border: 1px solid rgba(0,0,0,0.05); border-radius: 1.5rem; transition: all 0.3s ease; }
+        .glass-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-reveal { animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    </style>
+</head>
+<body class="antialiased font-sans">
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full z-50 glass-header border-b border-black/5">
+        <div class="max-w-7xl mx-auto px-8 h-16 flex items-center justify-between">
+            <a href="../home.html" class="text-xl font-black italic tracking-tighter">Auto<span class="text-primary tracking-normal">CV</span></a>
+            <div class="hidden md:flex items-center gap-8 text-sm font-bold">
+                <a href="../home.html#features" class="hover:text-primary transition-colors">Features</a>
+                <a href="pricing.html" class="hover:text-primary transition-colors">Pricing</a>
+                <a href="about.html" class="hover:text-primary transition-colors">About</a>
+                <a href="support.html" class="text-primary transition-colors">Support</a>
+                
+                <!-- Unauthenticated -->
+                <div class="auth-hide flex items-center gap-6">
+                    <a href="login.html" class="px-5 py-2 glass-card border-none hover:translate-y-0 hover:shadow-none bg-black/5 rounded-full">Login</a>
+                    <button onclick="auth.loginWithGoogle()" class="px-6 py-2 bg-primary text-white rounded-full hover:opacity-90 active:scale-95 transition-all">Get Started</button>
+                </div>
+
+                <!-- Authenticated (Dropdown) -->
+                <div class="auth-show hidden relative group">
+                    <button class="flex items-center gap-2 hover:opacity-80 transition-all">
+                        <div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-sm shadow-lg shadow-primary/20" id="nav-avatar">U</div>
+                    </button>
+                    <div class="absolute right-0 top-full pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-[100]">
+                        <div class="w-56 bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] border border-black/5 overflow-hidden p-2 text-left">
+                            <div class="px-4 py-3 border-b border-black/5 mb-1 bg-slate-50/50">
+                                <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Account</p>
+                                <p class="text-xs font-bold text-slate-900 truncate" id="nav-username">User</p>
+                            </div>
+                            <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors rounded-xl">
+                                <span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard
+                            </a>
+                            <a href="account.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors rounded-xl">
+                                <span class="material-symbols-outlined text-[20px]">settings</span> Settings
+                            </a>
+                            <a href="pricing.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-blue-600 hover:bg-blue-50 transition-colors rounded-xl">
+                                <span class="material-symbols-outlined text-[20px]">workspace_premium</span> Upgrade Pro
+                            </a>
+                            <div class="h-[1px] bg-black/5 my-1"></div>
+                            <button onclick="auth.logout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors rounded-xl text-left">
+                                <span class="material-symbols-outlined text-[20px]">logout</span> Sign Out
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+            <!-- Left Side: Quick Links & Info -->
+            <div class="animate-reveal">
+                <h1 class="text-[56px] font-[900] tracking-tight leading-[1] mb-8">How can we <br/><span class="text-primary italic">help you?</span></h1>
+                <p class="text-lg text-slate-500 font-medium mb-12 max-w-md">
+                    Have questions about your subscription, a technical bug, or just want to say hi? We're here for you 24/7.
+                </p>
+
+                <div class="space-y-6">
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=autocv.app@gmail.com&su=Support%20Request" target="_blank" class="glass-card p-6 flex gap-6 items-center hover:scale-[1.02] cursor-pointer active:scale-[0.98]">
+                        <div class="w-12 h-12 rounded-2xl bg-blue-50 text-primary flex items-center justify-center">
+                            <span class="material-symbols-outlined">mail</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Email Support</h3>
+                            <p class="text-sm text-slate-500 font-medium">autocv.app@gmail.com</p>
+                        </div>
+                    </a>
+                    <div class="glass-card p-6 flex gap-6 items-center">
+                        <div class="w-12 h-12 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center">
+                            <span class="material-symbols-outlined">bolt</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Fast Response</h3>
+                            <p class="text-sm text-slate-500">Usually replies under 24 hours</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 flex gap-6 items-center">
+                        <div class="w-12 h-12 rounded-2xl bg-green-50 text-green-600 flex items-center justify-center">
+                            <span class="material-symbols-outlined">help</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Knowledge Base</h3>
+                            <p class="text-sm text-slate-500">Read our common FAQs</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Contact Form -->
+            <div class="animate-reveal delay-200">
+                <div class="bg-white p-10 rounded-[2.5rem] shadow-[0_40px_80px_rgba(0,0,0,0.04)] border border-black/5">
+                    <h2 class="text-2xl font-bold mb-8">Send us a message</h2>
+                    <form id="support-form" class="space-y-6">
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-slate-400">Full Name</label>
+                                <input type="text" required class="w-full px-5 py-3 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-primary/20 text-sm font-medium" placeholder="John Doe">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-slate-400">Email Address</label>
+                                <input type="email" required class="w-full px-5 py-3 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-primary/20 text-sm font-medium" placeholder="john@example.com">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-black uppercase tracking-widest text-slate-400">Subject</label>
+                            <select class="w-full px-5 py-3 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-primary/20 text-sm font-medium">
+                                <option>Billing Issue</option>
+                                <option>Technical Problem</option>
+                                <option>Feature Request</option>
+                                <option>General Inquiry</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-black uppercase tracking-widest text-slate-400">Message</label>
+                            <textarea required rows="5" class="w-full px-5 py-3 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-primary/20 text-sm font-medium resize-none" placeholder="Describe your query here..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-4 bg-primary text-white rounded-full font-bold shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                            Submit Ticket
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-20 py-12 px-8 border-t border-black/5 bg-white">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-xs text-slate-400">© 2024 AutoCV. All rights reserved.</p>
+            <div class="flex gap-8">
+                <a class="text-xs text-slate-500 hover:text-primary transition-colors" href="privacy.html">Privacy</a>
+                <a class="text-xs text-slate-500 hover:text-primary transition-colors" href="terms.html">Terms</a>
+                <a class="text-xs text-slate-500 hover:text-primary transition-colors" href="support.html">Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../static/js/config.js?v=2.4"></script>
+    <script src="../static/js/app.js?v=2.4"></script>
+    <script>
+        document.getElementById('support-form').onsubmit = (e) => {
+            e.preventDefault();
+            toast('Message sent successfully! We will get back to you soon.', 'success');
+            e.target.reset();
+        };
+    </script>
+</body>
+</html>

@@ -117,33 +117,44 @@
 <span class="text-sm font-semibold">New Resume</span>
 </button>
 <nav class="flex flex-col gap-1 overflow-y-auto no-scrollbar flex-grow">
-<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-blue-600 bg-white rounded-lg shadow-sm" href="javascript:void(0)">
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-blue-600 bg-white rounded-lg shadow-sm" href="dashboard.html">
 <span class="material-symbols-outlined text-[20px]">dashboard</span>
                 Dashboard
             </a>
-<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors rounded-lg" href="javascript:void(0)">
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors rounded-lg" href="optimize.html">
 <span class="material-symbols-outlined text-[20px]">auto_fix_high</span>
                 Optimizer
             </a>
-<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors rounded-lg" href="javascript:void(0)">
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors rounded-lg" href="javascript:toast('History coming soon!', 'info')">
 <span class="material-symbols-outlined text-[20px]">history</span>
                 History
             </a>
-<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors rounded-lg" href="javascript:void(0)">
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors rounded-lg" href="account.html">
 <span class="material-symbols-outlined text-[20px]">settings</span>
                 Settings
             </a>
 </nav>
 <!-- Plan Status Card -->
 <div class="mt-auto p-4 bg-surface-container rounded-xl">
-<div class="flex justify-between items-center mb-2">
-<span class="text-[11px] font-bold text-on-surface uppercase tracking-wider">Free Plan</span>
-<span class="text-[11px] font-bold text-on-surface">2/3</span>
+    <div class="flex justify-between items-center mb-2">
+        <span class="text-[11px] font-bold text-on-surface uppercase tracking-wider">Free Plan</span>
+        <span class="text-[11px] font-bold text-on-surface">2/3</span>
+    </div>
+    <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+        <div class="bg-orange-500 h-full w-[66%]"></div>
+    </div>
+    <p class="text-[10px] text-on-secondary-container mt-2">1 optimization remaining</p>
 </div>
-<div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
-<div class="bg-orange-500 h-full w-[66%]"></div>
-</div>
-<p class="text-[10px] text-on-secondary-container mt-2">1 optimization remaining</p>
+
+<div class="flex flex-col gap-1 mt-4 px-2">
+    <a class="flex items-center gap-3 text-slate-400 px-3 py-1 text-[10px] hover:underline" href="terms.html">
+        <span class="material-symbols-outlined text-[14px]">gavel</span>
+        Legal
+    </a>
+    <a class="flex items-center gap-3 text-slate-400 px-3 py-1 text-[10px] hover:underline" href="privacy.html">
+        <span class="material-symbols-outlined text-[14px]">lock</span>
+        Privacy
+    </a>
 </div>
 </aside>
 <div class="flex-1 flex flex-col min-w-0">
@@ -151,11 +162,46 @@
 <header class="fixed top-0 right-0 left-[240px] z-50 bg-white/70 backdrop-blur-xl h-16 shadow-[0_10px_40px_rgba(29,29,31,0.06)]">
 <div class="flex justify-between items-center px-8 h-full max-w-[980px] mx-auto">
 <div class="flex items-center gap-6">
-<a class="text-blue-600 font-semibold text-sm transition-opacity hover:opacity-80" href="pricing.html">Pricing</a>
+    <a class="text-slate-500 font-semibold text-sm transition-opacity hover:opacity-80" href="../home.html#features">Features</a>
+    <a class="text-blue-600 font-semibold text-sm transition-opacity hover:opacity-80" href="pricing.html">Pricing</a>
+    <a class="text-slate-500 font-semibold text-sm transition-opacity hover:opacity-80" href="about.html">About</a>
+    <a class="text-slate-500 font-semibold text-sm transition-opacity hover:opacity-80" href="support.html">Support</a>
 </div>
 <div class="flex items-center gap-4">
-<button class="text-slate-600 text-sm font-medium transition-opacity hover:opacity-80">Login</button>
-<button class="bg-primary text-white px-5 py-2 rounded-full text-sm font-semibold transition-opacity hover:opacity-80">Get Started</button>
+    <!-- Unauthenticated View -->
+    <div class="auth-hide flex items-center gap-4">
+        <button onclick="window.location.href='login.html'" class="text-slate-600 text-sm font-medium transition-opacity hover:opacity-80">Login</button>
+        <button onclick="auth.loginWithGoogle()" class="bg-primary text-white px-5 py-2 rounded-full text-sm font-semibold transition-opacity hover:opacity-80">Get Started</button>
+    </div>
+    
+    <!-- Authenticated View (Dropdown Menu) -->
+    <div class="auth-show hidden relative group">
+        <button class="flex items-center gap-2 hover:opacity-80 transition-all">
+            <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shadow-lg shadow-primary/20" id="nav-avatar">U</div>
+        </button>
+        <!-- Dropdown Menu -->
+        <div class="absolute right-0 top-full pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-[100]">
+            <div class="w-56 bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] border border-black/5 overflow-hidden p-2">
+                <div class="px-4 py-3 border-b border-black/5 mb-1 bg-slate-50/50">
+                    <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Account</p>
+                    <p class="text-xs font-bold text-slate-900 truncate" id="nav-username">User</p>
+                </div>
+                <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors rounded-xl">
+                    <span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard
+                </a>
+                <a href="account.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors rounded-xl">
+                    <span class="material-symbols-outlined text-[20px]">settings</span> Settings
+                </a>
+                <a href="pricing.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-blue-600 hover:bg-blue-50 transition-colors rounded-xl">
+                    <span class="material-symbols-outlined text-[20px]">workspace_premium</span> Upgrade Pro
+                </a>
+                <div class="h-[1px] bg-black/5 my-1"></div>
+                <button onclick="auth.logout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors rounded-xl text-left">
+                    <span class="material-symbols-outlined text-[20px]">logout</span> Sign Out
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 </div>
 </header>
@@ -163,92 +209,83 @@
 <main class="flex-1 mt-16 py-24 px-8 overflow-y-auto">
 <div class="max-w-[980px] mx-auto">
 <!-- Header Section -->
-<header class="mb-16">
-<h1 class="text-[32px] font-extrabold tracking-tight text-on-surface mb-2">Good morning, Aadit 👋</h1>
-<p class="text-on-secondary-container body-lg">Your resumes are performing better than 84% of candidates this week.</p>
+<header class="mb-12 animate-on-scroll">
+    <h1 class="text-[32px] font-extrabold tracking-tight text-on-surface mb-2" id="user-greeting">Welcome back 👋</h1>
+    <p class="text-on-secondary-container body-lg" id="dashboard-subtitle">Let's see how your career documents are performing.</p>
 </header>
-<!-- Stats Grid -->
-<section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-<div class="p-8 bg-surface-container-lowest rounded-DEFAULT border border-outline-variant/15 flex flex-col gap-4">
-<span class="material-symbols-outlined text-primary text-3xl">trending_up</span>
-<div>
-<p class="text-[11px] font-bold uppercase tracking-widest text-on-secondary-container mb-1">ATS Score Avg</p>
-<h3 class="text-3xl font-bold">92<span class="text-lg text-primary ml-1">%</span></h3>
+
+<!-- Dashboard Content Container (Populated by JS) -->
+<div id="dashboard-content" class="min-h-[400px]">
+    <!-- Loading State -->
+    <div id="dashboard-loading" class="flex flex-col items-center justify-center py-20 gap-4">
+        <div class="spinner !border-primary/30 !border-top-primary w-12 h-12"></div>
+        <p class="text-slate-400 font-medium animate-pulse">Fetching your latest stats...</p>
+    </div>
+
+    <!-- Empty State (Hidden by default) -->
+    <div id="dashboard-empty" class="hidden flex flex-col items-center justify-center py-20 px-6 text-center bg-surface-container-low/50 rounded-[2.5rem] border-2 border-dashed border-outline-variant/30 animate-on-scroll">
+        <div class="w-20 h-20 bg-primary-container/10 rounded-full flex items-center justify-center mb-6">
+            <span class="material-symbols-outlined text-primary text-4xl">analytics</span>
+        </div>
+        <h2 class="text-2xl font-bold tracking-tight mb-3 text-slate-900">No data found yet</h2>
+        <p class="text-slate-500 max-w-sm mb-8 leading-relaxed">
+            Analyze your first resume to see your ATS performance, keyword match rates, and real-time improvements here.
+        </p>
+        <button onclick="window.location.href='optimize.html'" class="bg-primary text-white px-8 py-4 rounded-full font-bold shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+            Optimize My First Resume
+        </button>
+    </div>
+
+    <!-- Real Content (Hidden by default) -->
+    <div id="dashboard-real" class="hidden">
+        <!-- Stats Grid -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            <div class="p-8 bg-surface-container-lowest rounded-DEFAULT border border-outline-variant/15 flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow">
+                <span class="material-symbols-outlined text-primary text-3xl">trending_up</span>
+                <div>
+                    <p class="text-[11px] font-bold uppercase tracking-widest text-on-secondary-container mb-1">ATS Score Avg</p>
+                    <h3 class="text-3xl font-bold" id="stat-ats-avg">0<span class="text-lg text-primary ml-1">%</span></h3>
+                </div>
+            </div>
+            <div class="p-8 bg-surface-container-lowest rounded-DEFAULT border border-outline-variant/15 flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow">
+                <span class="material-symbols-outlined text-tertiary text-3xl">check_circle</span>
+                <div>
+                    <p class="text-[11px] font-bold uppercase tracking-widest text-on-secondary-container mb-1">Total Optimizations</p>
+                    <h3 class="text-3xl font-bold" id="stat-optimizations">0</h3>
+                </div>
+            </div>
+            <div class="p-8 bg-surface-container-lowest rounded-DEFAULT border border-outline-variant/15 flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow">
+                <span class="material-symbols-outlined text-orange-500 text-3xl">bolt</span>
+                <div>
+                    <p class="text-[11px] font-bold uppercase tracking-widest text-on-secondary-container mb-1">Top Score</p>
+                    <h3 class="text-3xl font-bold" id="stat-top-score">0<span class="text-lg text-orange-500 ml-1">%</span></h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Optimizations -->
+        <section class="mb-16">
+            <div class="flex justify-between items-end mb-8">
+                <h2 class="text-2xl font-bold tracking-tight">Recent Optimizations</h2>
+                <button onclick="window.location.href='history.html'" class="text-sm font-semibold text-primary hover:underline">View All</button>
+            </div>
+            <div class="grid grid-cols-1 gap-4" id="optimizations-list">
+                <!-- Dynamically populated -->
+            </div>
+        </section>
+    </div>
 </div>
-</div>
-<div class="p-8 bg-surface-container-lowest rounded-DEFAULT border border-outline-variant/15 flex flex-col gap-4">
-<span class="material-symbols-outlined text-tertiary text-3xl">check_circle</span>
-<div>
-<p class="text-[11px] font-bold uppercase tracking-widest text-on-secondary-container mb-1">Improvements</p>
-<h3 class="text-3xl font-bold">142</h3>
-</div>
-</div>
-<div class="p-8 bg-surface-container-lowest rounded-DEFAULT border border-outline-variant/15 flex flex-col gap-4">
-<span class="material-symbols-outlined text-orange-500 text-3xl">bolt</span>
-<div>
-<p class="text-[11px] font-bold uppercase tracking-widest text-on-secondary-container mb-1">Interview Rate</p>
-<h3 class="text-3xl font-bold">3.5<span class="text-lg text-orange-500 ml-1">x</span></h3>
-</div>
-</div>
-</section>
-<!-- Recent Optimizations -->
-<section class="mb-16">
-<div class="flex justify-between items-end mb-8">
-<h2 class="text-2xl font-bold tracking-tight">Recent Optimizations</h2>
-<button onclick="window.location.href='history.html'" class="text-sm font-semibold text-primary hover:underline">View All</button>
-</div>
-<div class="grid grid-cols-1 gap-4">
-<!-- Card 1 -->
-<div class="bg-surface-container-lowest p-6 rounded-DEFAULT border border-outline-variant/15 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-lg transition-shadow">
-<div class="flex items-center gap-4">
-<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center">
-<span class="material-symbols-outlined text-primary">description</span>
-</div>
-<div>
-<h4 class="font-bold text-on-surface">Product_Designer_Senior.pdf</h4>
-<p class="text-sm text-on-secondary-container">Applied to: <span class="font-medium text-on-surface">Stripe</span></p>
-</div>
-</div>
-<div class="flex items-center gap-8">
-<div class="text-right">
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-tertiary-container/10 text-tertiary">96% Score</span>
-<p class="text-[11px] text-on-secondary-container mt-1">Oct 24, 2024</p>
-</div>
-<button class="bg-surface-container-high text-primary px-6 py-2.5 rounded-full text-sm font-bold hover:bg-primary hover:text-white transition-all">View Results</button>
-</div>
-</div>
-<!-- Card 2 -->
-<div class="bg-surface-container-lowest p-6 rounded-DEFAULT border border-outline-variant/15 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-lg transition-shadow">
-<div class="flex items-center gap-4">
-<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center">
-<span class="material-symbols-outlined text-primary">description</span>
-</div>
-<div>
-<h4 class="font-bold text-on-surface">Lead_Engineer_CV.pdf</h4>
-<p class="text-sm text-on-secondary-container">Applied to: <span class="font-medium text-on-surface">Airbnb</span></p>
-</div>
-</div>
-<div class="flex items-center gap-8">
-<div class="text-right">
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-orange-500/10 text-orange-600">78% Score</span>
-<p class="text-[11px] text-on-secondary-container mt-1">Oct 22, 2024</p>
-</div>
-<button class="bg-surface-container-high text-primary px-6 py-2.5 rounded-full text-sm font-bold hover:bg-primary hover:text-white transition-all">View Results</button>
-</div>
-</div>
-</div>
-</section>
+
 <!-- Upgrade Banner -->
-<section class="bg-on-surface text-white p-8 md:p-12 rounded-xl relative overflow-hidden group">
-<div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
-<div class="max-w-md text-center md:text-left">
-<h3 class="text-2xl font-bold mb-2">Get Unlimited Optimizations</h3>
-<p class="text-slate-400 text-sm">Upgrade to Pro to unlock AI-powered cover letters, multiple resume versions, and direct job application tracking.</p>
-</div>
-<button class="bg-primary-container hover:bg-primary text-white px-8 py-4 rounded-full font-bold shadow-xl transition-all whitespace-nowrap">Upgrade to Pro</button>
-</div>
-<!-- Decorative Background -->
-<div class="absolute -right-20 -bottom-20 w-64 h-64 bg-primary/20 rounded-full blur-[100px] group-hover:scale-125 transition-transform duration-700"></div>
+<section class="bg-on-surface text-white p-8 md:p-12 rounded-xl relative overflow-hidden group mb-16 animate-on-scroll">
+    <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
+        <div class="max-w-md text-center md:text-left">
+            <h3 class="text-2xl font-bold mb-2">Get Unlimited Optimizations</h3>
+            <p class="text-slate-400 text-sm">Upgrade to Pro to unlock AI-powered cover letters, multiple resume versions, and direct job application tracking.</p>
+        </div>
+        <button onclick="window.location.href='pricing.html'" class="bg-primary-container hover:bg-primary text-white px-8 py-4 rounded-full font-bold shadow-xl transition-all whitespace-nowrap">Upgrade to Pro</button>
+    </div>
+    <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-primary/20 rounded-full blur-[100px] group-hover:scale-125 transition-transform duration-700"></div>
 </section>
 </div>
 </main>
@@ -259,8 +296,8 @@
 <div class="flex gap-8">
 <a class="text-xs text-slate-500 hover:text-blue-600 transition-colors" href="privacy.html">Privacy</a>
 <a class="text-xs text-slate-500 hover:text-blue-600 transition-colors" href="terms.html">Terms</a>
-<a class="text-xs text-slate-500 hover:text-blue-600 transition-colors" href="mailto:support@autocv.co">Support</a>
-<a class="text-xs text-slate-500 hover:text-blue-600 transition-colors" href="mailto:support@autocv.co">Contact</a>
+<a class="text-xs text-slate-500 hover:text-blue-600 transition-colors" href="support.html">Support</a>
+<a class="text-xs text-slate-500 hover:text-blue-600 transition-colors" href="support.html">Contact</a>
 </div>
 </div>
 </footer>
@@ -272,8 +309,8 @@
 </button>
 </div>
 
-<script src="../static/js/config.js?v=2.1"></script>
-<script src="../static/js/app.js?v=2.1"></script>
+<script src="../static/js/config.js?v=2.4"></script>
+<script src="../static/js/app.js?v=2.4"></script>
 
 <script>
     // Reveal animations on scroll
@@ -300,26 +337,113 @@
 
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-      // Fix Sidebar Links
+  document.addEventListener("DOMContentLoaded", async () => {
+      // 1. Initial UI Setup
       const links = document.querySelectorAll('aside nav a');
-      links[0].href = 'dashboard.html';
-      links[1].href = 'optimize.html';
-      links[2].href = 'history.html';
-      links[3].href = 'account.html';
+      if (links.length >= 4) {
+          links[0].href = 'dashboard.html';
+          links[1].href = 'optimize.html';
+          links[2].href = 'history.html';
+          links[3].href = 'account.html';
+      }
       
       const newResumeBtn = document.querySelector('aside button');
       if (newResumeBtn) newResumeBtn.onclick = () => window.location.href = 'optimize.html';
 
-      // Fix Top Nav Login/Started -> Logout
-      const topNavButtons = document.querySelector('header .flex.items-center.gap-4');
-      if (topNavButtons) {
-          topNavButtons.innerHTML = `
-            <button onclick="auth.logout()" class="text-slate-600 text-sm font-medium hover:opacity-80 transition-opacity">Logout</button>
-            <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold" id="nav-avatar">U</div>
-          `;
-      }
+      // 2. Wait for Auth to initialize
+      let retryCount = 0;
+      const checkAuth = setInterval(() => {
+          if (window.auth && window.auth.user) {
+              clearInterval(checkAuth);
+              loadDashboardData();
+          } else if (retryCount > 10) {
+              clearInterval(checkAuth);
+              // Handle unauthenticated case? auth.init already redirects if needed.
+          }
+          retryCount++;
+      }, 500);
   });
+
+  async function loadDashboardData() {
+      const loading = document.getElementById('dashboard-loading');
+      const empty = document.getElementById('dashboard-empty');
+      const real = document.getElementById('dashboard-real');
+      const list = document.getElementById('optimizations-list');
+      
+      try {
+          if (!auth.supabase) throw new Error("Supabase not initialized");
+
+          // Update Greeting
+          const welcome = document.getElementById('user-greeting');
+          const fullName = auth.user.user_metadata?.full_name || auth.user.email.split('@')[0];
+          const hour = new Date().getHours();
+          const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+          welcome.textContent = `${greeting}, ${fullName.split(' ')[0]} 👋`;
+
+          // Fetch real data from Supabase
+          const { data, error } = await auth.supabase
+            .from('optimizations')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+          if (error) {
+              console.warn("Table probably doesn't exist yet:", error.message);
+              // Fallback to empty state if table missing or errored
+              loading.classList.add('hidden');
+              empty.classList.remove('hidden');
+              return;
+          }
+
+          if (!data || data.length === 0) {
+              loading.classList.add('hidden');
+              empty.classList.remove('hidden');
+              return;
+          }
+
+          // We have data! Calculate real stats
+          const total = data.length;
+          const avgScore = Math.round(data.reduce((acc, curr) => acc + (curr.optimized_score || 0), 0) / total);
+          const topScore = Math.max(...data.map(d => d.optimized_score || 0));
+          
+          document.getElementById('stat-ats-avg').innerHTML = `${avgScore}<span class="text-lg text-primary ml-1">%</span>`;
+          document.getElementById('stat-optimizations').textContent = total;
+          document.getElementById('stat-top-score').innerHTML = `${topScore}<span class="text-lg text-orange-500 ml-1">%</span>`;
+          
+          document.getElementById('dashboard-subtitle').textContent = `You've optimized ${total} resume${total > 1 ? 's' : ''}. Here is your career progress.`;
+
+          // Render Recent items (max 2 for dashboard)
+          list.innerHTML = data.slice(0, 2).map(opt => `
+            <div class="bg-surface-container-lowest p-6 rounded-DEFAULT border border-outline-variant/15 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-lg transition-shadow">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary text-[28px]">description</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-on-surface">${esc(opt.filename || 'Resume_Optimization.pdf')}</h4>
+                        <p class="text-sm text-on-secondary-container">Applied to: <span class="font-medium text-on-surface">${esc(opt.job_title || 'General Application')}</span></p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-8">
+                    <div class="text-right">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${opt.optimized_score >= 80 ? 'bg-tertiary-container/10 text-tertiary' : 'bg-orange-500/10 text-orange-600'}">
+                            ${opt.optimized_score}% Score
+                        </span>
+                        <p class="text-[11px] text-on-secondary-container mt-1">${new Date(opt.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
+                    </div>
+                    <button onclick="window.location.href='results.html?id=${opt.id}'" class="bg-surface-container-high text-primary px-6 py-2.5 rounded-full text-sm font-bold hover:bg-primary hover:text-white transition-all">View Results</button>
+                </div>
+            </div>
+          `).join('');
+
+          loading.classList.add('hidden');
+          real.classList.remove('hidden');
+
+      } catch (err) {
+          console.error("Dashboard error:", err);
+          loading.classList.add('hidden');
+          empty.classList.remove('hidden');
+      }
+  }
 </script>
 
 </body>

@@ -114,21 +114,60 @@
 <div class="flex justify-between items-center px-8 h-full max-w-[1440px] mx-auto font-['Inter'] antialiased">
 <div class="flex items-center gap-8">
 <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">AutoCV</span>
-<div class="hidden md:flex gap-6">
-<a class="text-blue-600 dark:text-blue-400 font-semibold transition-opacity duration-200 ease-in-out" href="pricing.html">Pricing</a>
+<div class="flex items-center gap-8">
+    <a class="text-blue-600 dark:text-blue-400 font-semibold transition-opacity duration-200 ease-in-out" href="pricing.html">Pricing</a>
+    <a class="text-slate-500 font-semibold transition-opacity duration-200 ease-in-out" href="about.html">About</a>
+    <a class="text-slate-500 font-semibold transition-opacity duration-200 ease-in-out" href="support.html">Support</a>
 </div>
 </div>
 <div class="flex items-center gap-4">
-<button class="text-slate-600 dark:text-slate-400 hover:opacity-80 transition-opacity duration-200 ease-in-out">Login</button>
-<button class="bg-primary text-white px-5 py-2 rounded-full font-medium hover:opacity-80 transition-opacity duration-200 ease-in-out">Get Started</button>
+    <!-- Unauthenticated -->
+    <div class="auth-hide flex items-center gap-4">
+        <button onclick="window.location.href='login.html'" class="text-slate-600 dark:text-slate-400 font-medium hover:opacity-80 transition-opacity">Login</button>
+        <button onclick="auth.loginWithGoogle()" class="bg-primary text-white px-5 py-2 rounded-full font-semibold hover:opacity-90 transition-opacity">Get Started</button>
+    </div>
+
+    <!-- Authenticated (Dropdown) -->
+    <div class="auth-show hidden relative group">
+        <button class="flex items-center gap-2 hover:opacity-80 transition-all">
+            <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shadow-lg shadow-primary/20" id="nav-avatar">U</div>
+        </button>
+        <div class="absolute right-0 top-full pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-[100]">
+            <div class="w-56 bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] border border-black/5 overflow-hidden p-2 text-left">
+                <div class="px-4 py-3 border-b border-black/5 mb-1 bg-slate-50/50">
+                    <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Account</p>
+                    <p class="text-xs font-bold text-slate-900 truncate" id="nav-username">User</p>
+                </div>
+                <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors rounded-xl">
+                    <span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard
+                </a>
+                <a href="account.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors rounded-xl">
+                    <span class="material-symbols-outlined text-[20px]">settings</span> Settings
+                </a>
+                <a href="pricing.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-blue-600 hover:bg-blue-50 transition-colors rounded-xl">
+                    <span class="material-symbols-outlined text-[20px]">workspace_premium</span> Upgrade Pro
+                </a>
+                <div class="h-[1px] bg-black/5 my-1"></div>
+                <button onclick="auth.logout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors rounded-xl text-left">
+                    <span class="material-symbols-outlined text-[20px]">logout</span> Sign Out
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 </div>
 </nav>
 <!-- Sub-Header / Progress Bar -->
 <header class="mt-16 bg-surface-container-lowest px-8 py-4 border-b border-outline-variant/15 flex items-center justify-between z-40">
-<div onclick="window.location.href='dashboard.html'" class="flex items-center gap-2 text-primary font-medium hover:opacity-70 transition-opacity cursor-pointer">
-<span class="material-symbols-outlined text-[20px]">arrow_back</span>
-<span class="text-sm">Dashboard</span>
+<div id="back-nav-container">
+    <div onclick="window.location.href='/home.html'" class="auth-hide flex items-center gap-2 text-slate-500 font-medium hover:opacity-70 transition-opacity cursor-pointer">
+        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+        <span class="text-sm">Back to Home</span>
+    </div>
+    <div onclick="window.location.href='dashboard.html'" class="auth-show hidden flex items-center gap-2 text-primary-container font-medium hover:opacity-70 transition-opacity cursor-pointer">
+        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+        <span class="text-sm font-bold tracking-tight">Dashboard</span>
+    </div>
 </div>
 <div class="flex items-center gap-8">
 <div class="flex items-center gap-2 group">
@@ -199,8 +238,8 @@
         </button>
 </div>
 
-<script src="../static/js/config.js?v=2.3"></script>
-<script src="../static/js/app.js?v=2.3"></script>
+<script src="../static/js/config.js?v=2.4"></script>
+<script src="../static/js/app.js?v=2.4"></script>
 
 <script>
     // Reveal animations on scroll
@@ -272,6 +311,14 @@
           } else {
             const res = await api.post('/analyze', formData, true);
             renderAnalysisResults(res);
+            
+            // AUTOMATICALLY STORE DATA FOR DASHBOARD
+            if (!auth.user) return;
+            auth.saveOptimization({
+                ...res,
+                filename: resumeFile?.name,
+                job_title: document.getElementById('jd-input')?.value.trim().substring(0, 50) || 'General Application'
+            });
           }
         } catch (e) {
           if (e.message.includes('LIMIT_REACHED') || e.message === 'Limit reached') {
@@ -332,9 +379,9 @@
                     <h2 class="text-2xl font-bold leading-tight">${data.is_guest?'Unlock Full AI Report':'Unlock AI Tailoring'}</h2>
                     <p class="text-white/80 text-sm italic">You're currently in ${data.is_guest?'Guest View':'Free View'}. Sign in or upgrade to reveal all keywords.</p>
                 </div>
-                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center min-w-[160px] border border-white/20 shadow-lg">
-                    <button onclick="${data.is_guest?'auth.loginWithGoogle()':'handleOptimizeNow()'}" id="optimize-now-btn" class="w-full bg-white text-primary px-6 py-3 rounded-full text-sm font-bold hover:scale-105 active:scale-95 transition-all shadow-md">
-                        ${data.is_guest?'Sign In to Reveal':'Optimize Now'}
+                <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center min-w-[200px] border border-white/20 shadow-lg">
+                    <button onclick="${data.is_guest?'auth.loginWithGoogle()':'window.location.href=\'pricing.html\''}" id="optimize-now-btn" class="w-full bg-white text-primary px-6 py-3 rounded-full text-sm font-bold hover:scale-105 active:scale-95 transition-all shadow-md">
+                        ${data.is_guest?'Sign In to Reveal':'Upgrade to Unlock & Fix Resume'}
                     </button>
                 </div>
             </div>

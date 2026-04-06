@@ -115,18 +115,53 @@
 <!-- TopNavBar -->
 <nav class="fixed top-0 w-full z-50 glass-header shadow-[0_10px_40px_rgba(29,29,31,0.06)]">
 <div class="flex justify-between items-center px-8 h-16 max-w-[1440px] mx-auto font-['Inter'] antialiased">
-<a href="/home.html" class="text-xl font-bold tracking-tight text-slate-900 dark:text-white hover:opacity-80 transition-opacity">AutoCV</a>
+    <div class="flex items-center gap-6">
+        <a href="/home.html" class="text-xl font-bold tracking-tight text-slate-900 dark:text-white hover:opacity-80 transition-opacity">AutoCV</a>
+        <div class="h-6 w-px bg-slate-200 auth-show hidden"></div>
+        <a href="dashboard.html" class="auth-show hidden text-sm font-semibold text-slate-500 hover:text-primary transition-all flex items-center gap-1 group">
+           <span class="material-symbols-outlined text-[18px] group-hover:-translate-x-0.5 transition-transform">chevron_left</span>
+           Dashboard
+        </a>
+    </div>
 <div class="hidden md:flex items-center gap-8">
-<a class="text-blue-600 dark:text-blue-400 font-semibold transition-opacity hover:opacity-80" href="pricing.html">Pricing</a>
-</div>
+    <a class="text-slate-600 hover:opacity-80 transition-opacity font-semibold" href="../home.html#features">Features</a>
+    <a class="text-blue-600 font-semibold transition-opacity hover:opacity-80" href="pricing.html">Pricing</a>
+    <a class="text-slate-600 dark:text-slate-400 font-semibold transition-opacity hover:opacity-80" href="about.html">About</a>
+    <a class="text-slate-600 dark:text-slate-400 font-semibold transition-opacity hover:opacity-80" href="support.html">Support</a>
+    
+    <!-- Unauthenticated -->
+    <div class="auth-hide flex items-center gap-6">
+        <button onclick="window.location.href='login.html'" class="text-slate-600 dark:text-slate-400 font-medium hover:opacity-80 transition-opacity">Login</button>
+        <button onclick="auth.loginWithGoogle()" class="bg-primary text-white px-6 py-2 rounded-full font-semibold hover:opacity-90 transition-opacity">Get Started</button>
+    </div>
 
-        <button id="mobile-menu-btn" class="md:hidden text-slate-900 p-2">
-            <span class="material-symbols-outlined">menu</span>
+    <!-- Authenticated (Dropdown) -->
+    <div class="auth-show hidden relative group">
+        <button class="flex items-center gap-2 hover:opacity-80 transition-all">
+            <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shadow-lg shadow-primary/20" id="nav-avatar">U</div>
         </button>
-        <!-- mobile-menu-injected -->
-        <div class="hidden md:flex items-center gap-4">
-<button onclick="window.location.href='login.html'" class="text-slate-600 dark:text-slate-400 font-medium hover:opacity-80 transition-opacity">Login</button>
-<button onclick="auth.loginWithGoogle()" class="bg-primary text-on-primary px-6 py-2 rounded-full font-semibold hover:opacity-90 transition-opacity">Get Started</button>
+        <div class="absolute right-0 top-full pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-[100]">
+            <div class="w-56 bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] border border-black/5 overflow-hidden p-2 text-left">
+                <div class="px-4 py-3 border-b border-black/5 mb-1 bg-slate-50/50">
+                    <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Account</p>
+                    <p class="text-xs font-bold text-slate-900 truncate" id="nav-username">User</p>
+                </div>
+                <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors rounded-xl">
+                    <span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard
+                </a>
+                <a href="account.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors rounded-xl">
+                    <span class="material-symbols-outlined text-[20px]">settings</span> Settings
+                </a>
+                <a href="pricing.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-blue-600 hover:bg-blue-50 transition-colors rounded-xl">
+                    <span class="material-symbols-outlined text-[20px]">workspace_premium</span> Upgrade Pro
+                </a>
+                <div class="h-[1px] bg-black/5 my-1"></div>
+                <button onclick="auth.logout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors rounded-xl text-left">
+                    <span class="material-symbols-outlined text-[20px]">logout</span> Sign Out
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 </div>
 </nav>
@@ -231,50 +266,62 @@
 <button onclick="api.post('/payments/checkout/pro',{}).then(r=>window.location.href=r.checkout_url)" class="w-full py-3 rounded-full bg-on-surface text-surface font-bold hover:opacity-90 transition-opacity">Go Pro</button>
 </div>
 </section>
-<!-- Feature Comparison Table (Asymmetric Layout) -->
-<section class="mb-24 py-16 px-12 bg-surface-container-low rounded-xl">
-<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-<div>
-<h2 class="text-3xl font-bold tracking-tight mb-6">Compare everything</h2>
-<p class="text-on-secondary-container leading-relaxed">
-                            We believe in full transparency. Here is exactly what you get with each of our plans. No hidden limitations on your career.
-                        </p>
-</div>
-<div class="space-y-6">
-<div class="flex justify-between items-center py-4 border-b border-outline-variant/20">
-<span class="font-medium text-sm">PDF/Docx Export</span>
-<div class="flex gap-4">
-<span class="material-symbols-outlined text-xs text-outline">close</span>
-<span class="material-symbols-outlined text-xs text-primary">check</span>
-<span class="material-symbols-outlined text-xs text-primary">check</span>
-</div>
-</div>
-<div class="flex justify-between items-center py-4 border-b border-outline-variant/20">
-<span class="font-medium text-sm">AI Keyword Optimization</span>
-<div class="flex gap-4">
-<span class="material-symbols-outlined text-xs text-primary">check</span>
-<span class="material-symbols-outlined text-xs text-primary">check</span>
-<span class="material-symbols-outlined text-xs text-primary">check</span>
-</div>
-</div>
-<div class="flex justify-between items-center py-4 border-b border-outline-variant/20">
-<span class="font-medium text-sm">Tailored Cover Letters</span>
-<div class="flex gap-4">
-<span class="material-symbols-outlined text-xs text-outline">close</span>
-<span class="material-symbols-outlined text-xs text-primary">check</span>
-<span class="material-symbols-outlined text-xs text-primary">check</span>
-</div>
-</div>
-<div class="flex justify-between items-center py-4 border-b border-outline-variant/20">
-<span class="font-medium text-sm">Job Matching Insights</span>
-<div class="flex gap-4">
-<span class="material-symbols-outlined text-xs text-outline">close</span>
-<span class="material-symbols-outlined text-xs text-outline">close</span>
-<span class="material-symbols-outlined text-xs text-primary">check</span>
-</div>
-</div>
-</div>
-</div>
+<!-- Feature Comparison Chart -->
+<section class="mb-24 py-20 px-10 md:px-16 bg-surface-container-low rounded-[2.5rem] relative overflow-hidden group">
+    <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[100px] rounded-full transition-transform group-hover:scale-150 duration-700"></div>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center relative z-10">
+        <div class="lg:col-span-5">
+            <h2 class="text-[40px] font-black tracking-tight mb-6 leading-tight">Compare <br/>everything</h2>
+            <p class="text-on-secondary-container text-lg leading-relaxed max-w-sm">
+                We believe in full transparency. Here is exactly what you get with each of our plans. No hidden limitations on your career.
+            </p>
+        </div>
+        <div class="lg:col-span-7 space-y-2">
+            <!-- Table Header -->
+            <div class="flex justify-end gap-10 px-4 mb-4">
+                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-outline/50 w-[18px] text-center">Free</span>
+                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-primary w-[18px] text-center">Single</span>
+                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface w-[18px] text-center">Pro</span>
+            </div>
+            
+            <!-- Row 1 -->
+            <div class="flex justify-between items-center py-6 border-b border-outline-variant/20 hover:bg-white/40 transition-colors px-4 rounded-xl">
+                <span class="font-bold text-[15px] text-on-surface">PDF/Docx Export</span>
+                <div class="flex gap-10">
+                    <span class="material-symbols-outlined text-[18px] text-outline/30 w-[18px] text-center">close</span>
+                    <span class="material-symbols-outlined text-[18px] text-primary font-bold w-[18px] text-center">check</span>
+                    <span class="material-symbols-outlined text-[18px] text-primary font-bold w-[18px] text-center">check</span>
+                </div>
+            </div>
+            <!-- Row 2 -->
+            <div class="flex justify-between items-center py-6 border-b border-outline-variant/20 hover:bg-white/40 transition-colors px-4 rounded-xl">
+                <span class="font-bold text-[15px] text-on-surface">AI Keyword Optimization</span>
+                <div class="flex gap-10">
+                    <span class="material-symbols-outlined text-[18px] text-primary font-bold w-[18px] text-center">check</span>
+                    <span class="material-symbols-outlined text-[18px] text-primary font-bold w-[18px] text-center">check</span>
+                    <span class="material-symbols-outlined text-[18px] text-primary font-bold w-[18px] text-center">check</span>
+                </div>
+            </div>
+            <!-- Row 3 -->
+            <div class="flex justify-between items-center py-6 border-b border-outline-variant/20 hover:bg-white/40 transition-colors px-4 rounded-xl">
+                <span class="font-bold text-[15px] text-on-surface">Tailored Cover Letters</span>
+                <div class="flex gap-10">
+                    <span class="material-symbols-outlined text-[18px] text-outline/30 w-[18px] text-center">close</span>
+                    <span class="material-symbols-outlined text-[18px] text-primary font-bold w-[18px] text-center">check</span>
+                    <span class="material-symbols-outlined text-[18px] text-primary font-bold w-[18px] text-center">check</span>
+                </div>
+            </div>
+            <!-- Row 4 -->
+            <div class="flex justify-between items-center py-6 border-b border-outline-variant/20 hover:bg-white/40 transition-colors px-4 rounded-xl">
+                <span class="font-bold text-[15px] text-on-surface">Job Matching Insights</span>
+                <div class="flex gap-10">
+                    <span class="material-symbols-outlined text-[18px] text-outline/30 w-[18px] text-center">close</span>
+                    <span class="material-symbols-outlined text-[18px] text-outline/30 w-[18px] text-center">close</span>
+                    <span class="material-symbols-outlined text-[18px] text-primary font-bold w-[18px] text-center">check</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <!-- FAQ Accordion -->
 <section class="max-w-3xl mx-auto mb-24">
@@ -322,7 +369,7 @@
 <div class="relative z-20 max-w-xl">
 <h2 class="text-white text-3xl font-extrabold mb-4">Join 50,000+ job seekers</h2>
 <p class="text-white/90 text-lg mb-8">Professionals from Google, Meta, and Netflix use AutoCV to land their dream roles.</p>
-<button class="bg-white text-on-surface px-8 py-3 rounded-full font-bold hover:bg-surface-container transition-colors">Create Your Resume Now</button>
+<a href="optimize.html" class="bg-white text-on-surface px-8 py-3 rounded-full font-bold hover:bg-surface-container transition-colors inline-block no-underline">Create Your Resume Now</a>
 </div>
 </section>
 </div>
@@ -336,14 +383,14 @@
 <div class="flex gap-8">
 <a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="privacy.html">Privacy</a>
 <a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="terms.html">Terms</a>
-<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="mailto:support@autocv.co">Support</a>
-<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="mailto:support@autocv.co">Contact</a>
+<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="support.html">Support</a>
+<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="support.html">Contact</a>
 </div>
 </div>
 </footer>
 
-<script src="../static/js/config.js"></script>
-<script src="../static/js/app.js"></script>
+<script src="../static/js/config.js?v=2.4"></script>
+<script src="../static/js/app.js?v=2.4"></script>
 
 <script>
     // Reveal animations on scroll

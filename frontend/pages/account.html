@@ -113,10 +113,42 @@
 <div class="hidden md:flex gap-8 items-center">
 <a class="font-sans tracking-tight text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors duration-200" href="../home.html#features">Features</a>
 <a class="font-sans tracking-tight text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors duration-200" href="pricing.html">Pricing</a>
-<a class="font-sans tracking-tight text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors duration-200" href="../home.html#about">About</a>
-<div class="h-4 w-px bg-surface-container"></div>
-<button class="font-sans tracking-tight text-sm font-medium text-blue-600 hover:opacity-80">Sign In</button>
-<button class="bg-primary-container text-on-primary-container px-5 py-2 rounded-full font-sans tracking-tight text-sm font-medium hover:opacity-90 transition-all scale-95 duration-150 ease-in-out">Get Started</button>
+<a class="font-sans tracking-tight text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors duration-200" href="about.html">About</a>
+<a class="font-sans tracking-tight text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors duration-200" href="support.html">Support</a>
+
+<div class="auth-hide flex items-center gap-6">
+    <button onclick="window.location.href='login.html'" class="text-slate-500 font-medium hover:text-blue-600 transition-colors">Login</button>
+    <button onclick="auth.loginWithGoogle()" class="bg-primary text-white px-5 py-2 rounded-full font-medium hover:opacity-90">Get Started</button>
+</div>
+
+<!-- Authenticated (Dropdown) -->
+<div class="auth-show hidden relative group">
+    <button class="flex items-center gap-2 hover:opacity-80 transition-all">
+        <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shadow-lg shadow-primary/20" id="nav-avatar">U</div>
+    </button>
+    <!-- Dropdown Menu -->
+    <div class="absolute right-0 top-full pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-[100]">
+        <div class="w-56 bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] border border-black/5 overflow-hidden p-2 text-left">
+            <div class="px-4 py-3 border-b border-black/5 mb-1 bg-slate-50/50">
+                <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Account</p>
+                <p class="text-xs font-bold text-slate-900 truncate" id="nav-username">User</p>
+            </div>
+            <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors rounded-xl">
+                <span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard
+            </a>
+            <a href="account.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors rounded-xl">
+                <span class="material-symbols-outlined text-[20px]">settings</span> Settings
+            </a>
+            <a href="pricing.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-blue-600 hover:bg-blue-50 transition-colors rounded-xl">
+                <span class="material-symbols-outlined text-[20px]">workspace_premium</span> Upgrade Pro
+            </a>
+            <div class="h-[1px] bg-black/5 my-1"></div>
+            <button onclick="auth.logout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors rounded-xl text-left">
+                <span class="material-symbols-outlined text-[20px]">logout</span> Sign Out
+            </button>
+        </div>
+    </div>
+</div>
 </div>
 </div>
 </nav>
@@ -145,7 +177,7 @@
 <span class="material-symbols-outlined text-blue-600" data-icon="settings">settings</span>
                     Settings
                 </a>
-<a class="flex items-center gap-3 text-slate-500 px-4 py-2 hover:bg-slate-100 transition-all font-sans text-sm font-medium" href="mailto:support@autocv.co">
+<a class="flex items-center gap-3 text-slate-500 px-4 py-2 hover:bg-slate-100 transition-all font-sans text-sm font-medium" href="mailto:autocv.app@gmail.com">
 <span class="material-symbols-outlined" data-icon="help">help</span>
                     Help
                 </a>
@@ -157,11 +189,11 @@
 <button class="w-full py-2 bg-primary text-white text-xs rounded-full font-bold">Upgrade Now</button>
 </div>
 <div class="flex flex-col gap-1">
-<a class="flex items-center gap-3 text-slate-400 px-4 py-1 text-xs hover:underline" href="#">
+<a class="flex items-center gap-3 text-slate-400 px-4 py-1 text-xs hover:underline" href="terms.html">
 <span class="material-symbols-outlined text-sm" data-icon="gavel">gavel</span>
                         Legal
                     </a>
-<a class="flex items-center gap-3 text-slate-400 px-4 py-1 text-xs hover:underline" href="#">
+<a class="flex items-center gap-3 text-slate-400 px-4 py-1 text-xs hover:underline" href="privacy.html">
 <span class="material-symbols-outlined text-sm" data-icon="lock">lock</span>
                         Privacy
                     </a>
@@ -169,8 +201,14 @@
 </div>
 </aside>
 <!-- Main Content Area -->
-<main class="flex-1 overflow-y-auto px-8 md:px-24 py-16 bg-surface">
-<div class="max-w-[800px] mx-auto space-y-24">
+<main class="flex-1 overflow-y-auto px-8 md:px-24 py-10 bg-surface">
+<div class="max-w-[800px] mx-auto space-y-16">
+<!-- Breadcrumb -->
+<div onclick="window.location.href='dashboard.html'" class="flex items-center gap-2 text-primary-container font-medium hover:opacity-70 transition-opacity cursor-pointer mb-8 animate-page">
+    <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+    <span class="text-sm font-bold tracking-tight">Back to Dashboard</span>
+</div>
+
 <!-- Section 1: Profile -->
 <section class="space-y-6">
 <h2 class="text-[2rem] font-bold tracking-tight text-on-surface">Profile</h2>
@@ -223,19 +261,11 @@
 <!-- Section 3: Payment Method -->
 <section class="space-y-6">
 <h2 class="text-[2rem] font-bold tracking-tight text-on-surface">Payment</h2>
-<div class="bg-surface-container-lowest rounded-lg p-8 flex items-center justify-between ghost-border">
-<div class="flex items-center gap-5">
-<div class="w-12 h-8 bg-surface-container rounded-md flex items-center justify-center border border-outline-variant/20">
-<span class="material-symbols-outlined text-slate-600" data-icon="credit_card">credit_card</span>
-</div>
-<div>
-<p class="text-sm font-bold text-on-surface">Visa ending in 4242</p>
-<p class="text-xs font-medium text-on-secondary-container">Expires 08/28</p>
-</div>
-</div>
-<button class="px-6 py-2 border border-outline-variant rounded-full text-sm font-semibold text-on-surface hover:bg-surface-container-low transition-colors">
-                            Update Payment Method
-                        </button>
+<div id="payment-container" class="animate-page">
+    <!-- Loading placeholder -->
+    <div class="bg-surface-container-lowest rounded-lg p-12 flex flex-col items-center justify-center text-center ghost-border italic text-on-secondary-container">
+        Checking payment status...
+    </div>
 </div>
 </section>
 <!-- Section 4: Danger Zone -->
@@ -265,34 +295,102 @@
 <a class="text-xs font-light text-slate-400 hover:underline" href="privacy.html">Privacy Policy</a>
 <a class="text-xs font-light text-slate-400 hover:underline" href="terms.html">Terms of Service</a>
 <a class="text-xs font-light text-slate-400 hover:underline" href="privacy.html">Cookie Policy</a>
-<a class="text-xs font-light text-slate-400 hover:underline" href="mailto:support@autocv.co">Support</a>
+<a class="text-xs font-light text-slate-400 hover:underline" href="mailto:autocv.app@gmail.com">Support</a>
 </div>
 </div>
 </footer>
 
-<script src="../static/js/config.js"></script>
-<script src="../static/js/app.js"></script>
+<script src="../static/js/config.js?v=2.4"></script>
+<script src="../static/js/app.js?v=2.4"></script>
 
 <script>
-    // Reveal animations on scroll
     document.addEventListener("DOMContentLoaded", () => {
-        document.body.classList.add('animate-page');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
+        const checkAuth = setInterval(() => {
+            if (window.auth && window.auth.user) {
+                clearInterval(checkAuth);
+                renderAccountUI();
+            }
+        }, 500);
+    });
 
-        document.querySelectorAll('section, .animate-on-scroll').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(15px)';
-            el.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-            observer.observe(el);
+    function renderAccountUI() {
+        const user = auth.user;
+        const meta = user.user_metadata || {};
+        const fullName = meta.full_name || user.email.split('@')[0];
+        // For dev/admin, we treat specific email as Pro
+        const isPro = meta.plan === 'pro' || user.email === 'aaditchandra2212@gmail.com';
+
+        // 1. Update Profile Card
+        const avatar = document.querySelector('section .w-20.h-20');
+        const nameEl = document.querySelector('section h3.text-xl');
+        const emailEl = document.querySelector('section p.text-on-secondary-container');
+        
+        if (avatar) avatar.textContent = fullName[0].toUpperCase();
+        if (nameEl) nameEl.textContent = fullName;
+        if (emailEl) emailEl.textContent = user.email;
+
+        // 2. Update Subscription Card
+        const planBadge = document.querySelector('section span.bg-primary-container') || document.querySelector('section span.bg-tertiary-container');
+        if (planBadge) {
+            planBadge.textContent = isPro ? 'Pro Member' : 'Free Member';
+            planBadge.className = isPro ? 'inline-flex items-center px-4 py-1 rounded-full text-xs font-bold bg-tertiary-container/10 text-tertiary' : 'inline-flex items-center px-4 py-1 rounded-full text-xs font-bold bg-surface-container-high text-on-secondary-container';
+        }
+
+        const usageText = document.querySelector('section span.text-primary');
+        if (usageText) usageText.textContent = isPro ? 'Unlimited optimizations' : '1/3 optimizations used';
+
+        // 3. Update Payment Container (Empty State)
+        const paymentContainer = document.getElementById('payment-container');
+        if (isPro) {
+            paymentContainer.innerHTML = `
+                <div class="bg-surface-container-lowest rounded-lg p-8 flex items-center justify-between ghost-border">
+                    <div class="flex items-center gap-5">
+                        <div class="w-12 h-8 bg-surface-container rounded-md flex items-center justify-center border border-outline-variant/20 text-tertiary">
+                            <span class="material-symbols-outlined font-bold">check_circle</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-on-surface">Pro Subscription Active</p>
+                            <p class="text-xs font-medium text-on-secondary-container">Payment via Manual Upgrade (Lifetime)</p>
+                        </div>
+                    </div>
+                    <button onclick="window.location.href='pricing.html'" class="px-6 py-2 border border-outline-variant rounded-full text-sm font-semibold text-on-surface hover:bg-surface-container-low transition-colors">
+                        Manage Subscription
+                    </button>
+                </div>
+            `;
+        } else {
+            paymentContainer.innerHTML = `
+                <div class="bg-surface-container-lowest rounded-lg p-10 flex flex-col items-center justify-center text-center ghost-border gap-6">
+                    <div class="w-16 h-16 bg-surface-container rounded-full flex items-center justify-center text-primary-container">
+                        <span class="material-symbols-outlined text-3xl">add_card</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-on-surface mb-1">No payment method added</h3>
+                        <p class="text-sm text-on-secondary-container max-w-xs">Upgrade to a Pro plan to unlock unlimited resume optimizations and advanced AI analysis.</p>
+                    </div>
+                    <button onclick="window.location.href='pricing.html'" class="bg-primary text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-all">
+                        Add Payment Method to Get Started
+                    </button>
+                </div>
+            `;
+        }
+    }
+
+    // Reveal animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
         });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('section, .animate-page').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(15px)';
+        el.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+        observer.observe(el);
     });
 </script>
 

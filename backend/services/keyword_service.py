@@ -75,7 +75,12 @@ def extract_text_keywords(text: str) -> list[str]:
     return keywords
 
 
-    if not jd_text or len(jd_text.strip()) < 10:
+def extract_jd_keywords(jd_text: str) -> list[str]:
+    """
+    Extract keywords from job description.
+    Returns ranked list of most important keywords.
+    """
+    if not jd_text or len(jd_text.strip()) < 1:
         return GENERIC_ATS_KEYWORDS[:20]  # Return subset of general keywords
 
     raw_keywords = extract_text_keywords(jd_text)

@@ -198,16 +198,43 @@ const auth = {
 
     if (!isLoggedIn) return;
     
-    // Update Sidebar/Topnav Avatar
+    // Update Sidebar/Topnav Avatar & Username
+    const fullName = this.user.user_metadata?.full_name || this.user.email || 'User';
     document.querySelectorAll('#nav-avatar').forEach(el => {
-        el.textContent = (this.user.user_metadata?.full_name || this.user.email || 'U')[0].toUpperCase();
+        el.textContent = fullName[0].toUpperCase();
+    });
+    document.querySelectorAll('#nav-username').forEach(el => {
+        el.textContent = fullName;
     });
     
     // Update Dashboard Welcome Name
-    const nameEl = document.querySelector('h1');
-    if (nameEl && nameEl.innerText.includes('Good morning')) {
-        const fullName = this.user.user_metadata?.full_name || this.user.email.split('@')[0];
-        nameEl.innerHTML = `Good morning, ${fullName.split(' ')[0]} 👋`;
+    const nameEl = document.getElementById('user-greeting');
+    if (nameEl) {
+        const hour = new Date().getHours();
+        const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+        nameEl.textContent = `${greeting}, ${fullName.split(' ')[0]} 👋`;
+    }
+  },
+
+  async saveOptimization(data) {
+    if (!this.user || !this.supabase) return;
+    try {
+        const { error } = await this.supabase
+            .from('optimizations')
+            .insert([{
+                user_id: this.user.id,
+                filename: data.filename || 'Resume_Optimization.pdf',
+                job_title: data.job_title || 'General Application',
+                original_score: data.original_score || data.score || 0,
+                optimized_score: data.optimized_score || data.score || 0,
+                matched_count: data.matched_count || 0,
+                missing_count: data.missing_count || 0,
+                created_at: new Date().toISOString()
+            }]);
+        if (error) console.warn("Failed to auto-save optimization:", error.message);
+        else console.log("Optimization successfully recorded for dashboard stats.");
+    } catch (e) {
+        console.error("Dashboard record error:", e);
     }
   },
   requireAuth() {
