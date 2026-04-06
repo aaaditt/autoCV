@@ -3,7 +3,7 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Upgrade - ResumeAI</title>
+<title>Upgrade - AutoCV</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -108,6 +108,7 @@
     }
 </style>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-surface-container-low min-h-screen flex items-center justify-center p-4">
 <!-- Background Mockup (to show the "Route: /upgrade" context behind the modal) -->
@@ -126,7 +127,7 @@
 <!-- Modal Card -->
 <div class="bg-surface-container-lowest w-full max-w-[520px] rounded-xl shadow-[0_10px_40px_rgba(29,29,31,0.06)] relative overflow-hidden flex flex-col p-8">
 <!-- Close Button -->
-<button class="absolute top-6 right-6 text-on-secondary-container hover:text-on-surface transition-colors">
+<button onclick="window.location.href='dashboard.html'" class="absolute top-6 right-6 text-on-secondary-container hover:text-on-surface transition-colors">
 <span class="material-symbols-outlined text-2xl">close</span>
 </button>
 <!-- Top Tag -->
@@ -189,7 +190,7 @@
 <span class="text-[11px] text-on-secondary-container">PDF Export</span>
 </li>
 </ul>
-<button class="w-full py-2.5 rounded-full border border-primary text-primary text-xs font-bold hover:bg-primary/5 transition-all flex items-center justify-center gap-1">
+<button onclick="auth.showPaymentModal()" class="w-full py-2.5 rounded-full border border-primary text-primary text-xs font-bold hover:bg-primary/5 transition-all flex items-center justify-center gap-1">
                         Buy Now <span class="material-symbols-outlined text-xs">arrow_forward</span>
 </button>
 </div>
@@ -225,7 +226,7 @@
 <span class="text-[11px] text-on-surface font-medium">Live Cover Letter Help</span>
 </li>
 </ul>
-<button class="w-full py-2.5 rounded-full bg-primary text-white text-xs font-bold hover:bg-primary-container transition-all flex items-center justify-center gap-1 shadow-md">
+<button onclick="auth.showPaymentModal()" class="w-full py-2.5 rounded-full bg-primary text-white text-xs font-bold hover:bg-primary-container transition-all flex items-center justify-center gap-1 shadow-md">
                         Start Pro <span class="material-symbols-outlined text-xs">arrow_forward</span>
 </button>
 </div>

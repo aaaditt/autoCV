@@ -3,7 +3,7 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Welcome to ResumeAI</title>
+<title>Welcome to AutoCV</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -110,11 +110,12 @@
     }
 </style>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.42.0/dist/umd/supabase.js"></script>
 </head>
 <body class="bg-surface text-on-surface min-h-screen flex flex-col items-center">
 <!-- Top Navigation Suppression: Onboarding flow -->
 <header class="w-full py-8 flex justify-center">
-<h1 class="text-xl font-bold tracking-tighter text-on-surface">ResumeAI</h1>
+<h1 class="text-xl font-bold tracking-tighter text-on-surface">AutoCV</h1>
 </header>
 <main class="max-w-4xl w-full px-6 flex flex-col items-center text-center mt-12 mb-24">
 <!-- Celebration Icon -->
@@ -125,7 +126,7 @@
 </div>
 <!-- Hero Text -->
 <h2 class="text-5xl md:text-[48px] font-extrabold tracking-tight text-on-surface mb-4">
-            You're in, Aadit.
+            You're in.
         </h2>
 <p class="text-lg md:text-[20px] text-on-secondary-container font-medium mb-16 max-w-lg">
             Let's get your first resume optimized. It takes about 60 seconds.
@@ -153,25 +154,25 @@
 </div>
 <!-- Action Section -->
 <div class="flex flex-col items-center gap-6">
-<button class="bg-primary-container text-on-primary-container px-10 py-4 rounded-full font-semibold text-lg flex items-center gap-2 hover:brightness-95 transition-all shadow-md">
+<button onclick="window.location.href='optimize.html'" class="bg-primary-container text-on-primary-container px-10 py-4 rounded-full font-semibold text-lg flex items-center gap-2 hover:brightness-95 transition-all shadow-md">
                 Optimize My First Resume →
             </button>
-<a class="text-primary font-semibold text-sm hover:underline" href="/dashboard">
+<a class="text-primary font-semibold text-sm hover:underline" href="dashboard.html">
                 Or explore your dashboard first →
             </a>
 </div>
 </main>
 <!-- Footer Suppression Logic: Minimalist focused experience -->
 <footer class="mt-auto w-full max-w-7xl px-8 py-12 flex flex-col md:flex-row justify-between items-center border-t border-transparent text-on-secondary-container opacity-40">
-<span class="text-xs font-light">© 2024 ResumeAI. Built with Precision.</span>
+<span class="text-xs font-light">© 2024 AutoCV. Built with Precision.</span>
 <div class="flex gap-6">
 <span class="text-xs font-light">Privacy Policy</span>
 <span class="text-xs font-light">Terms of Service</span>
 </div>
 </footer>
 
-<script src="../static/js/config.js"></script>
-<script src="../static/js/app.js"></script>
+<script src="../static/js/config.js?v=2.1"></script>
+<script src="../static/js/app.js?v=2.1"></script>
 
 <script>
     // Reveal animations on scroll

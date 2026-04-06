@@ -1,16 +1,16 @@
-# ResumeAI — Complete Codebase
+# AutoCV — Complete Codebase
 
 ## Structure
 ```
-resumeai-backend/     → Flask API (deploy to Render)
-resumeai-frontend/    → HTML/CSS/JS (deploy to Vercel)
+autocv-backend/     → Flask API (deploy to Render)
+autocv-frontend/    → HTML/CSS/JS (deploy to Vercel)
 ```
 
 ## Quick Start
 
 ### Backend
 ```bash
-cd resumeai-backend
+cd autocv-backend
 cp .env.example .env        # fill in your keys
 pip install -r requirements.txt
 python app.py               # runs on localhost:5000
@@ -19,7 +19,7 @@ python app.py               # runs on localhost:5000
 ### Frontend
 Open index.html in browser, or:
 ```bash
-cd resumeai-frontend
+cd autocv-frontend
 npx serve .                 # static server on localhost:3000
 ```
 

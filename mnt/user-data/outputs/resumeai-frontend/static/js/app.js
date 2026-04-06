@@ -183,7 +183,7 @@ function renderNav(activePage) {
   return `
     <nav class="nav">
       <div class="nav-inner">
-        <a href="/index.html" class="nav-logo">ResumeAI</a>
+        <a href="/index.html" class="nav-logo">AutoCV</a>
         <div class="nav-links">
           ${pages.map(p => `<a href="${p.href}" class="nav-link${p.label===activePage?' font-medium':''}">${p.label}</a>`).join('')}
           <div class="auth-hide">

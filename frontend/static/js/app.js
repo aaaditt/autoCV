@@ -1,5 +1,5 @@
-// ── Config ──────────────────────────────────────────────
 const API = window.RESUMEAI_API_URL || 'http://localhost:5000/api';
+console.log("ResumeAI App v2.0 Initialized");
 
 // ── API Client ───────────────────────────────────────────
 const api = {
@@ -19,36 +19,273 @@ const api = {
   async get(path) {
     const res = await fetch(`${API}${path}`, { credentials: 'include' });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Request failed');
+    if (!res.ok) throw Error(data.error || 'Request failed');
     return data;
   }
 };
 
+// ── Toast (Global Utility) ──────────────────────────────────
+function toast(msg, type = '') {
+  console.log(`[Toast ${type.toUpperCase()}]: ${msg}`);
+  let c = document.querySelector('.toast-container');
+  if (!c) { 
+    c = document.createElement('div'); 
+    c.className = 'toast-container'; 
+    document.body.appendChild(c); 
+  }
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.textContent = msg;
+  c.appendChild(el);
+  setTimeout(() => { if (el.parentNode) el.remove(); }, 4500);
+}
+window.toast = toast;
+
 // ── Auth ─────────────────────────────────────────────────
 const auth = {
   user: null,
+  supabase: null,
   async init() {
+    const sb = window.supabase || (typeof supabase !== 'undefined' ? supabase : null);
+    if (sb) {
+      if (!window.SUPABASE_URL || !window.SUPABASE_ANON_KEY) {
+        console.error("Supabase configuration missing (URL or Anon Key)");
+        return;
+      }
+      this.supabase = sb.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+      this.setupAuthListener();
+    }
+
+    // Await either local session or backend session
+    await this.refreshUser();
+
+    // Determine if we should redirect
+    const privatePages = ['/pages/dashboard', '/pages/results', '/pages/account'];
+    const path = window.location.pathname;
+    const isPrivate = privatePages.some(p => path.includes(p));
+    const isOptimize = path.includes('/pages/optimize');
+    const isGuest = new URLSearchParams(window.location.search).get('guest') === 'true';
+    const isCallback = window.location.hash.includes('access_token=');
+
+    // Only redirect if it's a private page OR if it's the optimize page WITHOUT guest mode
+    if ((isPrivate || (isOptimize && !isGuest)) && !this.user && !isCallback) {
+        window.location.href = '/pages/login.html';
+    }
+    
+    this._updateUI();
+  },
+
+  setupAuthListener() {
+    this.supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log("Auth Event:", event);
+      if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+        if (session) {
+          try {
+            const res = await api.post('/auth/session', { access_token: session.access_token, user: session.user });
+            this.user = res.user || session.user;
+            this._updateUI();
+            
+            // If we are on a login/home/signup page, go to dashboard
+            const path = window.location.pathname;
+            if (path === '/' || path.includes('login.html') || path.includes('home.html') || path.includes('signup.html')) {
+              window.location.href = '/pages/dashboard.html';
+            }
+          } catch (e) {
+            console.error("Auth session sync failed:", e);
+          }
+        }
+      } else if (event === 'SIGNED_OUT') {
+         this.user = null;
+         this._updateUI();
+      }
+    });
+  },
+
+  async refreshUser() {
     try {
+      // 1. Try Supabase session first (faster)
+      const { data: { session } } = await this.supabase.auth.getSession();
+      if (session) {
+          this.user = session.user;
+          return;
+      }
+      
+      // 2. Try Backend session
       const data = await api.get('/auth/me');
-      if (data.authenticated) { this.user = data.user; this._updateUI(); }
-    } catch {}
+      if (data.authenticated) { 
+          this.user = data.user; 
+      }
+    } catch (e) {
+        console.warn("Could not refresh user session:", e);
+    }
+  },
+  async loginWithGoogle() {
+      if (!this.supabase) {
+        if (!window.SUPABASE_URL || !window.SUPABASE_ANON_KEY) {
+            return toast('Supabase configuration missing (URL or Anon Key) in config.js', 'error');
+        }
+        return toast('Supabase SDK not loaded. Check your internet or script tag.', 'error');
+      }
+      if (this.user) {
+          window.location.href = '/pages/dashboard.html';
+          return;
+      }
+      try {
+        const { error } = await this.supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: { redirectTo: window.location.origin + '/pages/dashboard.html' }
+        });
+        if (error) throw error;
+      } catch (err) {
+        toast(err.message, 'error');
+      }
+  },
+  async loginWithEmail(email, password) {
+      if (!this.supabase) {
+          return toast('Supabase configuration missing (URL or Anon Key) in config.js', 'error');
+      }
+      try {
+          const { data, error } = await this.supabase.auth.signInWithPassword({
+              email,
+              password,
+          });
+          if (error) throw error;
+          return data;
+      } catch (err) {
+          toast(err.message, 'error');
+          throw err;
+      }
+  },
+  async signupWithEmail(email, password) {
+      if (!this.supabase) {
+          return toast('Supabase configuration missing (URL or Anon Key) in config.js', 'error');
+      }
+      try {
+          const { data, error } = await this.supabase.auth.signUp({
+              email,
+              password,
+              options: {
+                  emailRedirectTo: window.location.origin + '/pages/login.html'
+              }
+          });
+          if (error) throw error;
+          return data;
+      } catch (err) {
+          toast(err.message, 'error');
+          throw err;
+      }
   },
   async logout() {
+    if (this.supabase) {
+        await this.supabase.auth.signOut();
+    }
     await api.post('/auth/logout', {});
     this.user = null;
     window.location.href = '/';
   },
   _updateUI() {
-    const nameEl = document.getElementById('nav-user');
-    if (nameEl && this.user) nameEl.textContent = this.user.name?.split(' ')[0] || this.user.email;
-    const avatarEl = document.getElementById('nav-avatar');
-    if (avatarEl && this.user) avatarEl.textContent = (this.user.name || this.user.email || 'U')[0].toUpperCase();
-    document.querySelectorAll('.auth-show').forEach(el => el.classList.remove('hidden'));
-    document.querySelectorAll('.auth-hide').forEach(el => el.classList.add('hidden'));
+    const isLoggedIn = !!this.user;
+    
+    // Toggle Visibility
+    document.querySelectorAll('.auth-show').forEach(el => {
+        if (isLoggedIn) el.classList.remove('hidden');
+        else el.classList.add('hidden');
+    });
+    document.querySelectorAll('.auth-hide').forEach(el => {
+        if (isLoggedIn) el.classList.add('hidden');
+        else el.classList.remove('hidden');
+    });
+
+    if (!isLoggedIn) return;
+    
+    // Update Sidebar/Topnav Avatar
+    document.querySelectorAll('#nav-avatar').forEach(el => {
+        el.textContent = (this.user.user_metadata?.full_name || this.user.email || 'U')[0].toUpperCase();
+    });
+    
+    // Update Dashboard Welcome Name
+    const nameEl = document.querySelector('h1');
+    if (nameEl && nameEl.innerText.includes('Good morning')) {
+        const fullName = this.user.user_metadata?.full_name || this.user.email.split('@')[0];
+        nameEl.innerHTML = `Good morning, ${fullName.split(' ')[0]} 👋`;
+    }
   },
   requireAuth() {
     if (!this.user) { window.location.href = '/?login=true'; return false; }
     return true;
+  },
+  showPaymentModal(plan = 'Free', price = '0') {
+    const isFree = plan === 'Free';
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-page';
+    modal.innerHTML = `
+      <div class="bg-white rounded-3xl max-w-xl w-full p-8 md:p-12 shadow-2xl relative overflow-hidden">
+          <button id="close-modal" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600">
+              <span class="material-symbols-outlined">close</span>
+          </button>
+          <div class="relative z-10">
+              <div class="text-center mb-8">
+                  <div class="w-16 h-16 ${isFree ? 'bg-green-100 text-green-600' : 'bg-primary-container/10 text-primary'} rounded-full flex items-center justify-center mx-auto mb-4">
+                      <span class="material-symbols-outlined text-3xl">${isFree ? 'rocket_launch' : 'payments'}</span>
+                  </div>
+                  <h2 class="text-2xl font-bold text-slate-900">${isFree ? 'Start Building Today' : 'Upgrade to ' + plan}</h2>
+                  <p class="text-slate-500 mt-2">${isFree ? 'Explore AutoCV with your first free optimization.' : 'Join 10,000+ job seekers who landed interviews.'}</p>
+              </div>
+
+              ${!isFree ? `
+              <div class="space-y-6 bg-slate-50 p-6 rounded-2xl mb-8 border border-slate-100">
+                  <div class="flex justify-between items-baseline border-b border-slate-200 pb-4">
+                      <span class="font-semibold text-slate-600 italic">Plan Selection: ${plan}</span>
+                      <div class="text-right">
+                          <span class="text-3xl font-black text-primary">${price}</span>
+                          <span class="text-slate-400 text-sm ml-1">${plan === 'Pro' ? '/mo' : ''}</span>
+                      </div>
+                  </div>
+
+                  <div class="space-y-4 pt-2">
+                      <div class="flex items-start gap-3">
+                          <span class="w-6 h-6 rounded-full bg-primary text-white text-[10px] items-center justify-center flex shrink-0 mt-1">1</span>
+                          <p class="text-sm text-slate-700"><strong>PayPal:</strong> aaditchandra2212@gmail.com</p>
+                      </div>
+                      <div class="flex items-start gap-3">
+                          <span class="w-6 h-6 rounded-full bg-primary text-white text-[10px] items-center justify-center flex shrink-0 mt-1">2</span>
+                          <p class="text-sm text-slate-700"><strong>Bank Transfer:</strong> Message on LinkedIn for details</p>
+                      </div>
+                      <div class="flex items-start gap-3">
+                          <span class="w-6 h-6 rounded-full bg-primary text-white text-[10px] items-center justify-center flex shrink-0 mt-1">3</span>
+                          <p class="text-sm text-slate-700"><strong>Process:</strong> Send payment & email confirmation to <strong>aaditchandra2212@gmail.com</strong>.</p>
+                      </div>
+                  </div>
+              </div>
+
+              <a href="mailto:work.aadit@gmail.com?subject=AutoCV - Plan Upgrade (${plan})&body=Hi Aadit, I've sent the payment for the ${plan} plan. My email associated with the account is: " 
+                 class="w-full bg-primary text-white py-4 rounded-full font-bold text-center block hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-primary/20 mb-4">
+                  Verify Payment & Proceed
+              </a>
+              ` : `
+              <div class="grid grid-cols-2 gap-4 mb-8">
+                  <button id="skip-to-login" class="py-4 rounded-full bg-slate-100 text-slate-600 font-bold hover:bg-slate-200 transition-colors">Skip for now</button>
+                  <button id="go-to-login" class="py-4 rounded-full bg-primary text-white font-bold hover:opacity-90 shadow-lg shadow-primary/20 transition-all">Get Started Free</button>
+              </div>
+              `}
+              
+              <p class="text-center text-[10px] uppercase tracking-widest text-slate-400 mt-2">Questions? LinkedIn: linkedin.com/in/aadit-chandra</p>
+          </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    
+    document.getElementById('close-modal').onclick = () => modal.remove();
+    if (isFree) {
+        document.getElementById('skip-to-login').onclick = () => {
+            modal.remove();
+            window.location.href = '/pages/optimize.html?guest=true';
+        };
+        document.getElementById('go-to-login').onclick = () => {
+            modal.remove();
+            this.loginWithGoogle();
+        };
+    }
   }
 };
 
@@ -98,16 +335,12 @@ function showSkeleton(id) {
     </div>`;
 }
 
-// ── Toast ────────────────────────────────────────────────
-function toast(msg, type = '') {
-  let c = document.querySelector('.toast-container');
-  if (!c) { c = document.createElement('div'); c.className = 'toast-container'; document.body.appendChild(c); }
-  const el = document.createElement('div');
-  el.className = `toast ${type}`;
-  el.textContent = msg;
-  c.appendChild(el);
-  setTimeout(() => el.remove(), 3500);
+// ── Utilities ─────────────────────────────────────────────
+function esc(s) { 
+  if (!s) return '';
+  return s.toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); 
 }
+window.esc = esc;
 
 // ── Dropzone ─────────────────────────────────────────────
 function setupDropzone(zoneId, inputId, onFile) {
@@ -171,7 +404,7 @@ function generateDiff(original, optimized) {
   return html;
 }
 
-function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+// diff used to be here
 
 // ── Shared nav HTML ──────────────────────────────────────
 function renderNav(activePage) {
@@ -183,7 +416,7 @@ function renderNav(activePage) {
   return `
     <nav class="nav">
       <div class="nav-inner">
-        <a href="/index.html" class="nav-logo">ResumeAI</a>
+        <a href="/home.html" class="nav-logo">AutoCV</a>
         <div class="nav-links">
           ${pages.map(p => `<a href="${p.href}" class="nav-link${p.label===activePage?' font-medium':''}">${p.label}</a>`).join('')}
           <div class="auth-hide">
@@ -197,4 +430,11 @@ function renderNav(activePage) {
     </nav>`;
 }
 
-document.addEventListener('DOMContentLoaded', () => { auth.init(); });
+// Initialize
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => { auth.init(); });
+} else {
+    auth.init();
+}
+
+window.auth = auth;

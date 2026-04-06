@@ -103,16 +103,17 @@
     }
 </style>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-surface text-on-surface antialiased">
 <!-- TopNavBar -->
 <nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl">
 <div class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
-<div class="text-xl font-semibold tracking-tighter text-slate-900">ResumeAI</div>
+<div class="text-xl font-semibold tracking-tighter text-slate-900">AutoCV</div>
 <div class="hidden md:flex gap-8 items-center">
-<a class="font-sans tracking-tight text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors duration-200" href="index.html#features">Features</a>
+<a class="font-sans tracking-tight text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors duration-200" href="../home.html#features">Features</a>
 <a class="font-sans tracking-tight text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors duration-200" href="pricing.html">Pricing</a>
-<a class="font-sans tracking-tight text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors duration-200" href="index.html#about">About</a>
+<a class="font-sans tracking-tight text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors duration-200" href="../home.html#about">About</a>
 <div class="h-4 w-px bg-surface-container"></div>
 <button class="font-sans tracking-tight text-sm font-medium text-blue-600 hover:opacity-80">Sign In</button>
 <button class="bg-primary-container text-on-primary-container px-5 py-2 rounded-full font-sans tracking-tight text-sm font-medium hover:opacity-90 transition-all scale-95 duration-150 ease-in-out">Get Started</button>
@@ -123,28 +124,28 @@
 <!-- SideNavBar -->
 <aside class="h-[calc(100vh-64px)] w-64 border-r border-slate-100 bg-slate-50 sticky top-16 hidden md:flex flex-col p-4 gap-2">
 <div class="px-4 py-6 mb-2">
-<div class="text-lg font-bold text-slate-900">ResumeAI</div>
+<div class="text-lg font-bold text-slate-900">AutoCV</div>
 <div class="text-xs text-on-secondary-container font-medium uppercase tracking-wider">Pro Plan</div>
 </div>
 <nav class="flex-1 flex flex-col gap-1">
-<a class="flex items-center gap-3 text-slate-500 px-4 py-2 hover:bg-slate-100 transition-all font-sans text-sm font-medium" href="#">
+<a class="flex items-center gap-3 text-slate-500 px-4 py-2 hover:bg-slate-100 transition-all font-sans text-sm font-medium" href="dashboard.html">
 <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
                     Dashboard
                 </a>
-<a class="flex items-center gap-3 text-slate-500 px-4 py-2 hover:bg-slate-100 transition-all font-sans text-sm font-medium" href="#">
+<a class="flex items-center gap-3 text-slate-500 px-4 py-2 hover:bg-slate-100 transition-all font-sans text-sm font-medium" href="optimize.html">
 <span class="material-symbols-outlined" data-icon="description">description</span>
                     Resumes
                 </a>
-<a class="flex items-center gap-3 text-slate-500 px-4 py-2 hover:bg-slate-100 transition-all font-sans text-sm font-medium" href="#">
+<a class="flex items-center gap-3 text-slate-500 px-4 py-2 hover:bg-slate-100 transition-all font-sans text-sm font-medium" href="history.html">
 <span class="material-symbols-outlined" data-icon="analytics">analytics</span>
-                    Analysis
+                    History
                 </a>
 <!-- Active Item: Settings/Account -->
 <a class="flex items-center gap-3 bg-white text-blue-600 shadow-sm rounded-lg px-4 py-2 font-sans text-sm font-semibold border-l-4 border-primary" href="#">
 <span class="material-symbols-outlined text-blue-600" data-icon="settings">settings</span>
                     Settings
                 </a>
-<a class="flex items-center gap-3 text-slate-500 px-4 py-2 hover:bg-slate-100 transition-all font-sans text-sm font-medium" href="#">
+<a class="flex items-center gap-3 text-slate-500 px-4 py-2 hover:bg-slate-100 transition-all font-sans text-sm font-medium" href="mailto:support@autocv.co">
 <span class="material-symbols-outlined" data-icon="help">help</span>
                     Help
                 </a>
@@ -259,12 +260,12 @@
 <!-- Footer -->
 <footer class="w-full py-12 bg-white border-t border-slate-100">
 <div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-<p class="text-xs font-light text-slate-400">© 2024 ResumeAI. Built with Precision.</p>
+<p class="text-xs font-light text-slate-400">© 2024 AutoCV. Built with Precision.</p>
 <div class="flex gap-6">
 <a class="text-xs font-light text-slate-400 hover:underline" href="privacy.html">Privacy Policy</a>
 <a class="text-xs font-light text-slate-400 hover:underline" href="terms.html">Terms of Service</a>
 <a class="text-xs font-light text-slate-400 hover:underline" href="privacy.html">Cookie Policy</a>
-<a class="text-xs font-light text-slate-400 hover:underline" href="mailto:support@resumeai.co">Support</a>
+<a class="text-xs font-light text-slate-400 hover:underline" href="mailto:support@autocv.co">Support</a>
 </div>
 </div>
 </footer>

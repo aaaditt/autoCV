@@ -1,4 +1,4 @@
-# ResumeAI — Deploy Guide
+# AutoCV — Deploy Guide
 # Estimated time: 45 minutes
 
 ## ─── STEP 1: Supabase Setup (10 min) ───────────────────
@@ -14,10 +14,10 @@
 
 1. Go to https://stripe.com → Dashboard
 2. Create two products:
-   Product 1: "ResumeAI Single"
+   Product 1: "AutoCV Single"
      → Price: $19.00 USD, one-time
      → Copy the Price ID → paste into .env as STRIPE_PRICE_SINGLE
-   Product 2: "ResumeAI Pro"
+   Product 2: "AutoCV Pro"
      → Price: $29.00 USD, recurring monthly
      → Copy the Price ID → paste into .env as STRIPE_PRICE_PRO
 3. Get your Secret Key (sk_live_...) → STRIPE_SECRET_KEY
@@ -41,7 +41,7 @@
    SUPABASE_URL        → https://xxx.supabase.co
    SUPABASE_SERVICE_KEY→ eyJ...
    FRONTEND_URL        → (set after Step 4)
-6. Deploy → note your URL: https://resumeai-backend.onrender.com
+6. Deploy → note your URL: https://autocv-backend.onrender.com
 
 ## ─── STEP 4: Deploy Frontend to Vercel (10 min) ─────────
 
@@ -50,26 +50,26 @@
 3. Framework: Other (plain HTML)
 4. Root directory: frontend/
 5. No build command needed
-6. Deploy → note your URL: https://resumeai.vercel.app
+6. Deploy → note your URL: https://autocv.vercel.app
 
 ## ─── STEP 5: Wire everything together (5 min) ───────────
 
 1. Update frontend/static/js/config.js:
-   window.RESUMEAI_API_URL = 'https://resumeai-backend.onrender.com/api';
+   window.RESUMEAI_API_URL = 'https://autocv-backend.onrender.com/api';
 
 2. In Render dashboard → update FRONTEND_URL env var:
-   https://resumeai.vercel.app
+   https://autocv.vercel.app
 
 3. In Stripe Dashboard → Webhooks → Add endpoint:
-   URL: https://resumeai-backend.onrender.com/api/webhook
+   URL: https://autocv-backend.onrender.com/api/webhook
    Events to listen for:
      - checkout.session.completed
      - customer.subscription.deleted
    Copy the Webhook Signing Secret → add as STRIPE_WEBHOOK_SECRET in Render
 
 4. In Supabase → Authentication → URL Configuration:
-   Site URL: https://resumeai.vercel.app
-   Redirect URLs: https://resumeai.vercel.app/*
+   Site URL: https://autocv.vercel.app
+   Redirect URLs: https://autocv.vercel.app/*
 
 ## ─── STEP 6: Test the full flow ─────────────────────────
 

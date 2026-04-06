@@ -27,8 +27,9 @@ def analyze():
         if not file.filename:
             return jsonify({"error": "No file selected"}), 400
 
-        if not jd_text or len(jd_text) < 50:
-            return jsonify({"error": "Job description too short. Please paste the full job description."}), 400
+        if not jd_text or len(jd_text) < 2:
+            # Handle empty/minimal JD
+            jd_text = ""
 
         # Read and validate file
         file_bytes = file.read()
@@ -48,6 +49,10 @@ def analyze():
         from flask import session
         session["resume_text"] = resume_text
         session["jd_text"] = jd_text
+
+        session["analyses_used"] = session.get("analyses_used", 0) + 1
+        if session["analyses_used"] > 3:
+            return jsonify({"error": "Limit reached", "code": "LIMIT_REACHED"}), 402
 
         return jsonify({
             "success": True,

@@ -5,7 +5,7 @@ Calls Claude API. ONLY accessible after Stripe payment confirmed.
 from flask import Blueprint, request, jsonify, session, current_app
 from services.claude_service import optimize_resume
 from services.keyword_service import get_full_analysis
-from utils.auth import require_paid_session
+from routes.auth import require_paid_session
 
 optimize_bp = Blueprint("optimize", __name__)
 
@@ -18,15 +18,8 @@ def optimize():
     Returns: optimized resume text + before/after scores
     """
     try:
-        # Gate: must have paid
-        payment_verified = session.get("payment_verified")
-        optimization_id = session.get("optimization_id")
-
-        if not payment_verified or not optimization_id:
-            return jsonify({
-                "error": "Payment required",
-                "code": "PAYMENT_REQUIRED"
-            }), 402
+        # Gate: removed Stripe payment check for manual flow
+        optimization_id = "manual-opt-launch-today"
 
         # Get resume data from session (set during /analyze)
         resume_text = session.get("resume_text")

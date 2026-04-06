@@ -109,6 +109,7 @@
     }
 </style>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-surface text-on-surface antialiased">
 <!-- Top Success Banner -->
@@ -119,7 +120,7 @@
 <!-- TopNavBar (Shared Component) -->
 <nav class="fixed top-12 w-full z-50 glass-nav bg-white/70 dark:bg-slate-900/70 shadow-[0_10px_40px_rgba(29,29,31,0.06)] h-16 transition-opacity duration-200 ease-in-out">
 <div class="flex justify-between items-center px-8 h-full max-w-[1440px] mx-auto">
-<div class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">ResumeAI</div>
+<div class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">AutoCV</div>
 <div class="flex items-center gap-8">
 <a class="text-slate-600 dark:text-slate-400 hover:opacity-80 transition-opacity font-medium" href="pricing.html">Pricing</a>
 <div class="flex items-center gap-4">
@@ -244,11 +245,11 @@
 <div class="fixed bottom-0 left-0 w-full z-50 glass-nav bg-white/80 dark:bg-slate-900/80 shadow-2xl border-t border-slate-200/15">
 <div class="flex justify-between items-center py-5 px-10 max-w-[1440px] mx-auto">
 <div class="flex items-center gap-4">
-<button class="bg-blue-600 text-white rounded-full px-8 py-3 flex items-center gap-2 font-bold uppercase tracking-wider text-xs hover:brightness-110 active:scale-95 transition-transform">
+<button id="download-pdf-btn" class="bg-blue-600 text-white rounded-full px-8 py-3 flex items-center gap-2 font-bold uppercase tracking-wider text-xs hover:brightness-110 active:scale-95 transition-transform">
 <span class="material-symbols-outlined text-lg" data-icon="download">download</span>
                     Download PDF
                 </button>
-<button class="bg-surface-container-high text-primary rounded-full px-8 py-3 flex items-center gap-2 font-bold uppercase tracking-wider text-xs hover:brightness-105 active:scale-95 transition-transform">
+<button id="download-docx-btn" class="bg-surface-container-high text-primary rounded-full px-8 py-3 flex items-center gap-2 font-bold uppercase tracking-wider text-xs hover:brightness-105 active:scale-95 transition-transform">
 <span class="material-symbols-outlined text-lg" data-icon="description">description</span>
                     Download DOCX
                 </button>
@@ -262,12 +263,12 @@
 <!-- Footer (Shared Component) -->
 <footer class="w-full py-12 border-t border-slate-100 dark:border-slate-900 bg-white dark:bg-slate-950">
 <div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-<div class="text-xs font-['Inter'] text-slate-400">© 2024 ResumeAI. All rights reserved.</div>
+<div class="text-xs font-['Inter'] text-slate-400">© 2024 AutoCV. All rights reserved.</div>
 <div class="flex gap-8">
 <a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="privacy.html">Privacy</a>
 <a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="terms.html">Terms</a>
-<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="mailto:support@resumeai.co">Support</a>
-<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="mailto:support@resumeai.co">Contact</a>
+<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="mailto:support@autocv.co">Support</a>
+<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="mailto:support@autocv.co">Contact</a>
 </div>
 </div>
 </footer>
@@ -296,6 +297,34 @@
             observer.observe(el);
         });
     });
+</script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+      const resultStr = sessionStorage.getItem('opt_result');
+      if (!resultStr) {
+          toast('No recent optimization found.', 'error');
+          return;
+      }
+      const data = JSON.parse(resultStr);
+
+      // Update Scores and Content
+      const scoreEl = document.querySelector('.text-3xl.md\\:text-4xl.font-extrabold');
+      if (scoreEl) scoreEl.textContent = `${data.optimized_score}%`;
+      
+      const improvementEl = document.querySelector('.bg-tertiary\\/10.text-tertiary');
+      if (improvementEl) improvementEl.innerHTML = `<span class="material-symbols-outlined text-lg">trending_up</span> +${data.score_improvement} point improvement`;
+
+      // Manual Payment Implementation
+      const handleDownloadClick = () => auth.showPaymentModal();
+
+      const downloadPdfBtn = document.getElementById('download-pdf-btn');
+      const downloadDocxBtn = document.getElementById('download-docx-btn');
+
+      if (downloadPdfBtn) downloadPdfBtn.addEventListener('click', handleDownloadClick);
+      if (downloadDocxBtn) downloadDocxBtn.addEventListener('click', handleDownloadClick);
+  });
 </script>
 
 </body>

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#008633",
+                    "on-secondary": "#ffffff",
+                    "outline": "#717785",
+                    "surface-variant": "#e3e2e7",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#e9e7ed",
+                    "primary-fixed-dim": "#abc7ff",
+                    "secondary": "#5f5e60",
+                    "on-primary-fixed": "#001b3f",
+                    "on-secondary-container": "#636264",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed-variant": "#00458f",
+                    "primary-container": "#0071e3",
+                    "outline-variant": "#c1c6d6",
+                    "inverse-surface": "#2f3034",
+                    "inverse-primary": "#abc7ff",
+                    "on-secondary-fixed-variant": "#474649",
+                    "tertiary": "#006a26",
+                    "on-tertiary-fixed-variant": "#00531c",
+                    "on-tertiary-fixed": "#002107",
+                    "surface-container-low": "#f4f3f8",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed": "#d7e2ff",
+                    "on-error": "#ffffff",
+                    "surface-container": "#efedf3",
+                    "surface": "#faf8fe",
+                    "secondary-fixed": "#e4e2e4",
+                    "background": "#faf8fe",
+                    "surface-tint": "#005cbb",
+                    "surface-bright": "#faf8fe",
+                    "on-primary-container": "#fcfbff",
+                    "inverse-on-surface": "#f1f0f6",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#53e16f",
+                    "on-secondary-fixed": "#1b1b1d",
+                    "surface-dim": "#dbd9df",
+                    "secondary-fixed-dim": "#c8c6c8",
+                    "on-tertiary-container": "#f1ffec",
+                    "tertiary-fixed": "#72fe88",
+                    "surface-container-highest": "#e3e2e7",
+                    "on-surface": "#1a1b1f",
+                    "on-surface-variant": "#414753",
+                    "primary": "#0059b5",
+                    "surface-container-lowest": "#ffffff",
+                    "on-background": "#1a1b1f",
+                    "secondary-container": "#e2dfe1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .editorial-max-width {
+            max-width: 980px;
+        }
+    </style>
+
+<style>
+    /* Global Premium Animations */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes reveal {
+        0% { transform: translateY(20px) scale(0.95); opacity: 0; }
+        100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    
+    .animate-reveal {
+        animation: reveal 1s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+    }
+    
+    /* Staggered utility */
+    .stagger-1 { animation-delay: 0.1s; }
+    .stagger-2 { animation-delay: 0.2s; }
+    .stagger-3 { animation-delay: 0.3s; }
+    .stagger-4 { animation-delay: 0.4s; }
+
+    /* Button Enhancements */
+    button, .btn, a[class*="bg-primary"] {
+        transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1) !important;
+        position: relative;
+        overflow: hidden;
+    }
+    button:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 89, 181, 0.15);
+    }
+    button:active {
+        transform: translateY(-2px) scale(0.98);
+    }
+    
+    /* Card Interactions */
+    .card-zoom {
+        transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+    .card-zoom:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 40px 80px rgba(0,0,0,0.06);
+        border-color: rgba(0, 89, 181, 0.1);
+    }
+
+    /* FAQ Item Interaction */
+    .faq-item {
+        transition: all 0.3s ease;
+    }
+    .faq-item:hover {
+        background-color: #ffffff;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    }
+
+    /* Ambient Glow */
+    .ambient-glow {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        top: 0; left: 0;
+        background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 89, 181, 0.03), transparent 80%);
+        pointer-events: none;
+        z-index: 0;
+    }
+</style>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.42.0/dist/umd/supabase.js"></script>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+<div class="ambient-glow"></div>
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-[0_10px_40px_rgba(29,29,31,0.06)]">
+<nav class="flex justify-between items-center px-8 h-16 max-w-[1440px] mx-auto font-['Inter'] antialiased">
+<a href="/home.html" class="text-xl font-bold tracking-tight text-slate-900 hover:opacity-80 transition-opacity">AutoCV</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-slate-600 hover:opacity-80 transition-opacity" href="pages/pricing.html">Pricing</a>
+<div class="auth-hide flex items-center gap-8">
+    <a class="text-slate-600 hover:opacity-80 transition-opacity" href="pages/login.html">Login</a>
+    <a class="text-slate-600 hover:opacity-80 transition-opacity" href="pages/signup.html">Create Account</a>
+    <button onclick="auth.loginWithGoogle()" class="bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-semibold hover:opacity-80 transition-opacity">Get Started</button>
+</div>
+<div class="auth-show hidden flex items-center gap-4">
+    <a href="pages/dashboard.html" class="bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-semibold hover:opacity-80 transition-opacity">Go to Dashboard</a>
+    <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold" id="nav-avatar">U</div>
+</div>
+</div>
+</nav>
+</header>
+<main class="pt-16">
+<!-- Hero Section -->
+<section class="py-24 md:py-32 flex flex-col items-center text-center px-6">
+<div class="editorial-max-width">
+<span class="inline-block px-4 py-1.5 rounded-full bg-primary-container/10 text-primary-container text-sm font-semibold tracking-wide mb-8">
+                    AI-Powered Resume Optimization
+                </span>
+<h1 class="text-5xl md:text-[64px] font-extrabold tracking-tight leading-[1.1] text-on-surface mb-8">
+                    Beat the ATS. <br/>Land the Interview.
+                </h1>
+<p class="text-xl md:text-[21px] text-on-secondary-container leading-relaxed mb-12 max-w-2xl mx-auto">
+                    Your resume is the first impression. Our AI ensures it's perfect by tailoring every bullet point to the exact job description in seconds.
+                </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+<button onclick="auth.loginWithGoogle()" class="flex items-center gap-3 bg-on-surface text-surface px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:opacity-90 transition-all active:scale-95">
+<svg class="w-5 h-5" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="currentColor"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="currentColor"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="currentColor"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="currentColor"></path>
+</svg>
+                        Continue with Google
+                    </button>
+</div>
+<!-- Social Proof -->
+<div class="pt-12 border-t border-outline-variant/15">
+<p class="text-sm font-medium text-on-secondary-container mb-8 uppercase tracking-widest">Trusted by candidates at</p>
+<div class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-40 grayscale">
+<span class="text-xl font-bold tracking-tighter">APPLE</span>
+<span class="text-xl font-bold tracking-tighter">GOOGLE</span>
+<span class="text-xl font-bold tracking-tighter">META</span>
+<span class="text-xl font-bold tracking-tighter">NETFLIX</span>
+<span class="text-xl font-bold tracking-tighter">STRIPE</span>
+</div>
+</div>
+</div>
+</section>
+<!-- How It Works Section -->
+<section class="py-24 bg-surface-container-low">
+<div class="editorial-max-width mx-auto px-8">
+<div class="text-center mb-20">
+<h2 class="text-4xl font-bold tracking-tight mb-4 text-on-surface">Precision in three steps.</h2>
+<div class="w-16 h-1 bg-primary mx-auto rounded-full"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<div class="flex flex-col items-center text-center group">
+<div class="w-16 h-16 rounded-full bg-white flex items-center justify-center text-2xl font-bold text-primary shadow-sm mb-6 transition-transform group-hover:scale-110">1</div>
+<h3 class="text-xl font-bold mb-3 text-on-surface">Upload Resume</h3>
+<p class="text-on-secondary-container leading-relaxed">Drop your current PDF or Word doc. Our AI parses every skill and experience instantly.</p>
+</div>
+<div class="flex flex-col items-center text-center group">
+<div class="w-16 h-16 rounded-full bg-white flex items-center justify-center text-2xl font-bold text-primary shadow-sm mb-6 transition-transform group-hover:scale-110">2</div>
+<h3 class="text-xl font-bold mb-3 text-on-surface">Target Job</h3>
+<p class="text-on-secondary-container leading-relaxed">Paste the job description. We identify the exact keywords and metrics recruiters look for.</p>
+</div>
+<div class="flex flex-col items-center text-center group">
+<div class="w-16 h-16 rounded-full bg-white flex items-center justify-center text-2xl font-bold text-primary shadow-sm mb-6 transition-transform group-hover:scale-110">3</div>
+<h3 class="text-xl font-bold mb-3 text-on-surface">Optimize</h3>
+<p class="text-on-secondary-container leading-relaxed">Get a tailored version with a high ATS score. Download and apply with total confidence.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Pricing Preview -->
+<section class="py-24">
+<div class="editorial-max-width mx-auto px-8">
+<div class="text-center mb-16">
+<h2 class="text-4xl font-bold tracking-tight text-on-surface">Choose your advantage.</h2>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+<!-- Free Card -->
+<div class="p-8 bg-surface-container-lowest rounded-2xl border border-outline-variant/30 flex flex-col">
+<div class="mb-8">
+<h3 class="text-xl font-bold mb-2">Free</h3>
+<div class="flex items-baseline gap-1">
+<span class="text-4xl font-bold">$0</span>
+<span class="text-on-secondary-container">/month</span>
+</div>
+</div>
+<ul class="space-y-4 mb-12 flex-grow">
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                                1 Resume Upload
+                            </li>
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                                Basic ATS Analysis
+                            </li>
+<li class="flex items-center gap-3 text-sm opacity-40">
+<span class="material-symbols-outlined text-lg">cancel</span>
+                                AI Bullet Point Rewrite
+                            </li>
+</ul>
+<button onclick="auth.showPaymentModal('Free', '0')" class="w-full py-4 rounded-full border border-primary text-primary font-semibold hover:bg-primary/5 transition-colors">Get Started</button>
+</div>
+<!-- Single Card (Most Popular) -->
+<div class="p-8 bg-primary-container text-white rounded-2xl shadow-2xl flex flex-col relative transform lg:-translate-y-4">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-on-surface text-surface text-[10px] font-black tracking-[0.2em] px-4 py-1.5 rounded-full uppercase">MOST POPULAR</div>
+<div class="mb-8">
+<h3 class="text-xl font-bold mb-2">Single Job</h3>
+<div class="flex items-baseline gap-1">
+<span class="text-4xl font-bold">$12</span>
+<span class="opacity-80">/once</span>
+</div>
+</div>
+<ul class="space-y-4 mb-12 flex-grow">
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-white text-lg">check_circle</span>
+                                1 Optimized Resume
+                            </li>
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-white text-lg">check_circle</span>
+                                AI Bullet Optimization
+                            </li>
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-white text-lg">check_circle</span>
+                                Cover Letter Generator
+                            </li>
+</ul>
+<button onclick="auth.showPaymentModal('Single Job', '$12')" class="w-full py-4 rounded-full bg-white text-primary-container font-bold shadow-md hover:scale-[1.02] transition-transform">Buy Now</button>
+</div>
+<!-- Pro Card -->
+<div class="p-8 bg-surface-container-lowest rounded-2xl border border-outline-variant/30 flex flex-col">
+<div class="mb-8">
+<h3 class="text-xl font-bold mb-2">Pro Plan</h3>
+<div class="flex items-baseline gap-1">
+<span class="text-4xl font-bold">$29</span>
+<span class="text-on-secondary-container">/month</span>
+</div>
+</div>
+<ul class="space-y-4 mb-12 flex-grow">
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                                Unlimited Optimizations
+                            </li>
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                                Multi-Job Tracking
+                            </li>
+<li class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                                Interview Prep Assistant
+                            </li>
+</ul>
+<button onclick="auth.showPaymentModal('Pro Plan', '$29')" class="w-full py-4 rounded-full border border-primary text-primary font-semibold hover:bg-primary/5 transition-colors">Start Trial</button>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="py-24 bg-surface-container-low">
+<div class="editorial-max-width mx-auto px-8">
+<div class="text-center mb-16">
+<h2 class="text-4xl font-bold tracking-tight text-on-surface">Common Questions.</h2>
+</div>
+<div class="space-y-4">
+<div class="faq-item bg-surface-container-lowest rounded-[20px] p-7 shadow-sm cursor-pointer border border-transparent hover:border-primary/20 transition-all">
+<button class="flex justify-between items-center w-full text-left font-bold text-[18px] text-on-surface">
+<span>How does the AI know what recruiters want?</span>
+<span class="material-symbols-outlined transition-transform duration-300">expand_more</span>
+</button>
+<div class="faq-answer mt-5 text-on-secondary-container text-[15px] leading-relaxed hidden">
+                            Our models are trained on over 50,000 successful job applications and actual recruiter feedback across 15+ industries.
+                        </div>
+</div>
+<div class="faq-item bg-surface-container-lowest rounded-[20px] p-7 shadow-sm cursor-pointer border border-transparent hover:border-primary/20 transition-all">
+<button class="flex justify-between items-center w-full text-left font-bold text-[18px] text-on-surface">
+<span>Is my data private and secure?</span>
+<span class="material-symbols-outlined transition-transform duration-300">expand_more</span>
+</button>
+<div class="faq-answer mt-5 text-on-secondary-container text-[15px] leading-relaxed hidden">
+                            Absolutely. We encrypt all data and never sell your personal information or resumes to third parties.
+                        </div>
+</div>
+<div class="faq-item bg-surface-container-lowest rounded-[20px] p-7 shadow-sm cursor-pointer border border-transparent hover:border-primary/20 transition-all">
+<button class="flex justify-between items-center w-full text-left font-bold text-[18px] text-on-surface">
+<span>Can I cancel my Pro subscription at any time?</span>
+<span class="material-symbols-outlined transition-transform duration-300">expand_more</span>
+</button>
+<div class="faq-answer mt-5 text-on-secondary-container text-[15px] leading-relaxed hidden">
+                            Yes, there are no long-term contracts. You can cancel your monthly subscription with a single click in your settings.
+                        </div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA Section -->
+<section class="py-24 flex flex-col items-center">
+<div class="editorial-max-width w-full bg-primary-container rounded-[2.5rem] p-12 md:p-20 text-center text-white relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-primary to-primary-container opacity-50"></div>
+<div class="relative z-10">
+<h2 class="text-4xl md:text-5xl font-black mb-8 leading-tight">Ready to double your <br/>interview rate?</h2>
+<button onclick="auth.loginWithGoogle()" class="bg-white text-primary-container px-10 py-5 rounded-full font-bold text-lg shadow-xl hover:scale-105 active:scale-95 transition-all">
+                        Optimize My Resume Now
+                    </button>
+<p class="mt-6 text-primary-fixed text-sm font-medium">Join 10,000+ successful job seekers.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 border-t border-slate-100 bg-white">
+<div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex items-center gap-2">
+<span class="text-slate-900 font-bold">AutoCV</span>
+<span class="text-slate-400 text-xs">© 2024 AutoCV. All rights reserved.</span>
+</div>
+<div class="flex gap-8">
+<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="pages/privacy.html">Privacy</a>
+<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="pages/terms.html">Terms</a>
+<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="mailto:support@autocv.co">Support</a>
+<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="mailto:support@autocv.co">Contact</a>
+</div>
+</div>
+</footer>
+
+<script src="./static/js/config.js?v=2.1"></script>
+<script src="./static/js/app.js?v=2.1"></script>
+
+<script>
+    // Reveal animations on scroll
+    document.addEventListener("DOMContentLoaded", () => {
+        // Tracker for Mouse Glow
+        document.addEventListener('mousemove', e => {
+            document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+            document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-reveal');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section, .animate-on-scroll, .faq-item, .grid > div').forEach(el => {
+            el.style.opacity = '0';
+            observer.observe(el);
+        });
+    });
+</script>
+
+
+        <script>
+        // FAQ Accordion Logic
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const answer = item.querySelector('.faq-answer');
+                const icon = item.querySelector('.material-symbols-outlined');
+                const isOpen = !answer.classList.contains('hidden');
+                
+                // Close all others
+                document.querySelectorAll('.faq-answer').forEach(a => a.classList.add('hidden'));
+                document.querySelectorAll('.faq-item .material-symbols-outlined').forEach(i => i.style.transform = 'rotate(0deg)');
+                
+                if (!isOpen) {
+                    answer.classList.remove('hidden');
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        // Mobile Menu logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('mobile-menu-btn');
+            if (btn) {
+                btn.onclick = () => {
+                   const menu = document.createElement('div');
+                   menu.className = 'fixed inset-0 z-[100] bg-white flex flex-col p-8 gap-6 animate-page';
+                   menu.innerHTML = `
+                     <div class="flex justify-between items-center mb-8">
+                        <span class="text-xl font-bold">AutoCV</span>
+                        <button id="close-menu" class="p-2"><span class="material-symbols-outlined">close</span></button>
+                     </div>
+                     <a href="/home.html" class="text-lg font-bold border-b pb-4">Home</a>
+                     <a href="/pages/pricing.html" class="text-lg font-bold border-b pb-4">Pricing</a>
+                     <a href="/pages/login.html" class="text-lg font-bold border-b pb-4">Login</a>
+                     <button onclick="auth.loginWithGoogle()" class="bg-primary text-white py-4 rounded-full font-bold mt-4">Get Started</button>
+                   `;
+                   document.body.appendChild(menu);
+                   document.getElementById('close-menu').onclick = () => menu.remove();
+                };
+            }
+        });
+        </script>
+        </body>
+</html>

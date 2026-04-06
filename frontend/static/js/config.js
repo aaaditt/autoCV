@@ -1,6 +1,3 @@
-/**
- * ResumeAI Frontend Configuration
- * Include this BEFORE app.js on every page if you want to override the default local API URL.
- */
-window.RESUMEAI_API_URL = 'https://resumeai-backend.onrender.com/api';
-// For local dev, comment out the line above or set it to: 'http://localhost:5000/api'
+window.RESUMEAI_API_URL = 'http://localhost:5000/api';
+window.SUPABASE_URL = 'https://zegytszmdcpwctwomqge.supabase.co';
+window.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplZ3l0c3ptZGNwd2N0d29tcWdlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzNDQxODYsImV4cCI6MjA5MDkyMDE4Nn0.Mq6TtNYLVyUtsj9D_ZVlaAs8ph3_TNirA8xrAFlZSjQ';

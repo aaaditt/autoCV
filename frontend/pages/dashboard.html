@@ -103,12 +103,13 @@
     }
 </style>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.42.0/dist/umd/supabase.js"></script>
 </head>
 <body class="bg-surface text-on-surface antialiased flex min-h-screen">
 <!-- SideNavBar -->
 <aside class="w-[240px] h-screen sticky top-0 flex flex-col bg-slate-50 dark:bg-slate-950 border-r border-slate-200/15 dark:border-slate-800/15 p-4 gap-2 shrink-0">
 <div class="mb-6 px-2">
-<span class="text-lg font-bold text-slate-900 dark:text-white tracking-tight">ResumeAI</span>
+<a href="/home.html" class="text-lg font-bold text-slate-900 dark:text-white tracking-tight hover:opacity-80 transition-opacity">AutoCV</a>
 <p class="text-[10px] uppercase tracking-widest text-secondary font-semibold">Pro Plan</p>
 </div>
 <button class="flex items-center justify-center gap-2 bg-primary-container text-white py-3 px-4 rounded-lg shadow-sm hover:brightness-110 transition-all mb-4">
@@ -116,19 +117,19 @@
 <span class="text-sm font-semibold">New Resume</span>
 </button>
 <nav class="flex flex-col gap-1 overflow-y-auto no-scrollbar flex-grow">
-<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-blue-600 bg-white rounded-lg shadow-sm" href="#">
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-blue-600 bg-white rounded-lg shadow-sm" href="javascript:void(0)">
 <span class="material-symbols-outlined text-[20px]">dashboard</span>
                 Dashboard
             </a>
-<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors rounded-lg" href="#">
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors rounded-lg" href="javascript:void(0)">
 <span class="material-symbols-outlined text-[20px]">auto_fix_high</span>
                 Optimizer
             </a>
-<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors rounded-lg" href="#">
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors rounded-lg" href="javascript:void(0)">
 <span class="material-symbols-outlined text-[20px]">history</span>
                 History
             </a>
-<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors rounded-lg" href="#">
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors rounded-lg" href="javascript:void(0)">
 <span class="material-symbols-outlined text-[20px]">settings</span>
                 Settings
             </a>
@@ -194,7 +195,7 @@
 <section class="mb-16">
 <div class="flex justify-between items-end mb-8">
 <h2 class="text-2xl font-bold tracking-tight">Recent Optimizations</h2>
-<button class="text-sm font-semibold text-primary hover:underline">View All</button>
+<button onclick="window.location.href='history.html'" class="text-sm font-semibold text-primary hover:underline">View All</button>
 </div>
 <div class="grid grid-cols-1 gap-4">
 <!-- Card 1 -->
@@ -254,12 +255,12 @@
 <!-- Footer -->
 <footer class="w-full py-12 border-t border-slate-100 dark:border-slate-900 bg-white dark:bg-slate-950">
 <div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-<p class="text-xs text-slate-400">© 2024 ResumeAI. All rights reserved.</p>
+<p class="text-xs text-slate-400">© 2024 AutoCV. All rights reserved.</p>
 <div class="flex gap-8">
 <a class="text-xs text-slate-500 hover:text-blue-600 transition-colors" href="privacy.html">Privacy</a>
 <a class="text-xs text-slate-500 hover:text-blue-600 transition-colors" href="terms.html">Terms</a>
-<a class="text-xs text-slate-500 hover:text-blue-600 transition-colors" href="mailto:support@resumeai.co">Support</a>
-<a class="text-xs text-slate-500 hover:text-blue-600 transition-colors" href="mailto:support@resumeai.co">Contact</a>
+<a class="text-xs text-slate-500 hover:text-blue-600 transition-colors" href="mailto:support@autocv.co">Support</a>
+<a class="text-xs text-slate-500 hover:text-blue-600 transition-colors" href="mailto:support@autocv.co">Contact</a>
 </div>
 </div>
 </footer>
@@ -271,8 +272,8 @@
 </button>
 </div>
 
-<script src="../static/js/config.js"></script>
-<script src="../static/js/app.js"></script>
+<script src="../static/js/config.js?v=2.1"></script>
+<script src="../static/js/app.js?v=2.1"></script>
 
 <script>
     // Reveal animations on scroll
@@ -295,6 +296,30 @@
             observer.observe(el);
         });
     });
+</script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+      // Fix Sidebar Links
+      const links = document.querySelectorAll('aside nav a');
+      links[0].href = 'dashboard.html';
+      links[1].href = 'optimize.html';
+      links[2].href = 'history.html';
+      links[3].href = 'account.html';
+      
+      const newResumeBtn = document.querySelector('aside button');
+      if (newResumeBtn) newResumeBtn.onclick = () => window.location.href = 'optimize.html';
+
+      // Fix Top Nav Login/Started -> Logout
+      const topNavButtons = document.querySelector('header .flex.items-center.gap-4');
+      if (topNavButtons) {
+          topNavButtons.innerHTML = `
+            <button onclick="auth.logout()" class="text-slate-600 text-sm font-medium hover:opacity-80 transition-opacity">Logout</button>
+            <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold" id="nav-avatar">U</div>
+          `;
+      }
+  });
 </script>
 
 </body>

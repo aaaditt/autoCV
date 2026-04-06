@@ -1,368 +1,154 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "tertiary-container": "#008633",
-                    "on-secondary": "#ffffff",
-                    "outline": "#717785",
-                    "surface-variant": "#e3e2e7",
-                    "on-primary": "#ffffff",
-                    "surface-container-high": "#e9e7ed",
-                    "primary-fixed-dim": "#abc7ff",
-                    "secondary": "#5f5e60",
-                    "on-primary-fixed": "#001b3f",
-                    "on-secondary-container": "#636264",
-                    "error": "#ba1a1a",
-                    "on-primary-fixed-variant": "#00458f",
-                    "primary-container": "#0071e3",
-                    "outline-variant": "#c1c6d6",
-                    "inverse-surface": "#2f3034",
-                    "inverse-primary": "#abc7ff",
-                    "on-secondary-fixed-variant": "#474649",
-                    "tertiary": "#006a26",
-                    "on-tertiary-fixed-variant": "#00531c",
-                    "on-tertiary-fixed": "#002107",
-                    "surface-container-low": "#f4f3f8",
-                    "on-error-container": "#93000a",
-                    "on-tertiary": "#ffffff",
-                    "primary-fixed": "#d7e2ff",
-                    "on-error": "#ffffff",
-                    "surface-container": "#efedf3",
-                    "surface": "#faf8fe",
-                    "secondary-fixed": "#e4e2e4",
-                    "background": "#faf8fe",
-                    "surface-tint": "#005cbb",
-                    "surface-bright": "#faf8fe",
-                    "on-primary-container": "#fcfbff",
-                    "inverse-on-surface": "#f1f0f6",
-                    "error-container": "#ffdad6",
-                    "tertiary-fixed-dim": "#53e16f",
-                    "on-secondary-fixed": "#1b1b1d",
-                    "surface-dim": "#dbd9df",
-                    "secondary-fixed-dim": "#c8c6c8",
-                    "on-tertiary-container": "#f1ffec",
-                    "tertiary-fixed": "#72fe88",
-                    "surface-container-highest": "#e3e2e7",
-                    "on-surface": "#1a1b1f",
-                    "on-surface-variant": "#414753",
-                    "primary": "#0059b5",
-                    "surface-container-lowest": "#ffffff",
-                    "on-background": "#1a1b1f",
-                    "secondary-container": "#e2dfe1"
-            },
-            "borderRadius": {
-                    "DEFAULT": "1rem",
-                    "lg": "2rem",
-                    "xl": "3rem",
-                    "full": "9999px"
-            },
-            "fontFamily": {
-                    "headline": ["Inter"],
-                    "body": ["Inter"],
-                    "label": ["Inter"]
+<html lang="en" class="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Welcome to AutoCV</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0059b5",
+                        "primary-container": "#0071e3",
+                        background: "#faf8fe",
+                        surface: "#ffffff",
+                        "on-surface": "#1a1b1f",
+                        "on-secondary-container": "#636264",
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
             }
-          },
-        },
-      }
+        }
     </script>
-<style>
+    <style>
+        body {
+            background-color: #faf8fe;
+            color: #1a1b1f;
+            overflow-x: hidden;
+        }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        body { font-family: 'Inter', sans-serif; }
-        .glass-nav {
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+        
+        /* Subtle Gradient Glow for Light Mode */
+        .glow-bg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(0, 89, 181, 0.05) 0%, rgba(250, 248, 254, 0) 70%);
+            filter: blur(80px);
+            z-index: -1;
+            animation: pulse 10s infinite alternate cubic-bezier(0.445, 0.05, 0.55, 0.95);
         }
-        .editorial-max-width {
-            max-width: 980px;
+
+        @keyframes pulse {
+            from { opacity: 0.4; transform: translate(-50%, -50%) scale(0.9); }
+            to { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        /* Typography */
+        .title-reveal {
+            background: linear-gradient(to bottom, #1a1b1f 60%, rgba(26, 27, 31, 0.6));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-reveal {
+            animation: fadeInUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+
+        /* Elevation */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 89, 181, 0.08);
+            border-radius: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+        }
+
+        .grain {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.02;
+            pointer-events: none;
+            z-index: 100;
         }
     </style>
-
-<style>
-    /* Global Animations */
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-page {
-        animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    
-    /* Button Hover Enhancements */
-    button, a.btn, a[class*="bg-primary"], a[class*="bg-surface"] {
-        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, opacity 0.2s ease !important;
-    }
-    button:hover, a.btn:hover {
-        transform: translateY(-2px);
-    }
-</style>
-
 </head>
-<body class="bg-surface text-on-surface antialiased">
-<!-- TopNavBar -->
-<header class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-[0_10px_40px_rgba(29,29,31,0.06)]">
-<nav class="flex justify-between items-center px-8 h-16 max-w-[1440px] mx-auto font-['Inter'] antialiased">
-<div class="text-xl font-bold tracking-tight text-slate-900">ResumeAI</div>
-<div class="hidden md:flex items-center gap-8">
-<a class="text-slate-600 hover:opacity-80 transition-opacity" href="pages/pricing.html">Pricing</a>
-<a class="text-slate-600 hover:opacity-80 transition-opacity" href="pages/login.html">Login</a>
-<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-semibold hover:opacity-80 transition-opacity">Get Started</button>
-</div>
-</nav>
-</header>
-<main class="pt-16">
-<!-- Hero Section -->
-<section class="py-24 md:py-32 flex flex-col items-center text-center px-6">
-<div class="editorial-max-width">
-<span class="inline-block px-4 py-1.5 rounded-full bg-primary-container/10 text-primary-container text-sm font-semibold tracking-wide mb-8">
-                    AI-Powered Resume Optimization
+<body class="antialiased flex min-h-screen items-center justify-center p-6 select-none transition-colors duration-700">
+    <div class="grain"></div>
+    <div class="glow-bg"></div>
+
+    <div class="max-w-4xl w-full text-center z-10">
+        <!-- Logo Badge -->
+        <div class="mb-12 opacity-0 animate-reveal">
+            <div class="inline-flex items-center gap-2 px-6 py-2 glass-card text-xs font-bold tracking-[0.2em] uppercase text-primary">
+                <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                Live Platform
+            </div>
+        </div>
+
+        <!-- Headline -->
+        <h1 class="text-[clamp(3.5rem,10vw,6rem)] font-[900] tracking-[-0.05em] leading-[0.9] mb-8 opacity-0 animate-reveal delay-1 title-reveal">
+            Welcome to <br/>
+            Auto<span class="text-primary italic">CV</span>
+        </h1>
+
+        <!-- Tagline -->
+        <p class="text-lg md:text-[22px] text-slate-500 font-medium tracking-tight mb-16 max-w-2xl mx-auto opacity-0 animate-reveal delay-2 leading-relaxed">
+            The AI-powered architect for your professional future. <br class="hidden md:block"/>
+            Optimize, elevate, and land the interview with data-driven precision.
+        </p>
+
+        <!-- Button Section -->
+        <div class="opacity-0 animate-reveal delay-3">
+            <button onclick="navigateToMain()" class="group relative px-12 py-5 bg-primary text-white font-extrabold text-lg rounded-full overflow-hidden hover:scale-[1.05] hover:shadow-2xl hover:shadow-primary/20 active:scale-[0.98] transition-all duration-300">
+                <span class="relative z-10 flex items-center gap-2">
+                    Get Started
+                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
                 </span>
-<h1 class="text-5xl md:text-[64px] font-extrabold tracking-tight leading-[1.1] text-on-surface mb-8">
-                    Beat the ATS. <br/>Land the Interview.
-                </h1>
-<p class="text-xl md:text-[21px] text-on-secondary-container leading-relaxed mb-12 max-w-2xl mx-auto">
-                    Your resume is the first impression. Our AI ensures it's perfect by tailoring every bullet point to the exact job description in seconds.
-                </p>
-<div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-<button class="flex items-center gap-3 bg-on-surface text-surface px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:opacity-90 transition-all active:scale-95">
-<svg class="w-5 h-5" viewbox="0 0 24 24">
-<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="currentColor"></path>
-<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="currentColor"></path>
-<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="currentColor"></path>
-<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="currentColor"></path>
-</svg>
-                        Continue with Google
-                    </button>
-</div>
-<!-- Social Proof -->
-<div class="pt-12 border-t border-outline-variant/15">
-<p class="text-sm font-medium text-on-secondary-container mb-8 uppercase tracking-widest">Trusted by candidates at</p>
-<div class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-40 grayscale">
-<span class="text-xl font-bold tracking-tighter">APPLE</span>
-<span class="text-xl font-bold tracking-tighter">GOOGLE</span>
-<span class="text-xl font-bold tracking-tighter">META</span>
-<span class="text-xl font-bold tracking-tighter">NETFLIX</span>
-<span class="text-xl font-bold tracking-tighter">STRIPE</span>
-</div>
-</div>
-</div>
-</section>
-<!-- How It Works Section -->
-<section class="py-24 bg-surface-container-low">
-<div class="editorial-max-width mx-auto px-8">
-<div class="text-center mb-20">
-<h2 class="text-4xl font-bold tracking-tight mb-4 text-on-surface">Precision in three steps.</h2>
-<div class="w-16 h-1 bg-primary mx-auto rounded-full"></div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-<div class="flex flex-col items-center text-center group">
-<div class="w-16 h-16 rounded-full bg-white flex items-center justify-center text-2xl font-bold text-primary shadow-sm mb-6 transition-transform group-hover:scale-110">1</div>
-<h3 class="text-xl font-bold mb-3 text-on-surface">Upload Resume</h3>
-<p class="text-on-secondary-container leading-relaxed">Drop your current PDF or Word doc. Our AI parses every skill and experience instantly.</p>
-</div>
-<div class="flex flex-col items-center text-center group">
-<div class="w-16 h-16 rounded-full bg-white flex items-center justify-center text-2xl font-bold text-primary shadow-sm mb-6 transition-transform group-hover:scale-110">2</div>
-<h3 class="text-xl font-bold mb-3 text-on-surface">Target Job</h3>
-<p class="text-on-secondary-container leading-relaxed">Paste the job description. We identify the exact keywords and metrics recruiters look for.</p>
-</div>
-<div class="flex flex-col items-center text-center group">
-<div class="w-16 h-16 rounded-full bg-white flex items-center justify-center text-2xl font-bold text-primary shadow-sm mb-6 transition-transform group-hover:scale-110">3</div>
-<h3 class="text-xl font-bold mb-3 text-on-surface">Optimize</h3>
-<p class="text-on-secondary-container leading-relaxed">Get a tailored version with a high ATS score. Download and apply with total confidence.</p>
-</div>
-</div>
-</div>
-</section>
-<!-- Pricing Preview -->
-<section class="py-24">
-<div class="editorial-max-width mx-auto px-8">
-<div class="text-center mb-16">
-<h2 class="text-4xl font-bold tracking-tight text-on-surface">Choose your advantage.</h2>
-</div>
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-<!-- Free Card -->
-<div class="p-8 bg-surface-container-lowest rounded-2xl border border-outline-variant/30 flex flex-col">
-<div class="mb-8">
-<h3 class="text-xl font-bold mb-2">Free</h3>
-<div class="flex items-baseline gap-1">
-<span class="text-4xl font-bold">$0</span>
-<span class="text-on-secondary-container">/month</span>
-</div>
-</div>
-<ul class="space-y-4 mb-12 flex-grow">
-<li class="flex items-center gap-3 text-sm">
-<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
-                                1 Resume Upload
-                            </li>
-<li class="flex items-center gap-3 text-sm">
-<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
-                                Basic ATS Analysis
-                            </li>
-<li class="flex items-center gap-3 text-sm opacity-40">
-<span class="material-symbols-outlined text-lg">cancel</span>
-                                AI Bullet Point Rewrite
-                            </li>
-</ul>
-<button class="w-full py-4 rounded-full border border-primary text-primary font-semibold hover:bg-primary/5 transition-colors">Get Started</button>
-</div>
-<!-- Single Card (Most Popular) -->
-<div class="p-8 bg-primary-container text-white rounded-2xl shadow-2xl flex flex-col relative transform lg:-translate-y-4">
-<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-on-surface text-surface text-[10px] font-black tracking-[0.2em] px-4 py-1.5 rounded-full uppercase">MOST POPULAR</div>
-<div class="mb-8">
-<h3 class="text-xl font-bold mb-2">Single Job</h3>
-<div class="flex items-baseline gap-1">
-<span class="text-4xl font-bold">$12</span>
-<span class="opacity-80">/once</span>
-</div>
-</div>
-<ul class="space-y-4 mb-12 flex-grow">
-<li class="flex items-center gap-3 text-sm">
-<span class="material-symbols-outlined text-white text-lg">check_circle</span>
-                                1 Optimized Resume
-                            </li>
-<li class="flex items-center gap-3 text-sm">
-<span class="material-symbols-outlined text-white text-lg">check_circle</span>
-                                AI Bullet Optimization
-                            </li>
-<li class="flex items-center gap-3 text-sm">
-<span class="material-symbols-outlined text-white text-lg">check_circle</span>
-                                Cover Letter Generator
-                            </li>
-</ul>
-<button class="w-full py-4 rounded-full bg-white text-primary-container font-bold shadow-md hover:scale-[1.02] transition-transform">Buy Now</button>
-</div>
-<!-- Pro Card -->
-<div class="p-8 bg-surface-container-lowest rounded-2xl border border-outline-variant/30 flex flex-col">
-<div class="mb-8">
-<h3 class="text-xl font-bold mb-2">Pro Plan</h3>
-<div class="flex items-baseline gap-1">
-<span class="text-4xl font-bold">$29</span>
-<span class="text-on-secondary-container">/month</span>
-</div>
-</div>
-<ul class="space-y-4 mb-12 flex-grow">
-<li class="flex items-center gap-3 text-sm">
-<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
-                                Unlimited Optimizations
-                            </li>
-<li class="flex items-center gap-3 text-sm">
-<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
-                                Multi-Job Tracking
-                            </li>
-<li class="flex items-center gap-3 text-sm">
-<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
-                                Interview Prep Assistant
-                            </li>
-</ul>
-<button class="w-full py-4 rounded-full border border-primary text-primary font-semibold hover:bg-primary/5 transition-colors">Start Trial</button>
-</div>
-</div>
-</div>
-</section>
-<!-- FAQ Section -->
-<section class="py-24 bg-surface-container-low">
-<div class="editorial-max-width mx-auto px-8">
-<div class="text-center mb-16">
-<h2 class="text-4xl font-bold tracking-tight text-on-surface">Common Questions.</h2>
-</div>
-<div class="space-y-4">
-<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm">
-<button class="flex justify-between items-center w-full text-left font-bold text-on-surface">
-<span>How does the AI know what recruiters want?</span>
-<span class="material-symbols-outlined">expand_more</span>
-</button>
-<div class="mt-4 text-on-secondary-container text-sm leading-relaxed">
-                            Our models are trained on over 50,000 successful job applications and actual recruiter feedback across 15+ industries.
-                        </div>
-</div>
-<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm">
-<button class="flex justify-between items-center w-full text-left font-bold text-on-surface">
-<span>Is my data private and secure?</span>
-<span class="material-symbols-outlined">expand_more</span>
-</button>
-<div class="mt-4 text-on-secondary-container text-sm leading-relaxed">
-                            Absolutely. We encrypt all data and never sell your personal information or resumes to third parties.
-                        </div>
-</div>
-<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm">
-<button class="flex justify-between items-center w-full text-left font-bold text-on-surface">
-<span>Can I cancel my Pro subscription at any time?</span>
-<span class="material-symbols-outlined">expand_more</span>
-</button>
-<div class="mt-4 text-on-secondary-container text-sm leading-relaxed">
-                            Yes, there are no long-term contracts. You can cancel your monthly subscription with a single click in your settings.
-                        </div>
-</div>
-</div>
-</div>
-</section>
-<!-- Final CTA Section -->
-<section class="py-24 flex flex-col items-center">
-<div class="editorial-max-width w-full bg-primary-container rounded-[2.5rem] p-12 md:p-20 text-center text-white relative overflow-hidden">
-<div class="absolute inset-0 bg-gradient-to-br from-primary to-primary-container opacity-50"></div>
-<div class="relative z-10">
-<h2 class="text-4xl md:text-5xl font-black mb-8 leading-tight">Ready to double your <br/>interview rate?</h2>
-<button class="bg-white text-primary-container px-10 py-5 rounded-full font-bold text-lg shadow-xl hover:scale-105 active:scale-95 transition-all">
-                        Optimize My Resume Now
-                    </button>
-<p class="mt-6 text-primary-fixed text-sm font-medium">Join 10,000+ successful job seekers.</p>
-</div>
-</div>
-</section>
-</main>
-<!-- Footer -->
-<footer class="w-full py-12 border-t border-slate-100 bg-white">
-<div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-8">
-<div class="flex items-center gap-2">
-<span class="text-slate-900 font-bold">ResumeAI</span>
-<span class="text-slate-400 text-xs">© 2024 ResumeAI. All rights reserved.</span>
-</div>
-<div class="flex gap-8">
-<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="pages/privacy.html">Privacy</a>
-<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="pages/terms.html">Terms</a>
-<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="mailto:support@resumeai.co">Support</a>
-<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="mailto:support@resumeai.co">Contact</a>
-</div>
-</div>
-</footer>
+                <!-- Hover Glow Effect -->
+                <div class="absolute inset-0 bg-primary-container opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </button>
+            <p class="mt-8 text-xs text-slate-400 uppercase tracking-widest font-bold">Trusted by 10,000+ Students & Professionals</p>
+        </div>
+    </div>
 
-<script src="./static/js/config.js"></script>
-<script src="./static/js/app.js"></script>
+    <!-- Background Decoration -->
+    <div class="fixed bottom-12 left-1/2 -translate-x-1/2 opacity-20 text-[10px] uppercase tracking-[0.4em] font-black pointer-events-none text-slate-900">
+        Built with Precision since 2024
+    </div>
 
-<script>
-    // Reveal animations on scroll
-    document.addEventListener("DOMContentLoaded", () => {
-        document.body.classList.add('animate-page');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('section, .animate-on-scroll').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(15px)';
-            el.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-            observer.observe(el);
-        });
-    });
-</script>
-
+    <script>
+        function navigateToMain() {
+            // Smooth transition effect
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                window.location.href = 'home.html';
+            }, 600);
+        }
+    </script>
 </body>
 </html>

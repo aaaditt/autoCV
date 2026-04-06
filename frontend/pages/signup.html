@@ -3,10 +3,9 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>AutoCV - Login</title>
+<title>AutoCV - Sign Up</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
@@ -84,60 +83,53 @@
         body { font-family: 'Inter', sans-serif; }
         .editorial-shadow { box-shadow: 0 10px 40px rgba(29, 29, 31, 0.06); }
         .ghost-border { outline: 1px solid rgba(193, 198, 214, 0.15); }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-page {
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        button, a.btn, a[class*="bg-primary"], a[class*="bg-surface"] {
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, opacity 0.2s ease !important;
+        }
+        button:hover, a.btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Toast Styles (Sync with global.css) */
+        .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+        .toast {
+            background: #1a1b1f; color: #fff; padding: 12px 20px; border-radius: 1rem;
+            font-size: 14px; box-shadow: 0 8px 40px rgba(0,0,0,0.12); max-width: 320px;
+            animation: slideUp 0.2s ease;
+        }
+        .toast.success { background: #34C759; }
+        .toast.error   { background: #ba1a1a; }
+        @keyframes slideUp { from { transform: translateY(12px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* Loading Spinner */
+        .spinner {
+            width: 20px; height: 20px; border: 2.5px solid rgba(255,255,255,0.3);
+            border-top-color: #fff; border-radius: 50%;
+            animation: spin 0.7s linear infinite; display: inline-block;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
-
-<style>
-    /* Global Animations */
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-page {
-        animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    
-    /* Button Hover Enhancements */
-    button, a.btn, a[class*="bg-primary"], a[class*="bg-surface"] {
-        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, opacity 0.2s ease !important;
-    }
-    button:hover, a.btn:hover {
-        transform: translateY(-2px);
-    }
-
-    /* Toast Styles (Sync with global.css) */
-    .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
-    .toast {
-        background: #1a1b1f; color: #fff; padding: 12px 20px; border-radius: 1rem;
-        font-size: 14px; box-shadow: 0 8px 40px rgba(0,0,0,0.12); max-width: 320px;
-        animation: slideUp 0.2s ease;
-    }
-    .toast.success { background: #34C759; }
-    .toast.error   { background: #ba1a1a; }
-    @keyframes slideUp { from { transform: translateY(12px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-    /* Loading Spinner */
-    .spinner {
-        width: 20px; height: 20px; border: 2.5px solid rgba(255,255,255,0.3);
-        border-top-color: #fff; border-radius: 50%;
-        animation: spin 0.7s linear infinite; display: inline-block;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-</style>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.42.0/dist/umd/supabase.js"></script>
 </head>
 <body class="bg-surface text-on-surface min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden">
-<!-- Hero Background Canvas (Editorial Aesthetic) -->
 <div class="absolute inset-0 -z-10 bg-surface overflow-hidden">
 <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/5 blur-[120px]"></div>
 <div class="absolute bottom-[-5%] right-[-5%] w-[30%] h-[30%] rounded-full bg-tertiary/5 blur-[100px]"></div>
 </div>
-<!-- Backdrop Blur Overlay -->
 <div class="fixed inset-0 bg-white/30 backdrop-blur-xl z-10"></div>
-<!-- Login Modal -->
-<main class="relative z-20 w-full max-w-[400px]">
+
+<main class="relative z-20 w-full max-w-[440px]">
 <div class="bg-surface-container-lowest editorial-shadow rounded-lg p-8 md:p-10 flex flex-col gap-8 ghost-border">
-<!-- Header Section -->
 <header class="flex flex-col items-center gap-4">
 <div class="flex items-center gap-2">
 <div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center">
@@ -146,11 +138,11 @@
 <span class="text-xl font-bold tracking-tight text-slate-900">AutoCV</span>
 </div>
 <div class="text-center">
-<h1 class="text-2xl font-bold tracking-tight text-on-surface">Welcome back</h1>
-<p class="text-on-secondary-container body-lg mt-1">Ready to craft your next career move?</p>
+<h1 class="text-2xl font-bold tracking-tight text-on-surface">Create your account</h1>
+<p class="text-on-secondary-container body-lg mt-1">Start your journey to a better career today.</p>
 </div>
 </header>
-<!-- Social Login -->
+
 <section class="flex flex-col gap-3">
 <button onclick="auth.loginWithGoogle()" class="flex items-center justify-center gap-3 w-full h-12 bg-surface-container-lowest border border-outline-variant/30 rounded-full text-on-surface font-medium hover:bg-surface-container-low transition-colors duration-200">
 <svg class="w-5 h-5" viewbox="0 0 24 24">
@@ -162,77 +154,111 @@
                     Continue with Google
                 </button>
 </section>
-<!-- Divider -->
+
 <div class="flex items-center gap-4">
 <div class="h-[1px] flex-1 bg-outline-variant/20"></div>
-<span class="text-xs font-medium uppercase tracking-widest text-on-secondary-container">or continue with email</span>
+<span class="text-xs font-medium uppercase tracking-widest text-on-secondary-container">or use your email</span>
 <div class="h-[1px] flex-1 bg-outline-variant/20"></div>
 </div>
-<!-- Form Section -->
+
 <form class="flex flex-col gap-5">
 <div class="flex flex-col gap-2">
 <label class="text-xs font-semibold text-on-secondary-container px-1" for="email">EMAIL ADDRESS</label>
 <input class="w-full h-12 px-4 bg-surface-container-high border-b-2 border-transparent focus:border-primary-container focus:ring-0 rounded-t-DEFAULT transition-all duration-200 outline-none placeholder:text-outline/50" id="email" placeholder="alex@example.com" type="email"/>
 </div>
 <div class="flex flex-col gap-2">
-<div class="flex justify-between items-center px-1">
-<label class="text-xs font-semibold text-on-secondary-container" for="password">PASSWORD</label>
-<a class="text-xs font-semibold text-primary-container hover:underline" href="#">Forgot?</a>
-</div>
+<label class="text-xs font-semibold text-on-secondary-container px-1" for="password">PASSWORD</label>
 <input class="w-full h-12 px-4 bg-surface-container-high border-b-2 border-transparent focus:border-primary-container focus:ring-0 rounded-t-DEFAULT transition-all duration-200 outline-none placeholder:text-outline/50" id="password" placeholder="••••••••" type="password"/>
 </div>
-<button id="signin-btn" class="w-full h-12 bg-primary-container text-white font-semibold rounded-full hover:brightness-110 active:scale-[0.98] transition-all duration-200 shadow-lg shadow-primary-container/20 mt-2 flex items-center justify-center gap-2" type="button" onclick="signInWithEmail()">
-                    <span id="btn-text">Sign In</span>
+<div class="flex flex-col gap-2">
+<label class="text-xs font-semibold text-on-secondary-container px-1" for="confirm-password">CONFIRM PASSWORD</label>
+<input class="w-full h-12 px-4 bg-surface-container-high border-b-2 border-transparent focus:border-primary-container focus:ring-0 rounded-t-DEFAULT transition-all duration-200 outline-none placeholder:text-outline/50" id="confirm-password" placeholder="••••••••" type="password"/>
+</div>
+<button id="signup-btn" class="w-full h-12 bg-primary-container text-white font-semibold rounded-full hover:brightness-110 active:scale-[0.98] transition-all duration-200 shadow-lg shadow-primary-container/20 mt-2 flex items-center justify-center gap-2" type="button" onclick="signUpWithEmail()">
+                    <span id="btn-text">Create Account</span>
                     <div id="btn-spinner" class="spinner hidden"></div>
                 </button>
 </form>
 
 <script>
-    async function signInWithEmail() {
-        const btn = document.getElementById('signin-btn');
+    async function signUpWithEmail() {
+        const btn = document.getElementById('signup-btn');
         const text = document.getElementById('btn-text');
         const spinner = document.getElementById('btn-spinner');
-
+        
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-        if (!email || !password) return toast("Email and password are required", "error");
+        const confirmPassword = document.getElementById('confirm-password').value;
         
+        if (!email || !password || !confirmPassword) {
+            return toast("All fields are required", "error");
+        }
+        
+        if (password !== confirmPassword) {
+            return toast("Passwords do not match", "error");
+        }
+        
+        if (password.length < 6) {
+            return toast("Password must be at least 6 characters", "error");
+        }
+
         // Set Loading State
         btn.disabled = true;
         text.style.opacity = '0.7';
         spinner.classList.remove('hidden');
 
         try {
-            const data = await auth.loginWithEmail(email, password);
+            console.log("Attempting signup for:", email);
+            const data = await auth.signupWithEmail(email, password);
+            console.log("Signup Response:", data);
+            
+            // Check if user is auto-logged in (session is present and confirmation is OFF)
             if (data && data.session) {
-                toast("Login successful! Redirecting...", "success");
-                // The auth state change listener in app.js will handle the actual redirect,
-                // but we can add a fallback here if needed.
+                toast("Account created! Redirecting...", "success");
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            } else if (data && data.user) {
+                // confirmation is ON - data.session is null but data.user is present
+                toast("Verification email sent! Please check your inbox.", "success");
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 4000);
+            } else {
+                // Might happen if rate limited or other silent fail
+                toast("Check your email for the confirmation link to proceed.", "success");
             }
         } catch(err) {
-            // Error already handled by toast in loginWithEmail
+            console.error("Signup failed:", err);
+            // Already handled by toast in auth.signupWithEmail, but let's be double sure
+            if (typeof toast !== 'undefined') {
+                toast(err.message, 'error');
+            } else {
+                alert("Error: " + err.message);
+            }
         } finally {
+            // Reset Loading State (though if redirecting it doesn't matter much)
             setTimeout(() => {
                 btn.disabled = false;
                 text.style.opacity = '1';
                 spinner.classList.add('hidden');
-            }, 1000);
+            }, 2000);
         }
     }
 </script>
-<!-- Footer Link -->
+
 <footer class="text-center">
 <p class="text-on-secondary-container body-lg">
-                    New to AutoCV? 
-                    <a class="text-primary-container font-semibold hover:underline inline-flex items-center gap-1 group" href="signup.html">
-                        Create account
+                    Already have an account? 
+                    <a class="text-primary-container font-semibold hover:underline inline-flex items-center gap-1 group" href="login.html">
+                        Sign In
                         <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
 </a>
 </p>
 </footer>
 </div>
 </main>
-<!-- Shared Footer Navigation (Suppressed per shell visibility rules for transactional screens, but we include copyright for aesthetic anchor) -->
+
 <div class="fixed bottom-8 text-on-secondary-container/40 text-[10px] font-medium tracking-widest uppercase">
         © 2024 AutoCV. Built for high-performance careers.
     </div>
@@ -241,25 +267,8 @@
 <script src="../static/js/app.js?v=2.1"></script>
 
 <script>
-    // Reveal animations on scroll
     document.addEventListener("DOMContentLoaded", () => {
         document.body.classList.add('animate-page');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('section, .animate-on-scroll').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(15px)';
-            el.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-            observer.observe(el);
-        });
     });
 </script>
 

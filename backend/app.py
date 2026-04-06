@@ -11,11 +11,16 @@ def create_app():
     app = Flask(__name__)
     app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-change-in-prod")
 
+    app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+    app.config['SESSION_COOKIE_SECURE'] = True
+    app.config['SESSION_COOKIE_HTTPONLY'] = True
+    app.config['PERMANENT_SESSION_LIFETIME'] = 3600
+
     CORS(app, origins=[
         "http://localhost:3000",
         "http://localhost:5500",
         os.environ.get("FRONTEND_URL", "")
-    ], supports_credentials=True)
+    ], supports_credentials=True, allow_headers=["Content-Type"], methods=["GET", "POST", "OPTIONS"])
 
     limiter = Limiter(
         get_remote_address,
@@ -32,7 +37,7 @@ def create_app():
 
     app.register_blueprint(analyze_bp, url_prefix="/api")
     app.register_blueprint(optimize_bp, url_prefix="/api")
-    app.register_blueprint(auth_bp, url_prefix="/api")
+    app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(payments_bp, url_prefix="/api")
     app.register_blueprint(download_bp, url_prefix="/api")
 

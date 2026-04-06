@@ -25,6 +25,15 @@ STOP_WORDS = {
     "well", "new", "own", "same", "us", "its", "etc", "job", "position"
 }
 
+# Generic Keywords for "No JD" Analysis
+GENERIC_ATS_KEYWORDS = [
+    "Communication", "Management", "Leadership", "Teamwork", 
+    "Problem Solving", "Collaboration", "Process Improvement",
+    "Strategy", "Analysis", "Development", "Implementation",
+    "Design", "Research", "Documentation", "Planning", "Execution",
+    "Optimization", "Efficiency", "Results", "Stakeholder Management"
+]
+
 # High-value tech/skill patterns
 SKILL_PATTERNS = [
     r'\b[A-Z][a-z]+(?:\.[a-z]+)+\b',          # React.js, Node.js
@@ -66,11 +75,9 @@ def extract_text_keywords(text: str) -> list[str]:
     return keywords
 
 
-def extract_jd_keywords(jd_text: str) -> list[str]:
-    """
-    Extract keywords from job description.
-    Returns ranked list of most important keywords.
-    """
+    if not jd_text or len(jd_text.strip()) < 10:
+        return GENERIC_ATS_KEYWORDS[:20]  # Return subset of general keywords
+
     raw_keywords = extract_text_keywords(jd_text)
 
     # Count frequency

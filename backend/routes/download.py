@@ -36,12 +36,15 @@ def download(format: str):
         else:
             return jsonify({"error": "Invalid format. Use 'pdf' or 'docx'"}), 400
 
-        return send_file(
+        from flask import make_response
+        response = make_response(send_file(
             io.BytesIO(file_bytes),
             mimetype=mimetype,
             as_attachment=True,
             download_name=filename
-        )
+        ))
+        response.headers['Access-Control-Expose-Headers'] = 'Content-Disposition'
+        return response
 
     except Exception as e:
         return jsonify({"error": f"Download failed: {str(e)}"}), 500
