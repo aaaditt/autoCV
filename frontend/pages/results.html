@@ -119,15 +119,55 @@
 </div>
 <!-- TopNavBar (Shared Component) -->
 <nav class="fixed top-12 w-full z-50 glass-nav bg-white/70 dark:bg-slate-900/70 shadow-[0_10px_40px_rgba(29,29,31,0.06)] h-16 transition-opacity duration-200 ease-in-out">
-<div class="flex justify-between items-center px-8 h-full max-w-[1440px] mx-auto">
-<div class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">AutoCV</div>
-<div class="flex items-center gap-8">
-<a class="text-slate-600 dark:text-slate-400 hover:opacity-80 transition-opacity font-medium" href="pricing.html">Pricing</a>
-<div class="flex items-center gap-4">
-<button class="text-slate-600 dark:text-slate-400 hover:opacity-80 transition-opacity font-medium">Login</button>
-<button class="bg-primary-container text-white px-6 py-2 rounded-full font-semibold hover:opacity-80 transition-opacity">Get Started</button>
-</div>
-</div>
+<div class="flex justify-between items-center px-8 h-full max-w-[1440px] mx-auto font-['Inter'] antialiased">
+    <div class="flex items-center gap-6">
+        <a href="/home.html" class="text-xl font-bold tracking-tight text-slate-900 dark:text-white hover:opacity-80 transition-opacity">AutoCV</a>
+        <div class="h-6 w-px bg-slate-200 auth-show hidden"></div>
+        <a href="dashboard.html" class="auth-show hidden text-sm font-semibold text-slate-500 hover:text-primary transition-all flex items-center gap-1 group">
+           <span class="material-symbols-outlined text-[18px] group-hover:-translate-x-0.5 transition-transform">chevron_left</span>
+           Dashboard
+        </a>
+    </div>
+    <div class="flex items-center gap-8">
+        <a class="text-slate-600 dark:text-slate-400 font-semibold transition-opacity duration-200 ease-in-out" href="pricing.html">Pricing</a>
+        
+        <!-- Unauthenticated -->
+        <div class="auth-hide flex items-center gap-4">
+            <button onclick="window.location.href='login.html'" class="text-slate-600 dark:text-slate-400 font-medium hover:opacity-80 transition-opacity">Login</button>
+            <button onclick="auth.loginWithGoogle()" class="bg-primary text-white px-5 py-2 rounded-full font-semibold hover:opacity-90 transition-opacity">Get Started</button>
+        </div>
+
+        <!-- Authenticated (Dropdown) -->
+        <div class="auth-show hidden relative group">
+            <button class="flex items-center gap-2 hover:opacity-80 transition-all">
+                <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shadow-lg shadow-primary/20" id="nav-avatar">U</div>
+            </button>
+            <div class="absolute right-0 top-full pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-[100]">
+                <div class="w-56 bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] border border-black/5 overflow-hidden p-2 text-left">
+                    <div class="px-4 py-3 border-b border-black/5 mb-1 bg-slate-50/50">
+                        <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Account</p>
+                        <div class="flex items-baseline gap-2">
+                             <p class="text-xs font-bold text-slate-900 truncate" id="nav-username">User</p>
+                             <span class="text-[10px] text-blue-600 font-black uppercase pro-show hidden">Pro</span>
+                        </div>
+                    </div>
+                    <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors rounded-xl font-body">
+                        <span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard
+                    </a>
+                    <a href="account.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors rounded-xl font-body">
+                        <span class="material-symbols-outlined text-[20px]">settings</span> Settings
+                    </a>
+                    <a href="pricing.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-blue-600 hover:bg-blue-50 transition-colors rounded-xl pro-hide font-body">
+                        <span class="material-symbols-outlined text-[20px]">workspace_premium</span> Upgrade Pro
+                    </a>
+                    <div class="h-[1px] bg-black/5 my-1"></div>
+                    <button onclick="auth.logout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors rounded-xl text-left font-body">
+                        <span class="material-symbols-outlined text-[20px]">logout</span> Sign Out
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </nav>
 <main class="pt-32 pb-40 max-w-[980px] mx-auto px-6">
@@ -254,7 +294,7 @@
                     Download DOCX
                 </button>
 </div>
-<button class="flex items-center gap-2 text-slate-600 font-bold uppercase tracking-wider text-xs hover:text-primary transition-colors">
+<button onclick="window.location.href='optimize.html'" class="flex items-center gap-2 text-slate-600 font-bold uppercase tracking-wider text-xs hover:text-primary transition-colors">
                 Optimize Another Resume
                 <span class="material-symbols-outlined text-lg">arrow_forward</span>
 </button>
@@ -263,12 +303,12 @@
 <!-- Footer (Shared Component) -->
 <footer class="w-full py-12 border-t border-slate-100 dark:border-slate-900 bg-white dark:bg-slate-950">
 <div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-<div class="text-xs font-['Inter'] text-slate-400">© 2024 AutoCV. All rights reserved.</div>
+<div class="text-xs font-['Inter'] text-slate-400">© 2025 AutoCV. All rights reserved.</div>
 <div class="flex gap-8">
 <a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="privacy.html">Privacy</a>
 <a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="terms.html">Terms</a>
-<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="mailto:autocv.app@gmail.com">Support</a>
-<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="mailto:autocv.app@gmail.com">Contact</a>
+<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="support.html">Support</a>
+<a class="text-xs font-['Inter'] text-slate-500 hover:text-blue-600 transition-colors" href="support.html">Contact</a>
 </div>
 </div>
 </footer>
@@ -316,8 +356,18 @@
       const improvementEl = document.querySelector('.bg-tertiary\\/10.text-tertiary');
       if (improvementEl) improvementEl.innerHTML = `<span class="material-symbols-outlined text-lg">trending_up</span> +${data.score_improvement} point improvement`;
 
-      // Manual Payment Implementation
-      const handleDownloadClick = () => auth.showPaymentModal();
+      // Handle Download Logic (Pro vs Free)
+      const handleDownloadClick = () => {
+          if (auth.isPro) {
+              toast('Preparing your optimized document...', 'info');
+              // Simulate direct download
+              setTimeout(() => {
+                  toast('Download started! Check your downloads folder.', 'success');
+              }, 1500);
+          } else {
+              auth.showPaymentModal('Single Resume', '$9');
+          }
+      };
 
       const downloadPdfBtn = document.getElementById('download-pdf-btn');
       const downloadDocxBtn = document.getElementById('download-docx-btn');

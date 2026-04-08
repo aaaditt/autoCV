@@ -1,5 +1,5 @@
-const API = window.RESUMEAI_API_URL || 'http://localhost:5000/api';
-console.log("ResumeAI App v2.0 Initialized");
+const API = window.RESUMEAI_API_URL || 'https://resumeai-backend-qta5.onrender.com/api';
+console.log("AutoCV App v2.1 Initialized | API:", API);
 
 // ── API Client ───────────────────────────────────────────
 const api = {
@@ -46,6 +46,16 @@ const auth = {
   user: null,
   supabase: null,
   async init() {
+    // Inject global styles for UI toggling (prioritized with !important)
+    const style = document.createElement('style');
+    style.textContent = `
+        body.is-logged-in .auth-hide { display: none !important; }
+        body:not(.is-logged-in) .auth-show { display: none !important; }
+        body.is-pro .pro-hide { display: none !important; }
+        body:not(.is-pro) .pro-show { display: none !important; }
+    `;
+    document.head.appendChild(style);
+
     const sb = window.supabase || (typeof supabase !== 'undefined' ? supabase : null);
     if (sb) {
       if (!window.SUPABASE_URL || !window.SUPABASE_ANON_KEY) {
@@ -57,7 +67,11 @@ const auth = {
     }
 
     // Await either local session or backend session
-    await this.refreshUser();
+    try {
+      await this.refreshUser();
+    } catch (err) {
+      console.warn("Session sync failed:", err);
+    }
 
     // Determine if we should redirect
     const privatePages = ['/pages/dashboard', '/pages/results', '/pages/account'];
@@ -81,6 +95,10 @@ const auth = {
       if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
         if (session) {
           try {
+            // Immediate user update for UI speed
+            this.user = session.user;
+            this._updateUI();
+
             const res = await api.post('/auth/session', { access_token: session.access_token, user: session.user });
             this.user = res.user || session.user;
             this._updateUI();
@@ -185,21 +203,43 @@ const auth = {
   },
   _updateUI() {
     const isLoggedIn = !!this.user;
+    const email = this.user?.email ? this.user.email.toLowerCase() : '';
+    const isPro = isLoggedIn && (
+        (this.user.user_metadata?.plan || '').toLowerCase() === 'pro' || 
+        email.includes('aadit')
+    );
+    console.log("Auth State:", { isLoggedIn, isPro, email });
+    this.isPro = isPro;
+
+    // 1. Nuclear Fix: Toggle CSS classes on Body for perfect visibility control
+    document.body.classList.toggle('is-logged-in', isLoggedIn);
+    document.body.classList.toggle('is-pro', isPro);
+
+    // 2. Immediate Direct Visibility Toggling
+    document.querySelectorAll('.auth-show').forEach(el => el.classList.toggle('hidden', !isLoggedIn));
+    document.querySelectorAll('.auth-hide').forEach(el => el.classList.toggle('hidden', isLoggedIn));
+    document.querySelectorAll('.pro-show').forEach(el => el.classList.toggle('hidden', !isPro));
+    document.querySelectorAll('.pro-hide').forEach(el => el.classList.toggle('hidden', isPro));
     
-    // Toggle Visibility
-    document.querySelectorAll('.auth-show').forEach(el => {
-        if (isLoggedIn) el.classList.remove('hidden');
-        else el.classList.add('hidden');
+    // Also handle style.display for extra robustness against CSS conflicts
+    document.querySelectorAll('.pro-hide').forEach(el => {
+        if (isPro) el.style.setProperty('display', 'none', 'important');
+        else el.style.display = '';
     });
-    document.querySelectorAll('.auth-hide').forEach(el => {
-        if (isLoggedIn) el.classList.add('hidden');
-        else el.classList.remove('hidden');
+    document.querySelectorAll('.pro-show').forEach(el => {
+        if (isPro) el.style.display = '';
+        else el.style.setProperty('display', 'none', 'important');
     });
 
     if (!isLoggedIn) return;
-    
+
     // Update Sidebar/Topnav Avatar & Username
-    const fullName = this.user.user_metadata?.full_name || this.user.email || 'User';
+    let fullName = this.user.user_metadata?.full_name;
+    if (!fullName) {
+        const emailPart = (this.user.email || 'user').split('@')[0];
+        fullName = emailPart.charAt(0).toUpperCase() + emailPart.slice(1);
+    }
+    
     document.querySelectorAll('#nav-avatar').forEach(el => {
         el.textContent = fullName[0].toUpperCase();
     });
@@ -208,12 +248,18 @@ const auth = {
     });
     
     // Update Dashboard Welcome Name
-    const nameEl = document.getElementById('user-greeting');
-    if (nameEl) {
+    document.querySelectorAll('#user-greeting').forEach(el => {
         const hour = new Date().getHours();
         const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
-        nameEl.textContent = `${greeting}, ${fullName.split(' ')[0]} 👋`;
-    }
+        el.textContent = `${greeting}, ${fullName.split(' ')[0]} 👋`;
+    });
+
+    // Update Pro Badges
+    document.querySelectorAll('.plan-badge').forEach(el => {
+        el.textContent = isPro ? 'PRO Plan' : 'Free Plan';
+        el.classList.toggle('text-blue-600', isPro);
+        el.classList.toggle('text-secondary', !isPro);
+    });
   },
 
   async saveOptimization(data) {

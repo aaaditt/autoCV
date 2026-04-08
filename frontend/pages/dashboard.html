@@ -77,7 +77,13 @@
       }
     </script>
 <style>
-        body { font-family: 'Inter', sans-serif; }
+    /* Nuclear Auth/Pro Visibility System */
+    body.is-pro .pro-hide { display: none !important; }
+    body:not(.is-pro) .pro-show { display: none !important; }
+    body.is-logged-in .auth-hide { display: none !important; }
+    body:not(.is-logged-in) .auth-show { display: none !important; }
+    
+    body { font-family: 'Inter', sans-serif; }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
@@ -110,7 +116,7 @@
 <aside class="w-[240px] h-screen sticky top-0 flex flex-col bg-slate-50 dark:bg-slate-950 border-r border-slate-200/15 dark:border-slate-800/15 p-4 gap-2 shrink-0">
 <div class="mb-6 px-2">
 <a href="/home.html" class="text-lg font-bold text-slate-900 dark:text-white tracking-tight hover:opacity-80 transition-opacity">AutoCV</a>
-<p class="text-[10px] uppercase tracking-widest text-secondary font-semibold">Pro Plan</p>
+<p class="text-[10px] uppercase tracking-widest text-secondary font-semibold plan-badge">Pro Plan</p>
 </div>
 <button class="flex items-center justify-center gap-2 bg-primary-container text-white py-3 px-4 rounded-lg shadow-sm hover:brightness-110 transition-all mb-4">
 <span class="material-symbols-outlined text-[20px]">add</span>
@@ -135,7 +141,7 @@
             </a>
 </nav>
 <!-- Plan Status Card -->
-<div class="mt-auto p-4 bg-surface-container rounded-xl">
+<div class="mt-auto p-4 bg-surface-container rounded-xl pro-hide">
     <div class="flex justify-between items-center mb-2">
         <span class="text-[11px] font-bold text-on-surface uppercase tracking-wider">Free Plan</span>
         <span class="text-[11px] font-bold text-on-surface">2/3</span>
@@ -144,6 +150,13 @@
         <div class="bg-orange-500 h-full w-[66%]"></div>
     </div>
     <p class="text-[10px] text-on-secondary-container mt-2">1 optimization remaining</p>
+</div>
+<div class="mt-auto p-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-xl pro-show hidden">
+    <div class="flex items-center gap-2 mb-2">
+        <span class="material-symbols-outlined text-blue-600 text-sm">verified</span>
+        <span class="text-[11px] font-black text-blue-600 uppercase tracking-widest">Pro Member</span>
+    </div>
+    <p class="text-[10px] text-blue-900/60 dark:text-blue-300/60 leading-tight">You have unlimited optimizations and premium AI features unlocked.</p>
 </div>
 
 <div class="flex flex-col gap-1 mt-4 px-2">
@@ -192,8 +205,11 @@
                 <a href="account.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors rounded-xl">
                     <span class="material-symbols-outlined text-[20px]">settings</span> Settings
                 </a>
-                <a href="pricing.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-blue-600 hover:bg-blue-50 transition-colors rounded-xl">
+                <a href="pricing.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-blue-600 hover:bg-blue-50 transition-colors rounded-xl pro-hide">
                     <span class="material-symbols-outlined text-[20px]">workspace_premium</span> Upgrade Pro
+                </a>
+                <a href="account.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-green-600 hover:bg-green-50 transition-colors rounded-xl pro-show hidden">
+                    <span class="material-symbols-outlined text-[20px]">verified</span> Pro Subscription
                 </a>
                 <div class="h-[1px] bg-black/5 my-1"></div>
                 <button onclick="auth.logout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors rounded-xl text-left">
@@ -277,7 +293,7 @@
 </div>
 
 <!-- Upgrade Banner -->
-<section class="bg-on-surface text-white p-8 md:p-12 rounded-xl relative overflow-hidden group mb-16 animate-on-scroll">
+<section class="bg-on-surface text-white p-8 md:p-12 rounded-xl relative overflow-hidden group mb-16 animate-on-scroll pro-hide">
     <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
         <div class="max-w-md text-center md:text-left">
             <h3 class="text-2xl font-bold mb-2">Get Unlimited Optimizations</h3>
@@ -287,12 +303,24 @@
     </div>
     <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-primary/20 rounded-full blur-[100px] group-hover:scale-125 transition-transform duration-700"></div>
 </section>
+
+<!-- Pro Welcome Banner -->
+<section class="bg-blue-900 dark:bg-blue-950 text-white p-8 md:p-12 rounded-xl relative overflow-hidden group mb-16 animate-on-scroll pro-show hidden">
+    <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
+        <div class="max-w-md text-center md:text-left">
+            <h3 class="text-2xl font-bold mb-2">Enjoy Your Pro Benefits 🚀</h3>
+            <p class="text-blue-200/70 text-sm">You have full access to our most powerful AI models. Each optimization uses our premium Claude 3.5 engine to guarantee the best results.</p>
+        </div>
+        <button onclick="window.location.href='optimize.html'" class="bg-white text-blue-900 px-8 py-4 rounded-full font-bold shadow-xl transition-all whitespace-nowrap hover:scale-105">Optimize New Resume</button>
+    </div>
+    <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-blue-400/20 rounded-full blur-[100px] group-hover:scale-125 transition-transform duration-700"></div>
+</section>
 </div>
 </main>
 <!-- Footer -->
 <footer class="w-full py-12 border-t border-slate-100 dark:border-slate-900 bg-white dark:bg-slate-950">
 <div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-<p class="text-xs text-slate-400">© 2024 AutoCV. All rights reserved.</p>
+<p class="text-xs text-slate-400">© 2025 AutoCV. All rights reserved.</p>
 <div class="flex gap-8">
 <a class="text-xs text-slate-500 hover:text-blue-600 transition-colors" href="privacy.html">Privacy</a>
 <a class="text-xs text-slate-500 hover:text-blue-600 transition-colors" href="terms.html">Terms</a>
@@ -309,8 +337,8 @@
 </button>
 </div>
 
-<script src="../static/js/config.js?v=2.4"></script>
-<script src="../static/js/app.js?v=2.4"></script>
+<script src="../static/js/config.js?v=2.8"></script>
+<script src="../static/js/app.js?v=2.8"></script>
 
 <script>
     // Reveal animations on scroll
@@ -373,12 +401,7 @@
       try {
           if (!auth.supabase) throw new Error("Supabase not initialized");
 
-          // Update Greeting
-          const welcome = document.getElementById('user-greeting');
-          const fullName = auth.user.user_metadata?.full_name || auth.user.email.split('@')[0];
-          const hour = new Date().getHours();
-          const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
-          welcome.textContent = `${greeting}, ${fullName.split(' ')[0]} 👋`;
+          // Greeting is handled by app.js _updateUI()
 
           // Fetch real data from Supabase
           const { data, error } = await auth.supabase

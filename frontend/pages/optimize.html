@@ -78,9 +78,15 @@
       }
     </script>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
+    /* Nuclear Auth/Pro Visibility System */
+    body.is-pro .pro-hide { display: none !important; }
+    body:not(.is-pro) .pro-show { display: none !important; }
+    body.is-logged-in .auth-hide { display: none !important; }
+    body:not(.is-logged-in) .auth-show { display: none !important; }
+    
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #e3e2e7; border-radius: 10px; }
@@ -218,9 +224,13 @@
 <textarea id="jd-input" class="w-full h-64 bg-surface border-none border-b-2 border-surface-container-high focus:ring-0 focus:border-primary transition-all p-4 text-sm rounded-t-lg resize-none" placeholder="Paste the target job description here..."></textarea>
 </div>
 <!-- Action Button -->
-<button id="analyze-btn" class="w-full bg-primary-container text-on-primary-container py-4 rounded-full font-bold flex items-center justify-center gap-2 hover:brightness-110 transition-all shadow-lg shadow-primary-container/20">
+<button id="analyze-btn" class="w-full bg-primary-container text-on-primary-container py-4 rounded-full font-bold flex items-center justify-center gap-2 hover:brightness-110 transition-all shadow-lg shadow-primary-container/20 pro-hide">
                     Analyze My Resume Free
                     <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+<button id="analyze-btn-pro" onclick="document.getElementById('analyze-btn').click()" class="w-full bg-blue-600 text-white py-4 rounded-full font-bold flex items-center justify-center gap-2 hover:brightness-110 transition-all shadow-lg shadow-blue-500/20 pro-show hidden">
+                    Analyze with Premium AI
+                    <span class="material-symbols-outlined text-[18px]">rocket_launch</span>
 </button>
 </div>
 </section>
@@ -238,8 +248,8 @@
         </button>
 </div>
 
-<script src="../static/js/config.js?v=2.4"></script>
-<script src="../static/js/app.js?v=2.4"></script>
+<script src="../static/js/config.js?v=2.8"></script>
+<script src="../static/js/app.js?v=2.8"></script>
 
 <script>
     // Reveal animations on scroll
@@ -329,7 +339,10 @@
           }
         } finally {
           analyzeBtn.disabled = false;
-          analyzeBtn.innerHTML = 'Analyze My Resume Free <span class="material-symbols-outlined text-[18px]">arrow_forward</span>';
+          const btnText = auth.isPro ? 'Analyze with Premium AI <span class="material-symbols-outlined text-[18px]">rocket_launch</span>' : 'Analyze My Resume Free <span class="material-symbols-outlined text-[18px]">arrow_forward</span>';
+          analyzeBtn.innerHTML = btnText;
+          const proBtn = document.getElementById('analyze-btn-pro');
+          if (proBtn) proBtn.innerHTML = btnText;
         }
       });
   });
@@ -372,7 +385,7 @@
                 </div>
             </div>
          </div>
-         <div class="relative overflow-hidden bg-primary rounded-xl p-8 text-white shadow-xl shadow-primary/20 mt-8 group">
+         <div class="relative overflow-hidden bg-primary rounded-xl p-8 text-white shadow-xl shadow-primary/20 mt-8 group pro-hide">
             <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-primary-container blur-3xl rounded-full opacity-50 group-hover:scale-125 transition-transform duration-700"></div>
             <div class="relative z-10 flex flex-col md:flex-row gap-8 items-center">
                 <div class="flex-1 space-y-4 text-center md:text-left">
@@ -384,6 +397,19 @@
                         ${data.is_guest?'Sign In to Reveal':'Upgrade to Unlock & Fix Resume'}
                     </button>
                 </div>
+            </div>
+         </div>
+         
+         <div class="relative overflow-hidden bg-blue-600 rounded-xl p-8 text-white shadow-xl shadow-blue-500/20 mt-8 group pro-show hidden">
+            <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-blue-400 blur-3xl rounded-full opacity-50 group-hover:scale-125 transition-transform duration-700"></div>
+            <div class="relative z-10 flex flex-col md:flex-row gap-8 items-center">
+                <div class="flex-1 space-y-4 text-center md:text-left">
+                    <h2 class="text-2xl font-bold leading-tight">Pro Features Unlocked</h2>
+                    <p class="text-blue-100/80 text-sm italic">Your premium subscription is active. All keywords and AI insights are fully visible.</p>
+                </div>
+                <button onclick="window.location.href='results.html'" class="bg-white text-blue-600 px-8 py-3 rounded-full text-sm font-bold hover:scale-105 transition-all shadow-md">
+                    Go to Full Results
+                </button>
             </div>
          </div>
       </div>

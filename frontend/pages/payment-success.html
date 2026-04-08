@@ -176,11 +176,11 @@
 <!-- Semantic Footer (Based on JSON instructions but minimized for focus) -->
 <footer class="w-full py-12 bg-surface">
 <div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-<span class="text-xs font-light text-slate-400">© 2024 AutoCV. Built with Precision.</span>
+<span class="text-xs font-light text-slate-400">© 2025 AutoCV. All rights reserved.</span>
 <div class="flex gap-6">
 <a class="text-xs font-light text-slate-400 hover:underline" href="privacy.html">Privacy Policy</a>
 <a class="text-xs font-light text-slate-400 hover:underline" href="terms.html">Terms of Service</a>
-<a class="text-xs font-light text-slate-400 hover:underline" href="mailto:autocv.app@gmail.com">Support</a>
+<a class="text-xs font-light text-slate-400 hover:underline" href="support.html">Support</a>
 </div>
 </div>
 </footer>
@@ -213,35 +213,44 @@
 
 
 <script>
-  document.addEventListener("DOMContentLoaded", async () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const sessionId = urlParams.get('session_id');
+  document.addEventListener("DOMContentLoaded", () => {
+      // For manual payments, show confirmation and redirect to dashboard
+      document.querySelector('.progress-fill').style.width = '100%';
 
-      if (!sessionId) {
-          toast('Missing session ID', 'error');
-          return;
-      }
+      // Update status text to reflect manual payment flow
+      document.querySelector('h1').textContent = 'Payment request received.';
+      document.querySelector('main p.text-xl').textContent = 'Your account will be upgraded within 24 hours after payment verification.';
 
-      try {
-          // Verify payment
-          const verifyRes = await api.get('/payments/verify/' + sessionId);
-          if (verifyRes.paid) {
-              // Now call optimize
-              const optRes = await api.post('/optimize', {});
-              sessionStorage.setItem('opt_result', JSON.stringify(optRes));
-              
-              // update UI to show success
-              document.querySelector('.progress-fill').style.width = '100%';
-              setTimeout(() => {
-                  window.location.href = '/pages/results.html';
-              }, 700);
-          } else {
-              toast('Payment not confirmed', 'error');
-              setTimeout(() => { window.location.href='/pages/dashboard.html'; }, 2000);
-          }
-      } catch (e) {
-          toast(e.message || 'Error processing request', 'error');
-          document.querySelector('main').innerHTML = '<div class="text-center p-10"><h2 class="text-xl font-bold text-error">Something went wrong.</h2><p class="mt-4">Please contact autocv.app@gmail.com.</p></div>';
+      // Update the status card
+      const statusCard = document.querySelector('.w-full.max-w-\\[480px\\]');
+      if (statusCard) {
+          statusCard.innerHTML = `
+              <h2 class="text-lg font-bold text-on-surface mb-6 text-left">What happens next?</h2>
+              <div class="space-y-5 mb-8">
+                  <div class="flex items-center gap-4 text-left">
+                      <div class="flex-shrink-0 w-6 h-6 flex items-center justify-center text-tertiary">
+                          <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                      </div>
+                      <span class="text-on-surface font-medium">Payment request logged</span>
+                  </div>
+                  <div class="flex items-center gap-4 text-left">
+                      <div class="flex-shrink-0 w-6 h-6 flex items-center justify-center text-primary-container">
+                          <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">schedule</span>
+                      </div>
+                      <span class="text-on-surface font-medium">Admin verifies your payment (within 24 hours)</span>
+                  </div>
+                  <div class="flex items-center gap-4 text-left">
+                      <div class="flex-shrink-0 w-6 h-6 flex items-center justify-center text-outline-variant">
+                          <span class="material-symbols-outlined text-xl">circle</span>
+                      </div>
+                      <span class="text-on-secondary-container">Your account is upgraded automatically</span>
+                  </div>
+              </div>
+              <div class="flex flex-col gap-3">
+                  <button onclick="window.location.href='dashboard.html'" class="w-full bg-primary-container text-white py-3 rounded-full font-semibold hover:brightness-110 transition-all">Go to Dashboard</button>
+                  <p class="text-xs text-on-secondary-container text-center">Questions? Visit our <a href="support.html" class="text-primary font-semibold hover:underline">Support page</a></p>
+              </div>
+          `;
       }
   });
 </script>

@@ -16,11 +16,7 @@ def create_app():
     app.config['SESSION_COOKIE_HTTPONLY'] = True
     app.config['PERMANENT_SESSION_LIFETIME'] = 3600
 
-    CORS(app, origins=[
-        "http://localhost:3000",
-        "http://localhost:5500",
-        os.environ.get("FRONTEND_URL", "")
-    ], supports_credentials=True, allow_headers=["Content-Type"], methods=["GET", "POST", "OPTIONS"])
+    CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True, allow_headers=["Content-Type", "Authorization", "X-Requested-With"], methods=["GET", "POST", "OPTIONS"])
 
     limiter = Limiter(
         get_remote_address,
