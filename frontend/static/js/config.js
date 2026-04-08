@@ -1,6 +1,6 @@
 // ── AutoCV Configuration ─────────────────────────────────
 // Sets window globals BEFORE app.js loads
-window.RESUMEAI_API_URL = window.RESUMEAI_API_URL || 'https://resumeai-backend-qta5.onrender.com/api';
+window.RESUMEAI_API_URL = window.RESUMEAI_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : '/api');
 
 // Supabase Auth Configuration (PUBLIC keys - safe for frontend)
 window.SUPABASE_URL = 'https://zegytszmdcpwctwomqge.supabase.co';
