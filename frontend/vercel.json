@@ -3,7 +3,8 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "https://autocv-backend-gmsh.onrender.com/api/$1" }
+    { "source": "/api/(.*)", "destination": "https://autocv-backend-gmsh.onrender.com/api/$1" },
+    { "source": "/api", "destination": "https://autocv-backend-gmsh.onrender.com/api" }
   ],
   "headers": [
     {
