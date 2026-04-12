@@ -11,15 +11,31 @@ const api = {
       opts.headers = { 'Content-Type': 'application/json' };
       opts.body = JSON.stringify(body);
     }
-    const res = await fetch(`${API}${path}`, opts);
-    const data = await res.json();
+    const url = `${API}${path}`;
+    let res;
+    try {
+      res = await fetch(url, opts);
+    } catch (e) {
+      throw new Error('Cannot reach server. Please check your connection.');
+    }
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); } catch { throw new Error(res.status === 404 ? `API endpoint not found: ${path}` : `Server error (${res.status})`); }
     if (!res.ok) throw new Error(data.error || 'Request failed');
     return data;
   },
   async get(path) {
-    const res = await fetch(`${API}${path}`, { credentials: 'include' });
-    const data = await res.json();
-    if (!res.ok) throw Error(data.error || 'Request failed');
+    const url = `${API}${path}`;
+    let res;
+    try {
+      res = await fetch(url, { credentials: 'include' });
+    } catch (e) {
+      throw new Error('Cannot reach server. Please check your connection.');
+    }
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); } catch { throw new Error(res.status === 404 ? `API endpoint not found: ${path}` : `Server error (${res.status})`); }
+    if (!res.ok) throw new Error(data.error || 'Request failed');
     return data;
   }
 };

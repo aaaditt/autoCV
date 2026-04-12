@@ -30,12 +30,14 @@ def create_app():
     from routes.auth import auth_bp
     from routes.payments import payments_bp
     from routes.download import download_bp
+    from routes.recruiter import recruiter_bp
 
     app.register_blueprint(analyze_bp, url_prefix="/api")
     app.register_blueprint(optimize_bp, url_prefix="/api")
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(payments_bp, url_prefix="/api")
     app.register_blueprint(download_bp, url_prefix="/api")
+    app.register_blueprint(recruiter_bp, url_prefix="/api")
 
     app.limiter = limiter
 

@@ -84,6 +84,7 @@
         .resume-shadow {
             box-shadow: 0 10px 40px rgba(29, 29, 31, 0.06);
         }
+        .tab-content.hidden { display: none; }
         .glass-nav {
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -214,71 +215,63 @@
 </section>
 <!-- Centered Pill Tabs -->
 <div class="flex justify-center mb-8">
-<div class="bg-surface-container-high p-1.5 rounded-full flex gap-1">
-<button class="px-6 py-2 rounded-full text-sm font-semibold transition-colors text-on-secondary-container hover:bg-surface-container-highest">Original Resume</button>
-<button class="px-6 py-2 rounded-full text-sm font-semibold transition-colors bg-white text-on-surface shadow-sm">Optimized Resume</button>
-<button class="px-6 py-2 rounded-full text-sm font-semibold transition-colors text-on-secondary-container hover:bg-surface-container-highest">Changes Made</button>
+<div class="bg-surface-container-high p-1.5 rounded-full flex gap-1" id="result-tabs">
+<button data-tab="original" class="tab-btn px-6 py-2 rounded-full text-sm font-semibold transition-colors text-on-secondary-container hover:bg-surface-container-highest">Original Resume</button>
+<button data-tab="optimized" class="tab-btn px-6 py-2 rounded-full text-sm font-semibold transition-colors bg-white text-on-surface shadow-sm">Optimized Resume</button>
+<button data-tab="changes" class="tab-btn px-6 py-2 rounded-full text-sm font-semibold transition-colors text-on-secondary-container hover:bg-surface-container-highest">Changes Made</button>
 </div>
 </div>
-<!-- Content Area: Optimized Resume Card -->
+
+<!-- Tab Content: Original Resume -->
+<div id="tab-original" class="tab-content hidden">
 <div class="bg-white rounded-lg resume-shadow p-12 md:p-20 relative overflow-hidden">
-<!-- Professional Header -->
-<header class="mb-12 text-center">
-<h2 class="text-3xl font-bold tracking-tight mb-2">Alex Thompson</h2>
-<p class="text-on-secondary-container text-sm tracking-wide">alex.thompson@email.com • San Francisco, CA • linkedin.com/in/alex-t</p>
-</header>
-<div class="space-y-10">
-<!-- Summary -->
-<section>
-<h3 class="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-4">Professional Summary</h3>
-<p class="text-on-surface leading-relaxed">
-                        Results-driven Senior Software Engineer with 8+ years of experience in <span class="bg-[#D1FAE5] text-tertiary px-1 rounded">full-stack development</span>. Proven track record of <span class="bg-[#D1FAE5] text-tertiary px-1 rounded">scaling distributed systems</span> and leading cross-functional teams to deliver <span class="bg-[#D1FAE5] text-tertiary px-1 rounded">high-availability cloud solutions</span>.
-                    </p>
-</section>
-<!-- Experience -->
-<section>
-<h3 class="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-4">Experience</h3>
-<div class="space-y-8">
-<div>
-<div class="flex justify-between items-baseline mb-2">
-<h4 class="font-bold text-lg">Lead Engineer @ CloudPulse</h4>
-<span class="text-sm text-on-secondary-container italic">2020 – Present</span>
-</div>
-<ul class="list-disc ml-4 space-y-3 text-on-surface leading-relaxed">
-<li>Architected a <span class="bg-[#D1FAE5] text-tertiary px-1 rounded">microservices architecture</span> using Node.js and Kubernetes, reducing latency by 45%.</li>
-<li>Implemented <span class="bg-[#D1FAE5] text-tertiary px-1 rounded">CI/CD pipelines</span> resulting in a 3x increase in deployment frequency.</li>
-<li>Managed a team of 12 engineers, fostering <span class="bg-[#D1FAE5] text-tertiary px-1 rounded">Agile methodologies</span> and code review standards.</li>
-</ul>
-</div>
-<div>
-<div class="flex justify-between items-baseline mb-2">
-<h4 class="font-bold text-lg">Software Developer @ DataStream</h4>
-<span class="text-sm text-on-secondary-container italic">2017 – 2020</span>
-</div>
-<ul class="list-disc ml-4 space-y-3 text-on-surface leading-relaxed">
-<li>Developed real-time <span class="bg-[#D1FAE5] text-tertiary px-1 rounded">data visualization dashboards</span> using React and GraphQL.</li>
-<li>Optimized <span class="bg-[#D1FAE5] text-tertiary px-1 rounded">PostgreSQL queries</span> improving database throughput by 60%.</li>
-</ul>
+    <div id="original-resume-content" class="whitespace-pre-wrap text-on-surface leading-relaxed font-body text-sm">
+        <p class="text-center text-on-secondary-container italic py-20">Loading original resume...</p>
+    </div>
+    <div class="absolute top-0 right-0 p-8 opacity-5">
+        <span class="material-symbols-outlined text-9xl">description</span>
+    </div>
 </div>
 </div>
-</section>
-<!-- Skills -->
-<section>
-<h3 class="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-4">Technical Skills</h3>
-<div class="flex flex-wrap gap-2">
-<span class="px-3 py-1 bg-surface-container rounded-md text-sm font-medium">TypeScript</span>
-<span class="px-3 py-1 bg-surface-container rounded-md text-sm font-medium">Python</span>
-<span class="px-3 py-1 bg-[#D1FAE5] text-tertiary rounded-md text-sm font-bold">AWS (Lambda, S3, RDS)</span>
-<span class="px-3 py-1 bg-surface-container rounded-md text-sm font-medium">Docker</span>
-<span class="px-3 py-1 bg-[#D1FAE5] text-tertiary rounded-md text-sm font-bold">System Design</span>
-<span class="px-3 py-1 bg-surface-container rounded-md text-sm font-medium">Redis</span>
+
+<!-- Tab Content: Optimized Resume -->
+<div id="tab-optimized" class="tab-content">
+<div class="bg-white rounded-lg resume-shadow p-12 md:p-20 relative overflow-hidden">
+    <div id="optimized-resume-content" class="whitespace-pre-wrap text-on-surface leading-relaxed font-body text-sm">
+        <p class="text-center text-on-secondary-container italic py-20">Loading optimized resume...</p>
+    </div>
+    <div class="absolute top-0 right-0 p-8 opacity-5">
+        <span class="material-symbols-outlined text-9xl">auto_fix_high</span>
+    </div>
 </div>
-</section>
 </div>
-<!-- Page Watermark Style Decoration -->
-<div class="absolute top-0 right-0 p-8 opacity-5">
-<span class="material-symbols-outlined text-9xl">auto_fix_high</span>
+
+<!-- Tab Content: Changes Made -->
+<div id="tab-changes" class="tab-content hidden">
+<div class="bg-white rounded-lg resume-shadow p-12 md:p-20 relative overflow-hidden">
+    <div class="mb-6 flex items-center gap-4 text-xs font-bold uppercase tracking-wider">
+        <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-red-100 border border-red-300 inline-block"></span> Removed</span>
+        <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-green-100 border border-green-300 inline-block"></span> Added</span>
+    </div>
+    <div id="changes-diff-content" class="text-sm leading-relaxed font-body">
+        <p class="text-center text-on-secondary-container italic py-20">Loading changes...</p>
+    </div>
 </div>
+</div>
+
+<!-- Keyword Summary -->
+<div id="keyword-summary" class="mt-8 bg-white rounded-lg resume-shadow p-8 hidden">
+    <h3 class="text-xs font-bold uppercase tracking-[0.2em] text-primary mb-4">Keyword Match Summary</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-tertiary mb-3">Matched Keywords</h4>
+            <div id="matched-keywords-list" class="flex flex-wrap gap-2"></div>
+        </div>
+        <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-error mb-3">Still Missing</h4>
+            <div id="missing-keywords-list" class="flex flex-wrap gap-2"></div>
+        </div>
+    </div>
 </div>
 </main>
 <!-- BottomNavBar / Download Bar (Shared Component) -->
@@ -317,63 +310,151 @@
 <script src="../static/js/app.js"></script>
 
 <script>
-    // Reveal animations on scroll
-    document.addEventListener("DOMContentLoaded", () => {
-        document.body.classList.add('animate-page');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('section, .animate-on-scroll').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(15px)';
-            el.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-            observer.observe(el);
-        });
-    });
-</script>
-
-
-<script>
   document.addEventListener("DOMContentLoaded", () => {
+      document.body.classList.add('animate-page');
+
+      // ── Load optimization data from sessionStorage ──
       const resultStr = sessionStorage.getItem('opt_result');
       if (!resultStr) {
-          toast('No recent optimization found.', 'error');
+          toast('No recent optimization found. Redirecting...', 'error');
+          setTimeout(() => { window.location.href = 'optimize.html'; }, 2000);
           return;
       }
       const data = JSON.parse(resultStr);
 
-      // Update Scores and Content
-      const scoreEl = document.querySelector('.text-3xl.md\\:text-4xl.font-extrabold');
-      if (scoreEl) scoreEl.textContent = `${data.optimized_score}%`;
-      
-      const improvementEl = document.querySelector('.bg-tertiary\\/10.text-tertiary');
-      if (improvementEl) improvementEl.innerHTML = `<span class="material-symbols-outlined text-lg">trending_up</span> +${data.score_improvement} point improvement`;
+      // ── Update scores (hero section) ──
+      const origScore = data.original_score || 0;
+      const optScore = data.optimized_score || 0;
+      const improvement = data.score_improvement || (optScore - origScore);
 
-      // Handle Download Logic (Pro vs Free)
-      const handleDownloadClick = () => {
-          if (auth.isPro) {
-              toast('Preparing your optimized document...', 'info');
-              // Simulate direct download
-              setTimeout(() => {
-                  toast('Download started! Check your downloads folder.', 'success');
-              }, 1500);
-          } else {
+      // Center score text
+      const scoreEl = document.querySelector('.text-3xl.md\\:text-4xl.font-extrabold');
+      if (scoreEl) scoreEl.textContent = `${optScore}%`;
+
+      // Improvement pill
+      const improvementEl = document.querySelector('.bg-tertiary\\/10.text-tertiary');
+      if (improvementEl) improvementEl.innerHTML = `<span class="material-symbols-outlined text-lg">trending_up</span> +${improvement} point improvement`;
+
+      // Comparison labels (Previous / Optimized)
+      const compLabels = document.querySelectorAll('.absolute.-bottom-4 span.text-lg');
+      if (compLabels.length >= 2) {
+          compLabels[0].textContent = `${origScore}%`;
+          compLabels[1].textContent = `${optScore}%`;
+      }
+
+      // SVG rings - update stroke-dashoffset for real scores
+      const outerRing = document.querySelectorAll('svg circle.text-primary');
+      const innerRing = document.querySelectorAll('svg circle.text-slate-300');
+      if (outerRing.length) {
+          // Outer ring = optimized score (r=45%, circumference ≈ 283)
+          const outerOffset = 283 - (optScore / 100) * 283;
+          outerRing[0].setAttribute('stroke-dashoffset', outerOffset);
+      }
+      if (innerRing.length) {
+          // Inner ring = original score (r=32%, circumference ≈ 201)
+          const innerOffset = 201 - (origScore / 100) * 201;
+          innerRing[0].setAttribute('stroke-dashoffset', innerOffset);
+      }
+
+      // Banner job title
+      const bannerEl = document.querySelector('.bg-\\[\\#34C759\\] span.text-sm');
+      const jobTitle = sessionStorage.getItem('opt_job_title') || 'your target role';
+      if (bannerEl) bannerEl.textContent = `Optimization Complete: Your resume is now ATS-optimized for ${jobTitle}.`;
+
+      // ── Populate resume content ──
+      const optimizedText = data.optimized_text || 'Optimized resume text not available.';
+      const originalText = data.original_text || 'Original resume text not available.';
+
+      document.getElementById('optimized-resume-content').textContent = optimizedText;
+      document.getElementById('original-resume-content').textContent = originalText;
+
+      // ── Build diff view ──
+      const diffContainer = document.getElementById('changes-diff-content');
+      if (originalText && optimizedText && originalText !== 'Original resume text not available.') {
+          const origLines = originalText.split('\n');
+          const optLines = optimizedText.split('\n');
+          let diffHtml = '';
+          const maxLen = Math.max(origLines.length, optLines.length);
+          for (let i = 0; i < maxLen; i++) {
+              const o = origLines[i] ?? '';
+              const n = optLines[i] ?? '';
+              if (o === n) {
+                  if (o.trim()) diffHtml += `<div class="py-0.5">${esc(o)}</div>`;
+                  else diffHtml += `<div class="py-0.5">&nbsp;</div>`;
+              } else {
+                  if (o.trim()) diffHtml += `<div class="py-0.5 px-2 bg-red-50 border-l-2 border-red-300 text-red-700 rounded-r">${esc(o)}</div>`;
+                  if (n.trim()) diffHtml += `<div class="py-0.5 px-2 bg-green-50 border-l-2 border-green-300 text-green-700 rounded-r">${esc(n)}</div>`;
+              }
+          }
+          diffContainer.innerHTML = diffHtml;
+      } else {
+          diffContainer.innerHTML = '<p class="text-center text-on-secondary-container italic py-10">Diff unavailable — original text was not returned by the server.</p>';
+      }
+
+      // ── Keyword summary ──
+      const matchedKws = data.matched_keywords || [];
+      const missingKws = data.missing_keywords || [];
+      if (matchedKws.length || missingKws.length) {
+          document.getElementById('keyword-summary').classList.remove('hidden');
+          document.getElementById('matched-keywords-list').innerHTML = matchedKws.map(kw =>
+              `<span class="px-3 py-1.5 bg-[#D1FAE5] text-tertiary text-[11px] font-bold rounded-full">${esc(kw)}</span>`
+          ).join('') || '<span class="text-sm text-on-secondary-container italic">None</span>';
+          document.getElementById('missing-keywords-list').innerHTML = missingKws.map(kw =>
+              `<span class="px-3 py-1.5 bg-red-50 text-red-600 text-[11px] font-bold rounded-full">${esc(kw)}</span>`
+          ).join('') || '<span class="text-sm text-on-secondary-container italic">None</span>';
+      }
+
+      // ── Tab switching ──
+      const tabs = document.querySelectorAll('.tab-btn');
+      const tabContents = document.querySelectorAll('.tab-content');
+      tabs.forEach(btn => {
+          btn.addEventListener('click', () => {
+              // Reset all tabs
+              tabs.forEach(t => {
+                  t.classList.remove('bg-white', 'text-on-surface', 'shadow-sm');
+                  t.classList.add('text-on-secondary-container');
+              });
+              tabContents.forEach(c => c.classList.add('hidden'));
+              // Activate clicked tab
+              btn.classList.add('bg-white', 'text-on-surface', 'shadow-sm');
+              btn.classList.remove('text-on-secondary-container');
+              const target = document.getElementById('tab-' + btn.dataset.tab);
+              if (target) target.classList.remove('hidden');
+          });
+      });
+
+      // ── Download buttons — hit real backend endpoints ──
+      const handleDownload = async (format) => {
+          if (!auth.isPro) {
               auth.showPaymentModal('Single Resume', '$9');
+              return;
+          }
+          toast('Preparing your document...', 'info');
+          try {
+              const res = await fetch(`${API}/download/${format}`, { credentials: 'include' });
+              if (!res.ok) {
+                  const err = await res.json().catch(() => ({}));
+                  throw new Error(err.error || 'Download failed');
+              }
+              const blob = await res.blob();
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = `optimized_resume.${format}`;
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+              URL.revokeObjectURL(url);
+              toast('Download started!', 'success');
+          } catch (e) {
+              toast(e.message || 'Download failed. Please try again.', 'error');
           }
       };
 
       const downloadPdfBtn = document.getElementById('download-pdf-btn');
       const downloadDocxBtn = document.getElementById('download-docx-btn');
-
-      if (downloadPdfBtn) downloadPdfBtn.addEventListener('click', handleDownloadClick);
-      if (downloadDocxBtn) downloadDocxBtn.addEventListener('click', handleDownloadClick);
+      if (downloadPdfBtn) downloadPdfBtn.addEventListener('click', () => handleDownload('pdf'));
+      if (downloadDocxBtn) downloadDocxBtn.addEventListener('click', () => handleDownload('docx'));
   });
 </script>
 

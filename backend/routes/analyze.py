@@ -1,10 +1,11 @@
 """
 /api/analyze — Free keyword analysis endpoint.
-Zero API cost. Rate limited to 3/day per IP.
+Zero API cost. Plan-gated via plan_service.
 """
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify, session, current_app
 from services.file_service import extract_text, validate_file
-from services.keyword_service import analyze_resume_free
+from services.keyword_service import analyze_resume_free, get_full_analysis
+from services.plan_service import get_features, can_scan
 
 analyze_bp = Blueprint("analyze", __name__)
 
@@ -12,9 +13,9 @@ analyze_bp = Blueprint("analyze", __name__)
 @analyze_bp.route("/analyze", methods=["POST"])
 def analyze():
     """
-    Free analysis endpoint.
+    Analysis endpoint.
     Accepts: multipart/form-data with 'resume' file + 'job_description' text
-    Returns: ATS score + partial keyword data (rest blurred on frontend)
+    Returns: ATS score + keyword data (visibility depends on plan)
     """
     try:
         # Validate inputs
@@ -28,7 +29,6 @@ def analyze():
             return jsonify({"error": "No file selected"}), 400
 
         if not jd_text or len(jd_text) < 2:
-            # Handle empty/minimal JD
             jd_text = ""
 
         # Read and validate file
@@ -41,19 +41,44 @@ def analyze():
         if not resume_text or len(resume_text) < 100:
             return jsonify({"error": "Could not extract text from your resume. Please ensure it's not a scanned image."}), 400
 
-        # Run free local analysis (zero API cost)
-        result = analyze_resume_free(resume_text, jd_text)
-
         # Store resume text in session for later optimization
-        # (avoid re-uploading on payment)
-        from flask import session
         session["resume_text"] = resume_text
         session["jd_text"] = jd_text
 
-        session["analyses_used"] = session.get("analyses_used", 0) + 1
-        if session["analyses_used"] > 3:
-            return jsonify({"error": "Limit reached", "code": "LIMIT_REACHED"}), 402
+        # Determine user context from session
+        user = session.get("user") or {}
+        user_type = user.get("user_type", "student") if user else "guest"
+        plan = user.get("plan", "free") if user else "guest"
+        scans_used = session.get("scans_used", 0)
 
+        # Plan-gated scan limit check
+        if not can_scan(user_type, plan, scans_used):
+            return jsonify({"error": "Scan limit reached", "code": "LIMIT_REACHED"}), 402
+
+        session["scans_used"] = scans_used + 1
+        features = get_features(user_type, plan)
+        show_full = features.get("full_keywords", False)
+
+        if show_full:
+            # Free (logged in) / Single / Pro — full keyword visibility
+            full = get_full_analysis(resume_text, jd_text)
+            return jsonify({
+                "success": True,
+                "score": full["score"],
+                "matched_count": full["matched_count"],
+                "missing_count": full["missing_count"],
+                "total_keywords": full["total_keywords"],
+                "visible_matched": full["matched_keywords"],
+                "visible_missing": full["missing_keywords"],
+                "blurred_matched_count": 0,
+                "blurred_missing_count": 0,
+                "is_pro": plan in ("single", "pro"),
+                "features": features,
+                "score_label": _score_label(full["score"])
+            })
+
+        # Guest users — limited view (3 keywords visible, rest blurred)
+        result = analyze_resume_free(resume_text, jd_text)
         return jsonify({
             "success": True,
             "score": result["score"],
@@ -63,6 +88,8 @@ def analyze():
             "visible_matched": result["visible_matched"],
             "blurred_matched_count": result["blurred_matched_count"],
             "blurred_missing_count": result["blurred_missing_count"],
+            "is_pro": False,
+            "features": features,
             "score_label": _score_label(result["score"])
         })
 

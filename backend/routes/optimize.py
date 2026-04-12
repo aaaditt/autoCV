@@ -1,25 +1,27 @@
 """
 /api/optimize — AI resume rewrite endpoint.
-Calls Claude API. ONLY accessible after Stripe payment confirmed.
+Calls Claude API. Plan-gated to single/pro plans only.
 """
 from flask import Blueprint, request, jsonify, session, current_app
 from services.claude_service import optimize_resume
 from services.keyword_service import get_full_analysis
-from routes.auth import require_paid_session
+from routes.auth import require_auth, require_plan
 
 optimize_bp = Blueprint("optimize", __name__)
 
 
 @optimize_bp.route("/optimize", methods=["POST"])
+@require_auth
+@require_plan(["single", "pro"])
 def optimize():
     """
     Paid optimization endpoint.
-    Requires: valid payment session (set by Stripe webhook)
-    Returns: optimized resume text + before/after scores
+    Requires: authenticated user with single or pro plan.
+    Returns: optimized resume text + before/after scores.
     """
     try:
-        # Gate: removed Stripe payment check for manual flow
-        optimization_id = "manual-opt-launch-today"
+        user = session.get("user", {})
+        optimization_id = f"opt-{user.get('id', 'unknown')}-{int(__import__('time').time())}"
 
         # Get resume data from session (set during /analyze)
         resume_text = session.get("resume_text")
@@ -47,9 +49,6 @@ def optimize():
         session["optimized_text"] = result["optimized_text"]
         session["original_score"] = original_score
         session["optimized_score"] = result["new_score"]
-
-        # Clear payment flag (one-time use)
-        session.pop("payment_verified", None)
 
         return jsonify({
             "success": True,

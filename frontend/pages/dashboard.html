@@ -1,472 +1,286 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                "tertiary-container": "#008633",
-                "on-secondary": "#ffffff",
-                "outline": "#717785",
-                "surface-variant": "#e3e2e7",
-                "on-primary": "#ffffff",
-                "surface-container-high": "#e9e7ed",
-                "primary-fixed-dim": "#abc7ff",
-                "secondary": "#5f5e60",
-                "on-primary-fixed": "#001b3f",
-                "on-secondary-container": "#636264",
-                "error": "#ba1a1a",
-                "on-primary-fixed-variant": "#00458f",
-                "primary-container": "#0071e3",
-                "outline-variant": "#c1c6d6",
-                "inverse-surface": "#2f3034",
-                "inverse-primary": "#abc7ff",
-                "on-secondary-fixed-variant": "#474649",
-                "tertiary": "#006a26",
-                "on-tertiary-fixed-variant": "#00531c",
-                "on-tertiary-fixed": "#002107",
-                "surface-container-low": "#f4f3f8",
-                "on-error-container": "#93000a",
-                "on-tertiary": "#ffffff",
-                "primary-fixed": "#d7e2ff",
-                "on-error": "#ffffff",
-                "surface-container": "#efedf3",
-                "surface": "#faf8fe",
-                "secondary-fixed": "#e4e2e4",
-                "background": "#faf8fe",
-                "surface-tint": "#005cbb",
-                "surface-bright": "#faf8fe",
-                "on-primary-container": "#fcfbff",
-                "inverse-on-surface": "#f1f0f6",
-                "error-container": "#ffdad6",
-                "tertiary-fixed-dim": "#53e16f",
-                "on-secondary-fixed": "#1b1b1d",
-                "surface-dim": "#dbd9df",
-                "secondary-fixed-dim": "#c8c6c8",
-                "on-tertiary-container": "#f1ffec",
-                "tertiary-fixed": "#72fe88",
-                "surface-container-highest": "#e3e2e7",
-                "on-surface": "#1a1b1f",
-                "on-surface-variant": "#414753",
-                "primary": "#0059b5",
-                "surface-container-lowest": "#ffffff",
-                "on-background": "#1a1b1f",
-                "secondary-container": "#e2dfe1"
-            },
-            "borderRadius": {
-                "DEFAULT": "1rem",
-                "lg": "2rem",
-                "xl": "3rem",
-                "full": "9999px"
-            },
-            "fontFamily": {
-                "headline": ["Inter"],
-                "body": ["Inter"],
-                "label": ["Inter"]
-            }
-          },
-        }
-      }
-    </script>
-<style>
-    /* Nuclear Auth/Pro Visibility System */
-    body.is-pro .pro-hide { display: none !important; }
-    body:not(.is-pro) .pro-show { display: none !important; }
-    body.is-logged-in .auth-hide { display: none !important; }
-    body:not(.is-logged-in) .auth-show { display: none !important; }
-    
-    body { font-family: 'Inter', sans-serif; }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-    </style>
-
-<style>
-    /* Global Animations */
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-page {
-        animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    
-    /* Button Hover Enhancements */
-    button, a.btn, a[class*="bg-primary"], a[class*="bg-surface"] {
-        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, opacity 0.2s ease !important;
-    }
-    button:hover, a.btn:hover {
-        transform: translateY(-2px);
-    }
-</style>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.42.0/dist/umd/supabase.js"></script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — AutoCV</title>
+    <meta name="description" content="Your AutoCV dashboard — view scan history, ATS scores, and manage your resume optimization journey.">
+    <link rel="stylesheet" href="/static/css/design-system.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="/static/js/config.js" defer></script>
+    <script src="/static/js/auth.js" defer></script>
 </head>
-<body class="bg-surface text-on-surface antialiased flex min-h-screen">
-<!-- SideNavBar -->
-<aside class="w-[240px] h-screen sticky top-0 flex flex-col bg-slate-50 dark:bg-slate-950 border-r border-slate-200/15 dark:border-slate-800/15 p-4 gap-2 shrink-0">
-<div class="mb-6 px-2">
-<a href="/home.html" class="text-lg font-bold text-slate-900 dark:text-white tracking-tight hover:opacity-80 transition-opacity">AutoCV</a>
-<p class="text-[10px] uppercase tracking-widest text-secondary font-semibold plan-badge">Pro Plan</p>
-</div>
-<button class="flex items-center justify-center gap-2 bg-primary-container text-white py-3 px-4 rounded-lg shadow-sm hover:brightness-110 transition-all mb-4">
-<span class="material-symbols-outlined text-[20px]">add</span>
-<span class="text-sm font-semibold">New Resume</span>
-</button>
-<nav class="flex flex-col gap-1 overflow-y-auto no-scrollbar flex-grow">
-<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-blue-600 bg-white rounded-lg shadow-sm" href="dashboard.html">
-<span class="material-symbols-outlined text-[20px]">dashboard</span>
-                Dashboard
-            </a>
-<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors rounded-lg" href="optimize.html">
-<span class="material-symbols-outlined text-[20px]">auto_fix_high</span>
-                Optimizer
-            </a>
-<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors rounded-lg" href="javascript:toast('History coming soon!', 'info')">
-<span class="material-symbols-outlined text-[20px]">history</span>
-                History
-            </a>
-<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors rounded-lg" href="account.html">
-<span class="material-symbols-outlined text-[20px]">settings</span>
-                Settings
-            </a>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">
+            <div class="nav-logo-mark">A</div>
+            AutoCV
+        </a>
+        <div class="nav-links">
+            <span class="plan-badge badge badge-gray"></span>
+            <span class="user-type-badge badge badge-blue" style="margin-left:4px;"></span>
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.875rem;font-weight:700;cursor:pointer;margin-left:8px;" id="nav-avatar" onclick="document.querySelector('.sidebar').classList.toggle('mobile-open')">U</div>
+        </div>
+    </div>
 </nav>
-<!-- Plan Status Card -->
-<div class="mt-auto p-4 bg-surface-container rounded-xl pro-hide">
-    <div class="flex justify-between items-center mb-2">
-        <span class="text-[11px] font-bold text-on-surface uppercase tracking-wider">Free Plan</span>
-        <span class="text-[11px] font-bold text-on-surface">2/3</span>
-    </div>
-    <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
-        <div class="bg-orange-500 h-full w-[66%]"></div>
-    </div>
-    <p class="text-[10px] text-on-secondary-container mt-2">1 optimization remaining</p>
-</div>
-<div class="mt-auto p-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-xl pro-show hidden">
-    <div class="flex items-center gap-2 mb-2">
-        <span class="material-symbols-outlined text-blue-600 text-sm">verified</span>
-        <span class="text-[11px] font-black text-blue-600 uppercase tracking-widest">Pro Member</span>
-    </div>
-    <p class="text-[10px] text-blue-900/60 dark:text-blue-300/60 leading-tight">You have unlimited optimizations and premium AI features unlocked.</p>
-</div>
 
-<div class="flex flex-col gap-1 mt-4 px-2">
-    <a class="flex items-center gap-3 text-slate-400 px-3 py-1 text-[10px] hover:underline" href="terms.html">
-        <span class="material-symbols-outlined text-[14px]">gavel</span>
-        Legal
-    </a>
-    <a class="flex items-center gap-3 text-slate-400 px-3 py-1 text-[10px] hover:underline" href="privacy.html">
-        <span class="material-symbols-outlined text-[14px]">lock</span>
-        Privacy
-    </a>
-</div>
-</aside>
-<div class="flex-1 flex flex-col min-w-0">
-<!-- TopNavBar -->
-<header class="fixed top-0 right-0 left-[240px] z-50 bg-white/70 backdrop-blur-xl h-16 shadow-[0_10px_40px_rgba(29,29,31,0.06)]">
-<div class="flex justify-between items-center px-8 h-full max-w-[980px] mx-auto">
-<div class="flex items-center gap-6">
-    <a class="text-slate-500 font-semibold text-sm transition-opacity hover:opacity-80" href="../home.html#features">Features</a>
-    <a class="text-blue-600 font-semibold text-sm transition-opacity hover:opacity-80" href="pricing.html">Pricing</a>
-    <a class="text-slate-500 font-semibold text-sm transition-opacity hover:opacity-80" href="about.html">About</a>
-    <a class="text-slate-500 font-semibold text-sm transition-opacity hover:opacity-80" href="support.html">Support</a>
-</div>
-<div class="flex items-center gap-4">
-    <!-- Unauthenticated View -->
-    <div class="auth-hide flex items-center gap-4">
-        <button onclick="window.location.href='login.html'" class="text-slate-600 text-sm font-medium transition-opacity hover:opacity-80">Login</button>
-        <button onclick="auth.loginWithGoogle()" class="bg-primary text-white px-5 py-2 rounded-full text-sm font-semibold transition-opacity hover:opacity-80">Get Started</button>
-    </div>
-    
-    <!-- Authenticated View (Dropdown Menu) -->
-    <div class="auth-show hidden relative group">
-        <button class="flex items-center gap-2 hover:opacity-80 transition-all">
-            <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shadow-lg shadow-primary/20" id="nav-avatar">U</div>
-        </button>
-        <!-- Dropdown Menu -->
-        <div class="absolute right-0 top-full pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-[100]">
-            <div class="w-56 bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] border border-black/5 overflow-hidden p-2">
-                <div class="px-4 py-3 border-b border-black/5 mb-1 bg-slate-50/50">
-                    <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Account</p>
-                    <p class="text-xs font-bold text-slate-900 truncate" id="nav-username">User</p>
+<!-- App Layout -->
+<div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-label">Navigation</div>
+        <a href="/pages/dashboard.html" class="sidebar-link active">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">dashboard</span>
+            Dashboard
+        </a>
+        <a href="/pages/optimize.html" class="sidebar-link">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">document_scanner</span>
+            Scan Resume
+        </a>
+        <a href="/pages/optimize.html" class="sidebar-link">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">auto_fix_high</span>
+            Optimize
+            <span class="lock-icon pro-show">✦</span>
+        </a>
+
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-label">Pro Features</div>
+        <a href="/pages/student/templates.html" class="sidebar-link">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">description</span>
+            Templates
+            <span class="lock-icon" id="templates-lock">🔒</span>
+        </a>
+        <a href="/pages/student/cover-letter.html" class="sidebar-link">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">mail</span>
+            Cover Letter
+            <span class="lock-icon" id="cover-letter-lock">🔒</span>
+        </a>
+
+        <div class="sidebar-divider"></div>
+        <a href="/pages/account.html" class="sidebar-link">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">settings</span>
+            Settings
+        </a>
+
+        <!-- Plan Status -->
+        <div class="sidebar-bottom">
+            <div class="sidebar-plan" id="plan-widget">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-semibold">Free Plan</span>
+                    <span class="badge badge-gray text-xs">0 / 3 scans</span>
                 </div>
-                <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors rounded-xl">
-                    <span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard
-                </a>
-                <a href="account.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors rounded-xl">
-                    <span class="material-symbols-outlined text-[20px]">settings</span> Settings
-                </a>
-                <a href="pricing.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-blue-600 hover:bg-blue-50 transition-colors rounded-xl pro-hide">
-                    <span class="material-symbols-outlined text-[20px]">workspace_premium</span> Upgrade Pro
-                </a>
-                <a href="account.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-green-600 hover:bg-green-50 transition-colors rounded-xl pro-show hidden">
-                    <span class="material-symbols-outlined text-[20px]">verified</span> Pro Subscription
-                </a>
-                <div class="h-[1px] bg-black/5 my-1"></div>
-                <button onclick="auth.logout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors rounded-xl text-left">
-                    <span class="material-symbols-outlined text-[20px]">logout</span> Sign Out
-                </button>
+                <div class="plan-bar">
+                    <div class="plan-bar-fill" style="width:0%"></div>
+                </div>
+                <a href="/pages/pricing.html" class="btn btn-primary btn-sm btn-full" style="margin-top:12px;">Upgrade Plan</a>
             </div>
         </div>
-    </div>
-</div>
-</div>
-</header>
-<!-- Main Content -->
-<main class="flex-1 mt-16 py-24 px-8 overflow-y-auto">
-<div class="max-w-[980px] mx-auto">
-<!-- Header Section -->
-<header class="mb-12 animate-on-scroll">
-    <h1 class="text-[32px] font-extrabold tracking-tight text-on-surface mb-2" id="user-greeting">Welcome back 👋</h1>
-    <p class="text-on-secondary-container body-lg" id="dashboard-subtitle">Let's see how your career documents are performing.</p>
-</header>
+    </aside>
 
-<!-- Dashboard Content Container (Populated by JS) -->
-<div id="dashboard-content" class="min-h-[400px]">
-    <!-- Loading State -->
-    <div id="dashboard-loading" class="flex flex-col items-center justify-center py-20 gap-4">
-        <div class="spinner !border-primary/30 !border-top-primary w-12 h-12"></div>
-        <p class="text-slate-400 font-medium animate-pulse">Fetching your latest stats...</p>
-    </div>
-
-    <!-- Empty State (Hidden by default) -->
-    <div id="dashboard-empty" class="hidden flex flex-col items-center justify-center py-20 px-6 text-center bg-surface-container-low/50 rounded-[2.5rem] border-2 border-dashed border-outline-variant/30 animate-on-scroll">
-        <div class="w-20 h-20 bg-primary-container/10 rounded-full flex items-center justify-center mb-6">
-            <span class="material-symbols-outlined text-primary text-4xl">analytics</span>
+    <!-- Main Content -->
+    <main class="app-main">
+        <!-- Greeting -->
+        <div class="page-header">
+            <div>
+                <h1 id="user-greeting">Good morning 👋</h1>
+                <p class="text-muted text-sm" style="margin-top:4px;">Here's your resume optimization overview</p>
+            </div>
         </div>
-        <h2 class="text-2xl font-bold tracking-tight mb-3 text-slate-900">No data found yet</h2>
-        <p class="text-slate-500 max-w-sm mb-8 leading-relaxed">
-            Analyze your first resume to see your ATS performance, keyword match rates, and real-time improvements here.
-        </p>
-        <button onclick="window.location.href='optimize.html'" class="bg-primary text-white px-8 py-4 rounded-full font-bold shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
-            Optimize My First Resume
-        </button>
-    </div>
 
-    <!-- Real Content (Hidden by default) -->
-    <div id="dashboard-real" class="hidden">
-        <!-- Stats Grid -->
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            <div class="p-8 bg-surface-container-lowest rounded-DEFAULT border border-outline-variant/15 flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow">
-                <span class="material-symbols-outlined text-primary text-3xl">trending_up</span>
+        <!-- Quick Action -->
+        <div class="quick-action mb-24 animate-fade-in-up">
+            <div>
+                <h3>Ready to optimize your resume?</h3>
+                <p>Upload your resume and job description for an instant ATS score.</p>
+            </div>
+            <a href="/pages/optimize.html" class="btn" style="flex-shrink:0;">
+                <span class="material-symbols-outlined" style="font-size:1.125rem;">upload_file</span>
+                Scan Resume Now
+            </a>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="stats-row mb-24 animate-fade-in-up" style="animation-delay:0.1s;">
+            <div class="stat-card">
+                <div class="stat-value" id="stat-avg-score">—</div>
+                <div class="stat-label">Avg ATS Score</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="stat-scans-used">0</div>
+                <div class="stat-label">Scans Used</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="stat-top-score">—</div>
+                <div class="stat-label">Top Score</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="stat-optimizations">0</div>
+                <div class="stat-label">Optimizations</div>
+            </div>
+        </div>
+
+        <!-- Recent Scans -->
+        <div class="animate-fade-in-up" style="animation-delay:0.2s;">
+            <div class="flex items-center justify-between mb-16">
+                <h3>Recent Scans</h3>
+                <a href="/pages/optimize.html" class="btn btn-ghost btn-sm">
+                    <span class="material-symbols-outlined" style="font-size:1rem;">add</span>
+                    New Scan
+                </a>
+            </div>
+            <div class="scan-list" id="scan-list">
+                <!-- Populated by JS -->
+            </div>
+            <div class="empty-state hidden" id="empty-state">
+                <div class="empty-state-icon">📄</div>
+                <h3>No scans yet</h3>
+                <p>Upload your first resume to get started with ATS optimization.</p>
+                <a href="/pages/optimize.html" class="btn btn-primary">Scan Your Resume</a>
+            </div>
+        </div>
+
+        <!-- Plan Status (Pro users) -->
+        <div class="card mt-32 pro-show animate-fade-in-up" style="animation-delay:0.3s;background:linear-gradient(135deg,var(--primary-light),var(--surface-2));border-color:var(--primary);">
+            <div class="flex items-center gap-12">
+                <span style="font-size:1.5rem;">🚀</span>
                 <div>
-                    <p class="text-[11px] font-bold uppercase tracking-widest text-on-secondary-container mb-1">ATS Score Avg</p>
-                    <h3 class="text-3xl font-bold" id="stat-ats-avg">0<span class="text-lg text-primary ml-1">%</span></h3>
+                    <h3 style="color:var(--primary);">Pro Plan Active</h3>
+                    <p class="text-sm text-muted" style="margin-top:4px;">Unlimited scans, AI rewrites, cover letter generator, and premium templates.</p>
                 </div>
             </div>
-            <div class="p-8 bg-surface-container-lowest rounded-DEFAULT border border-outline-variant/15 flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow">
-                <span class="material-symbols-outlined text-tertiary text-3xl">check_circle</span>
-                <div>
-                    <p class="text-[11px] font-bold uppercase tracking-widest text-on-secondary-container mb-1">Total Optimizations</p>
-                    <h3 class="text-3xl font-bold" id="stat-optimizations">0</h3>
-                </div>
-            </div>
-            <div class="p-8 bg-surface-container-lowest rounded-DEFAULT border border-outline-variant/15 flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow">
-                <span class="material-symbols-outlined text-orange-500 text-3xl">bolt</span>
-                <div>
-                    <p class="text-[11px] font-bold uppercase tracking-widest text-on-secondary-container mb-1">Top Score</p>
-                    <h3 class="text-3xl font-bold" id="stat-top-score">0<span class="text-lg text-orange-500 ml-1">%</span></h3>
-                </div>
-            </div>
-        </section>
-
-        <!-- Recent Optimizations -->
-        <section class="mb-16">
-            <div class="flex justify-between items-end mb-8">
-                <h2 class="text-2xl font-bold tracking-tight">Recent Optimizations</h2>
-                <button onclick="window.location.href='history.html'" class="text-sm font-semibold text-primary hover:underline">View All</button>
-            </div>
-            <div class="grid grid-cols-1 gap-4" id="optimizations-list">
-                <!-- Dynamically populated -->
-            </div>
-        </section>
-    </div>
-</div>
-
-<!-- Upgrade Banner -->
-<section class="bg-on-surface text-white p-8 md:p-12 rounded-xl relative overflow-hidden group mb-16 animate-on-scroll pro-hide">
-    <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
-        <div class="max-w-md text-center md:text-left">
-            <h3 class="text-2xl font-bold mb-2">Get Unlimited Optimizations</h3>
-            <p class="text-slate-400 text-sm">Upgrade to Pro to unlock AI-powered cover letters, multiple resume versions, and direct job application tracking.</p>
         </div>
-        <button onclick="window.location.href='pricing.html'" class="bg-primary-container hover:bg-primary text-white px-8 py-4 rounded-full font-bold shadow-xl transition-all whitespace-nowrap">Upgrade to Pro</button>
-    </div>
-    <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-primary/20 rounded-full blur-[100px] group-hover:scale-125 transition-transform duration-700"></div>
-</section>
-
-<!-- Pro Welcome Banner -->
-<section class="bg-blue-900 dark:bg-blue-950 text-white p-8 md:p-12 rounded-xl relative overflow-hidden group mb-16 animate-on-scroll pro-show hidden">
-    <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
-        <div class="max-w-md text-center md:text-left">
-            <h3 class="text-2xl font-bold mb-2">Enjoy Your Pro Benefits 🚀</h3>
-            <p class="text-blue-200/70 text-sm">You have full access to our most powerful AI models. Each optimization uses our premium Claude 3.5 engine to guarantee the best results.</p>
-        </div>
-        <button onclick="window.location.href='optimize.html'" class="bg-white text-blue-900 px-8 py-4 rounded-full font-bold shadow-xl transition-all whitespace-nowrap hover:scale-105">Optimize New Resume</button>
-    </div>
-    <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-blue-400/20 rounded-full blur-[100px] group-hover:scale-125 transition-transform duration-700"></div>
-</section>
+    </main>
 </div>
-</main>
-<!-- Footer -->
-<footer class="w-full py-12 border-t border-slate-100 dark:border-slate-900 bg-white dark:bg-slate-950">
-<div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-<p class="text-xs text-slate-400">© 2025 AutoCV. All rights reserved.</p>
-<div class="flex gap-8">
-<a class="text-xs text-slate-500 hover:text-blue-600 transition-colors" href="privacy.html">Privacy</a>
-<a class="text-xs text-slate-500 hover:text-blue-600 transition-colors" href="terms.html">Terms</a>
-<a class="text-xs text-slate-500 hover:text-blue-600 transition-colors" href="support.html">Support</a>
-<a class="text-xs text-slate-500 hover:text-blue-600 transition-colors" href="support.html">Contact</a>
-</div>
-</div>
-</footer>
-</div>
-<!-- Floating Action Button (Mobile Context) -->
-<div class="md:hidden fixed bottom-6 right-6">
-<button class="w-14 h-14 bg-primary-container text-white rounded-full shadow-2xl flex items-center justify-center">
-<span class="material-symbols-outlined">add</span>
-</button>
-</div>
-
-<script src="../static/js/config.js?v=2.8"></script>
-<script src="../static/js/app.js?v=2.8"></script>
 
 <script>
-    // Reveal animations on scroll
-    document.addEventListener("DOMContentLoaded", () => {
-        document.body.classList.add('animate-page');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
+document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('auth:ready', async (e) => {
+        const user = e.detail.user;
+        if (!user) return;
 
-        document.querySelectorAll('section, .animate-on-scroll').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(15px)';
-            el.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-            observer.observe(el);
-        });
+        // Redirect recruiters to their dashboard
+        if (auth.isRecruiter) {
+            window.location.href = '/pages/recruiter/dashboard.html';
+            return;
+        }
+
+        // Update plan widget
+        updatePlanWidget();
+
+        // Update lock icons for pro features
+        if (auth.isPro) {
+            document.getElementById('templates-lock').style.display = 'none';
+            document.getElementById('cover-letter-lock').style.display = 'none';
+        }
+
+        // Load recent scans
+        await loadRecentScans();
     });
-</script>
+});
 
+function updatePlanWidget() {
+    const widget = document.getElementById('plan-widget');
+    if (!widget) return;
+    const features = auth.getFeatures();
+    const plan = auth.plan;
 
-<script>
-  document.addEventListener("DOMContentLoaded", async () => {
-      // 1. Initial UI Setup
-      const links = document.querySelectorAll('aside nav a');
-      if (links.length >= 4) {
-          links[0].href = 'dashboard.html';
-          links[1].href = 'optimize.html';
-          links[2].href = 'history.html';
-          links[3].href = 'account.html';
-      }
-      
-      const newResumeBtn = document.querySelector('aside button');
-      if (newResumeBtn) newResumeBtn.onclick = () => window.location.href = 'optimize.html';
+    if (plan === 'pro') {
+        widget.innerHTML = `
+            <div class="flex items-center gap-8">
+                <span style="font-size:1.25rem;">✦</span>
+                <span class="text-sm font-bold" style="color:var(--primary);">Pro Plan</span>
+            </div>
+            <p class="text-xs text-muted" style="margin-top:8px;">Unlimited — enjoy your benefits 🚀</p>
+        `;
+    } else if (plan === 'single') {
+        const used = 0; // TODO: track from backend
+        widget.innerHTML = `
+            <div class="flex items-center justify-between">
+                <span class="text-sm font-semibold">Single Plan</span>
+                <span class="badge badge-blue text-xs">${used} / 1 rewrite</span>
+            </div>
+            <div class="plan-bar"><div class="plan-bar-fill" style="width:${(used/1)*100}%"></div></div>
+        `;
+    } else {
+        const limit = features.weekly_scans || 3;
+        // Scans used from session — approximate
+        widget.querySelector('.text-sm.font-semibold').textContent = 'Free Plan';
+    }
+}
 
-      // 2. Wait for Auth to initialize
-      let retryCount = 0;
-      const checkAuth = setInterval(() => {
-          if (window.auth && window.auth.user) {
-              clearInterval(checkAuth);
-              loadDashboardData();
-          } else if (retryCount > 10) {
-              clearInterval(checkAuth);
-              // Handle unauthenticated case? auth.init already redirects if needed.
-          }
-          retryCount++;
-      }, 500);
-  });
+async function loadRecentScans() {
+    const list = document.getElementById('scan-list');
+    const empty = document.getElementById('empty-state');
 
-  async function loadDashboardData() {
-      const loading = document.getElementById('dashboard-loading');
-      const empty = document.getElementById('dashboard-empty');
-      const real = document.getElementById('dashboard-real');
-      const list = document.getElementById('optimizations-list');
-      
-      try {
-          if (!auth.supabase) throw new Error("Supabase not initialized");
+    if (!auth.supabase || !auth.user) {
+        list.classList.add('hidden');
+        empty.classList.remove('hidden');
+        return;
+    }
 
-          // Greeting is handled by app.js _updateUI()
-
-          // Fetch real data from Supabase
-          const { data, error } = await auth.supabase
+    try {
+        const { data, error } = await auth.supabase
             .from('optimizations')
             .select('*')
-            .order('created_at', { ascending: false });
+            .eq('user_id', auth.user.id)
+            .order('created_at', { ascending: false })
+            .limit(10);
 
-          if (error) {
-              console.warn("Table probably doesn't exist yet:", error.message);
-              // Fallback to empty state if table missing or errored
-              loading.classList.add('hidden');
-              empty.classList.remove('hidden');
-              return;
-          }
+        if (error) throw error;
 
-          if (!data || data.length === 0) {
-              loading.classList.add('hidden');
-              empty.classList.remove('hidden');
-              return;
-          }
+        if (!data || data.length === 0) {
+            list.classList.add('hidden');
+            empty.classList.remove('hidden');
 
-          // We have data! Calculate real stats
-          const total = data.length;
-          const avgScore = Math.round(data.reduce((acc, curr) => acc + (curr.optimized_score || 0), 0) / total);
-          const topScore = Math.max(...data.map(d => d.optimized_score || 0));
-          
-          document.getElementById('stat-ats-avg').innerHTML = `${avgScore}<span class="text-lg text-primary ml-1">%</span>`;
-          document.getElementById('stat-optimizations').textContent = total;
-          document.getElementById('stat-top-score').innerHTML = `${topScore}<span class="text-lg text-orange-500 ml-1">%</span>`;
-          
-          document.getElementById('dashboard-subtitle').textContent = `You've optimized ${total} resume${total > 1 ? 's' : ''}. Here is your career progress.`;
+            // Set stats
+            document.getElementById('stat-avg-score').textContent = '—';
+            document.getElementById('stat-scans-used').textContent = '0';
+            document.getElementById('stat-top-score').textContent = '—';
+            document.getElementById('stat-optimizations').textContent = '0';
+            return;
+        }
 
-          // Render Recent items (max 2 for dashboard)
-          list.innerHTML = data.slice(0, 2).map(opt => `
-            <div class="bg-surface-container-lowest p-6 rounded-DEFAULT border border-outline-variant/15 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-lg transition-shadow">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center">
-                        <span class="material-symbols-outlined text-primary text-[28px]">description</span>
+        // Calculate stats
+        const scores = data.filter(d => d.original_score).map(d => d.optimized_score || d.original_score);
+        const avg = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
+        const top = scores.length ? Math.max(...scores) : 0;
+
+        document.getElementById('stat-avg-score').textContent = avg ? `${avg}%` : '—';
+        document.getElementById('stat-scans-used').textContent = data.length;
+        document.getElementById('stat-top-score').textContent = top ? `${top}%` : '—';
+        document.getElementById('stat-optimizations').textContent = data.filter(d => d.optimized_text).length;
+
+        // Render scan list
+        list.innerHTML = data.map(scan => {
+            const score = scan.optimized_score || scan.original_score || 0;
+            const scoreClass = score >= 75 ? 'high' : score >= 50 ? 'mid' : 'low';
+            const title = scan.job_title || scan.filename || 'Resume Scan';
+            const date = new Date(scan.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            return `
+                <div class="scan-item" onclick="window.location.href='/pages/results.html?id=${scan.optimization_id}'">
+                    <div class="scan-item-score ${scoreClass}">${score}%</div>
+                    <div class="scan-item-info">
+                        <div class="scan-item-title">${esc(title)}</div>
+                        <div class="scan-item-meta">${scan.filename ? esc(scan.filename) : 'Resume scan'}</div>
                     </div>
-                    <div>
-                        <h4 class="font-bold text-on-surface">${esc(opt.filename || 'Resume_Optimization.pdf')}</h4>
-                        <p class="text-sm text-on-secondary-container">Applied to: <span class="font-medium text-on-surface">${esc(opt.job_title || 'General Application')}</span></p>
-                    </div>
+                    <div class="scan-item-date">${date}</div>
                 </div>
-                <div class="flex items-center gap-8">
-                    <div class="text-right">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${opt.optimized_score >= 80 ? 'bg-tertiary-container/10 text-tertiary' : 'bg-orange-500/10 text-orange-600'}">
-                            ${opt.optimized_score}% Score
-                        </span>
-                        <p class="text-[11px] text-on-secondary-container mt-1">${new Date(opt.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
-                    </div>
-                    <button onclick="window.location.href='results.html?id=${opt.id}'" class="bg-surface-container-high text-primary px-6 py-2.5 rounded-full text-sm font-bold hover:bg-primary hover:text-white transition-all">View Results</button>
-                </div>
-            </div>
-          `).join('');
+            `;
+        }).join('');
 
-          loading.classList.add('hidden');
-          real.classList.remove('hidden');
-
-      } catch (err) {
-          console.error("Dashboard error:", err);
-          loading.classList.add('hidden');
-          empty.classList.remove('hidden');
-      }
-  }
+        empty.classList.add('hidden');
+        list.classList.remove('hidden');
+    } catch (err) {
+        console.error('Failed to load scans:', err);
+        list.classList.add('hidden');
+        empty.classList.remove('hidden');
+    }
+}
 </script>
 
 </body>

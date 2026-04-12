@@ -1,154 +1,313 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Welcome to AutoCV</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-    <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        primary: "#0059b5",
-                        "primary-container": "#0071e3",
-                        background: "#faf8fe",
-                        surface: "#ffffff",
-                        "on-surface": "#1a1b1f",
-                        "on-secondary-container": "#636264",
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            background-color: #faf8fe;
-            color: #1a1b1f;
-            overflow-x: hidden;
-        }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        
-        /* Subtle Gradient Glow for Light Mode */
-        .glow-bg {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(0, 89, 181, 0.05) 0%, rgba(250, 248, 254, 0) 70%);
-            filter: blur(80px);
-            z-index: -1;
-            animation: pulse 10s infinite alternate cubic-bezier(0.445, 0.05, 0.55, 0.95);
-        }
-
-        @keyframes pulse {
-            from { opacity: 0.4; transform: translate(-50%, -50%) scale(0.9); }
-            to { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
-        }
-
-        /* Typography */
-        .title-reveal {
-            background: linear-gradient(to bottom, #1a1b1f 60%, rgba(26, 27, 31, 0.6));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-reveal {
-            animation: fadeInUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-        }
-
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.4s; }
-        .delay-3 { animation-delay: 0.6s; }
-
-        /* Elevation */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 89, 181, 0.08);
-            border-radius: 2rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
-        }
-
-        .grain {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://grainy-gradients.vercel.app/noise.svg');
-            opacity: 0.02;
-            pointer-events: none;
-            z-index: 100;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoCV — ATS Resume Scanner for Job Seekers & Recruiters</title>
+    <meta name="description" content="Scan your resume against any job description in seconds. Get an ATS compatibility score, keyword analysis, and AI-powered rewrites. Free for job seekers. Batch scanning for recruiters.">
+    <link rel="stylesheet" href="/static/css/design-system.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="/static/js/config.js" defer></script>
+    <script src="/static/js/auth.js" defer></script>
 </head>
-<body class="antialiased flex min-h-screen items-center justify-center p-6 select-none transition-colors duration-700">
-    <div class="grain"></div>
-    <div class="glow-bg"></div>
+<body>
 
-    <div class="max-w-4xl w-full text-center z-10">
-        <!-- Logo Badge -->
-        <div class="mb-12 opacity-0 animate-reveal">
-            <div class="inline-flex items-center gap-2 px-6 py-2 glass-card text-xs font-bold tracking-[0.2em] uppercase text-primary">
-                <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
-                Live Platform
+<!-- ═══ Navigation ═══ -->
+<nav class="nav nav-dark" id="main-nav">
+    <div class="nav-inner" style="max-width:var(--max-w);">
+        <a href="/" class="nav-logo">
+            <div class="nav-logo-mark">A</div>
+            AutoCV
+        </a>
+        <div class="nav-links">
+            <a href="/pages/pricing.html" class="nav-link">Pricing</a>
+            <a href="/pages/about.html" class="nav-link">About</a>
+            <div class="auth-hide" style="display:flex;gap:8px;margin-left:8px;">
+                <a href="/pages/login.html" class="btn btn-white-outline btn-sm">Log in</a>
+                <a href="/pages/signup.html" class="btn btn-white btn-sm">Get Started Free</a>
+            </div>
+            <div class="auth-show" style="display:flex;align-items:center;gap:12px;margin-left:8px;">
+                <span class="plan-badge badge badge-gray"></span>
+                <div style="width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;cursor:pointer;" id="nav-avatar" onclick="auth.redirectToDashboard()">U</div>
             </div>
         </div>
+    </div>
+</nav>
 
-        <!-- Headline -->
-        <h1 class="text-[clamp(3.5rem,10vw,6rem)] font-[900] tracking-[-0.05em] leading-[0.9] mb-8 opacity-0 animate-reveal delay-1 title-reveal">
-            Welcome to <br/>
-            Auto<span class="text-primary italic">CV</span>
-        </h1>
-
-        <!-- Tagline -->
-        <p class="text-lg md:text-[22px] text-slate-500 font-medium tracking-tight mb-16 max-w-2xl mx-auto opacity-0 animate-reveal delay-2 leading-relaxed">
-            The AI-powered architect for your professional future. <br class="hidden md:block"/>
-            Optimize, elevate, and land the interview with data-driven precision.
-        </p>
-
-        <!-- Button Section -->
-        <div class="opacity-0 animate-reveal delay-3">
-            <button onclick="navigateToMain()" class="group relative px-12 py-5 bg-primary text-white font-extrabold text-lg rounded-full overflow-hidden hover:scale-[1.05] hover:shadow-2xl hover:shadow-primary/20 active:scale-[0.98] transition-all duration-300">
-                <span class="relative z-10 flex items-center gap-2">
-                    Get Started
-                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                </span>
-                <!-- Hover Glow Effect -->
-                <div class="absolute inset-0 bg-primary-container opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </button>
-            <p class="mt-8 text-xs text-slate-400 uppercase tracking-widest font-bold">Trusted by 10,000+ Students & Professionals</p>
+<!-- ═══ Hero ═══ -->
+<section class="hero" id="hero">
+    <div class="hero-content animate-fade-in-up">
+        <div class="hero-badge">
+            <span class="dot"></span>
+            Used by 10,000+ professionals
+        </div>
+        <h1>Land More Interviews<br>with <span class="text-gradient">ATS-Optimized</span> Resumes</h1>
+        <p>Scan your resume against any job description. Get an instant ATS score, keyword gaps, and AI-powered rewrites — all in seconds.</p>
+        <div class="hero-ctas">
+            <a href="/pages/signup.html?type=student" class="btn btn-white btn-lg" id="cta-student">
+                <span class="material-symbols-outlined" style="font-size:1.125rem;">person</span>
+                I'm a Job Seeker
+            </a>
+            <a href="/pages/signup.html?type=recruiter" class="btn btn-white-outline btn-lg" id="cta-recruiter" style="border-color:rgba(124,58,237,0.5);color:#c4b5fd;">
+                <span class="material-symbols-outlined" style="font-size:1.125rem;">business_center</span>
+                I'm a Recruiter
+            </a>
         </div>
     </div>
 
-    <!-- Background Decoration -->
-    <div class="fixed bottom-12 left-1/2 -translate-x-1/2 opacity-20 text-[10px] uppercase tracking-[0.4em] font-black pointer-events-none text-slate-900">
-        Built with Precision since 2025
-    </div>
+    <!-- Floating glow dots -->
+    <div style="position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(0,113,227,0.12),transparent 70%);top:10%;left:-100px;pointer-events:none;"></div>
+    <div style="position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(109,40,217,0.1),transparent 70%);bottom:10%;right:-50px;pointer-events:none;"></div>
+</section>
 
-    <script>
-        function navigateToMain() {
-            // Smooth transition effect
-            document.body.style.opacity = '0';
-            document.body.style.transform = 'scale(0.98)';
-            setTimeout(() => {
-                window.location.href = 'home.html';
-            }, 600);
+<!-- ═══ How It Works — Students ═══ -->
+<section class="section" id="students" style="background:var(--bg);">
+    <div class="container">
+        <div class="text-center mb-32">
+            <span class="badge badge-blue mb-8">For Job Seekers</span>
+            <h2 style="margin-top:12px;">Your Resume, Optimized by AI</h2>
+            <p style="max-width:520px;margin:12px auto 0;">Upload your resume, paste a job description, and get instant ATS analysis with keyword recommendations.</p>
+        </div>
+        <div class="feature-grid stagger">
+            <div class="feature-card animate-fade-in-up">
+                <div class="feature-icon">
+                    <span class="material-symbols-outlined">upload_file</span>
+                </div>
+                <h3>Instant ATS Scan</h3>
+                <p>Upload PDF or DOCX — get your ATS compatibility score in seconds. No API costs, 100% local analysis.</p>
+            </div>
+            <div class="feature-card animate-fade-in-up">
+                <div class="feature-icon" style="background:var(--green-light);color:var(--green);">
+                    <span class="material-symbols-outlined">spellcheck</span>
+                </div>
+                <h3>Keyword Analysis</h3>
+                <p>See exactly which keywords match and which are missing. Know the gaps before HR sees them.</p>
+            </div>
+            <div class="feature-card animate-fade-in-up">
+                <div class="feature-icon" style="background:var(--orange-light);color:var(--orange);">
+                    <span class="material-symbols-outlined">auto_fix_high</span>
+                </div>
+                <h3>AI Resume Rewrite</h3>
+                <p>Claude AI rewrites your resume to include missing keywords naturally. Before/after score comparison.</p>
+                <span class="badge badge-blue" style="align-self:flex-start;">Paid Feature</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ Score Demo ═══ -->
+<section class="section-sm" style="background:var(--surface-2);">
+    <div class="container">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
+            <div>
+                <span class="badge badge-green mb-8">Live Preview</span>
+                <h2 style="margin-top:12px;">See Your Score Instantly</h2>
+                <p style="margin-top:12px;">Upload once. Get your ATS score, matched keywords, and optimization suggestions. Free users get 3 scans per week with full keyword visibility.</p>
+                <div style="margin-top:24px;display:flex;gap:12px;">
+                    <a href="/pages/optimize.html?guest=true" class="btn btn-primary" id="try-scanner">Try Free Scanner</a>
+                    <a href="/pages/pricing.html" class="btn btn-ghost">View Plans</a>
+                </div>
+            </div>
+            <div style="display:flex;justify-content:center;">
+                <div class="card card-lg" style="text-align:center;max-width:280px;">
+                    <div class="score-ring-wrap">
+                        <div class="score-ring" id="demo-score" style="width:140px;height:140px;"></div>
+                        <p class="score-label">ATS Compatibility Score</p>
+                    </div>
+                    <div style="margin-top:20px;display:flex;flex-direction:column;gap:8px;">
+                        <div class="pill-group" style="justify-content:center;">
+                            <span class="pill pill-matched">React.js</span>
+                            <span class="pill pill-matched">TypeScript</span>
+                            <span class="pill pill-matched">AWS</span>
+                        </div>
+                        <div class="pill-group" style="justify-content:center;">
+                            <span class="pill pill-missing">Kubernetes</span>
+                            <span class="pill pill-missing">CI/CD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ Recruiter Section ═══ -->
+<section class="section" id="recruiters" style="background:var(--bg-dark);">
+    <div class="container">
+        <div class="text-center mb-32">
+            <span class="badge badge-purple mb-8">For Recruiters & HR</span>
+            <h2 style="color:#fff;margin-top:12px;">Batch-Scan Candidates in Seconds</h2>
+            <p style="color:rgba(255,255,255,0.6);max-width:520px;margin:12px auto 0;">Upload multiple resumes, paste your job description, and rank candidates by ATS score. Export results to CSV.</p>
+        </div>
+        <div class="feature-grid stagger">
+            <div class="feature-card-dark animate-fade-in-up">
+                <div class="feature-icon" style="background:rgba(124,58,237,0.15);color:#a78bfa;">
+                    <span class="material-symbols-outlined">batch_prediction</span>
+                </div>
+                <h3>Batch Resume Scanning</h3>
+                <p>Upload up to 50 resumes at once. Each is scored and ranked against your job description keywords.</p>
+            </div>
+            <div class="feature-card-dark animate-fade-in-up">
+                <div class="feature-icon" style="background:rgba(124,58,237,0.15);color:#a78bfa;">
+                    <span class="material-symbols-outlined">leaderboard</span>
+                </div>
+                <h3>Ranked Results Table</h3>
+                <p>Candidates sorted by score. Click any row for a detailed keyword breakdown. Green/amber/red scoring.</p>
+            </div>
+            <div class="feature-card-dark animate-fade-in-up">
+                <div class="feature-icon" style="background:rgba(124,58,237,0.15);color:#a78bfa;">
+                    <span class="material-symbols-outlined">download</span>
+                </div>
+                <h3>CSV Export & Presets</h3>
+                <p>Export results to CSV for your ATS. Save keyword presets for recurring roles. $1/resume after 50.</p>
+                <span class="badge badge-purple" style="align-self:flex-start;">Pro Feature</span>
+            </div>
+        </div>
+        <div class="text-center" style="margin-top:48px;">
+            <a href="/pages/signup.html?type=recruiter" class="btn btn-lg" style="background:var(--recruiter-primary);color:#fff;box-shadow:0 4px 20px rgba(109,40,217,0.3);">
+                Start Batch Scanning — Free
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ Pricing Preview ═══ -->
+<section class="section-sm" id="pricing-preview" style="background:var(--bg);">
+    <div class="container">
+        <div class="text-center mb-32">
+            <h2>Simple, Transparent Pricing</h2>
+            <p style="margin-top:8px;">Start free. Upgrade when you're ready.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:680px;margin:0 auto;">
+            <!-- Student Card -->
+            <div class="card card-hover" style="text-align:center;padding:32px;">
+                <span class="badge badge-blue mb-8">Job Seekers</span>
+                <h3 style="margin-top:8px;">Free — $19/mo</h3>
+                <p class="text-sm" style="margin-top:8px;">ATS scanning, keyword analysis, AI resume rewrites, cover letter generator</p>
+                <a href="/pages/pricing.html" class="btn btn-primary btn-sm btn-full" style="margin-top:20px;">View Plans</a>
+            </div>
+            <!-- Recruiter Card -->
+            <div class="card card-hover" style="text-align:center;padding:32px;border-color:var(--recruiter-light);">
+                <span class="badge badge-purple mb-8">Recruiters</span>
+                <h3 style="margin-top:8px;">Free — $49/mo</h3>
+                <p class="text-sm" style="margin-top:8px;">Batch scanning, ranked results, CSV export, saved keyword presets</p>
+                <a href="/pages/pricing.html" class="btn btn-sm btn-full" style="margin-top:20px;background:var(--recruiter-primary);color:#fff;">View Plans</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ Stats Bar ═══ -->
+<section style="background:var(--surface-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+    <div class="container">
+        <div class="stats-bar">
+            <div class="stats-bar-item">
+                <div class="stats-bar-value" id="stat-resumes">10,000+</div>
+                <div class="stats-bar-label">Resumes Scanned</div>
+            </div>
+            <div class="stats-bar-item">
+                <div class="stats-bar-value">94%</div>
+                <div class="stats-bar-label">Higher Callback Rate</div>
+            </div>
+            <div class="stats-bar-item">
+                <div class="stats-bar-value">&lt; 5s</div>
+                <div class="stats-bar-label">Average Scan Time</div>
+            </div>
+            <div class="stats-bar-item">
+                <div class="stats-bar-value">40+</div>
+                <div class="stats-bar-label">Keywords Analyzed</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="section" style="background:var(--bg-dark);text-align:center;">
+    <div class="container">
+        <h2 style="color:#fff;">Ready to Beat the ATS?</h2>
+        <p style="color:rgba(255,255,255,0.6);margin:12px auto 32px;max-width:460px;">Join thousands of professionals who landed more interviews with AutoCV.</p>
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+            <a href="/pages/signup.html?type=student" class="btn btn-white btn-lg">Get Started Free</a>
+            <a href="/pages/optimize.html?guest=true" class="btn btn-white-outline btn-lg">Try Scanner as Guest</a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ Footer ═══ -->
+<footer class="footer">
+    <div class="footer-inner">
+        <div>
+            <div class="footer-brand">AutoCV</div>
+            <p class="footer-desc">ATS-optimized resume scanning and AI rewrites for job seekers and recruiters.</p>
+        </div>
+        <div>
+            <div class="footer-heading">Product</div>
+            <ul class="footer-links">
+                <li><a href="/pages/optimize.html?guest=true">Resume Scanner</a></li>
+                <li><a href="/pages/pricing.html">Pricing</a></li>
+                <li><a href="/pages/about.html">About</a></li>
+            </ul>
+        </div>
+        <div>
+            <div class="footer-heading">Support</div>
+            <ul class="footer-links">
+                <li><a href="/pages/support.html">Help Center</a></li>
+                <li><a href="/pages/privacy.html">Privacy Policy</a></li>
+                <li><a href="/pages/terms.html">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div>
+            <div class="footer-heading">Connect</div>
+            <ul class="footer-links">
+                <li><a href="https://linkedin.com/in/aadit-chandra" target="_blank">LinkedIn</a></li>
+                <li><a href="mailto:work.aadit@gmail.com">Email</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 AutoCV. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+// Animate demo score ring on scroll
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            renderScoreRing(document.getElementById('demo-score'), 78, 140);
+            observer.unobserve(entry.target);
         }
-    </script>
+    });
+}, { threshold: 0.5 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const demoEl = document.getElementById('demo-score');
+    if (demoEl) observer.observe(demoEl);
+
+    // Switch nav style on scroll
+    const nav = document.getElementById('main-nav');
+    const hero = document.getElementById('hero');
+    if (nav && hero) {
+        const io = new IntersectionObserver(([e]) => {
+            nav.classList.toggle('nav-dark', e.isIntersecting);
+            if (!e.isIntersecting) {
+                nav.style.background = 'rgba(255,255,255,0.88)';
+                nav.style.borderBottomColor = 'var(--border-light)';
+                nav.querySelectorAll('.nav-logo').forEach(l => l.style.color = 'var(--text)');
+                nav.querySelectorAll('.nav-link').forEach(l => { l.style.color = ''; });
+            } else {
+                nav.style.background = '';
+                nav.style.borderBottomColor = '';
+                nav.querySelectorAll('.nav-logo').forEach(l => l.style.color = '');
+                nav.querySelectorAll('.nav-link').forEach(l => { l.style.color = ''; });
+            }
+        }, { threshold: 0.1 });
+        io.observe(hero);
+    }
+});
+</script>
+
 </body>
 </html>
