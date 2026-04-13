@@ -11,9 +11,10 @@ const api = {
   // Sync helper to get token if possible
   _getToken() {
     try {
-      // Look for Supabase session in localStorage directly to avoid async deadlocks
-      for (const key in localStorage) {
-        if (key.includes('supabase.auth.token')) {
+      // Safely look for Supabase session in localStorage
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.includes('supabase.auth.token')) {
           const session = JSON.parse(localStorage.getItem(key));
           return session?.access_token;
         }
@@ -44,6 +45,7 @@ const api = {
       if (!res.ok) throw new Error(data.error || 'Request failed');
       return data;
     } catch (e) {
+      if (e.message.includes('fetch')) throw new Error('Cannot reach server (Preflight/Network failure)');
       throw e;
     }
   },
@@ -58,6 +60,7 @@ const api = {
       if (!res.ok) throw new Error(data.error || 'Request failed');
       return data;
     } catch (e) {
+      if (e.message.includes('fetch')) throw new Error('Cannot reach server (Preflight/Network failure)');
       throw e;
     }
   }
