@@ -284,6 +284,10 @@ async function analyzeResume() {
     try {
         const data = await api.post('/analyze', formData, true);
 
+        // Store extracted texts from analysis
+        currentResumeText = data.resume_text || '';
+        currentJdText = data.jd_text || '';
+
         // Step animation
         document.getElementById('step-2').classList.add('done');
         document.getElementById('step-3').classList.add('active');
@@ -391,7 +395,10 @@ document.addEventListener('click', async (e) => {
         btn.innerHTML = '<div class="spinner spinner-sm" style="border-top-color:#fff;border-color:rgba(255,255,255,0.3);"></div> Optimizing...';
 
         try {
-            const data = await api.post('/optimize', {});
+            const data = await api.post('/optimize', {
+                resume_text: currentResumeText,
+                jd_text: currentJdText
+            });
             // Redirect to results page with the ID so it can fetch the data
             if (data.optimization_id) {
                 window.location.href = `/pages/results.html?id=${data.optimization_id}`;

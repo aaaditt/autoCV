@@ -23,9 +23,9 @@ def optimize():
         user = session.get("user", {})
         optimization_id = f"opt-{user.get('id', 'unknown')}-{int(__import__('time').time())}"
 
-        # Get resume data from session (set during /analyze)
-        resume_text = session.get("resume_text")
-        jd_text = session.get("jd_text")
+        data = request.json or {}
+        resume_text = data.get("resume_text") or session.get("resume_text")
+        jd_text = data.get("jd_text") or session.get("jd_text")
 
         if not resume_text or not jd_text:
             return jsonify({

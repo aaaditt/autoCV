@@ -74,7 +74,9 @@ def analyze():
                 "blurred_missing_count": 0,
                 "is_pro": plan in ("single", "pro"),
                 "features": features,
-                "score_label": _score_label(full["score"])
+                "score_label": _score_label(full["score"]),
+                "resume_text": resume_text,
+                "jd_text": jd_text
             })
 
         # Guest users — limited view (3 keywords visible, rest blurred)
