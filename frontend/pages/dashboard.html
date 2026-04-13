@@ -47,7 +47,7 @@
         <a href="/pages/optimize.html" class="sidebar-link">
             <span class="material-symbols-outlined" style="font-size:1.125rem;">auto_fix_high</span>
             Optimize
-            <span class="lock-icon pro-show">âœ¦</span>
+            <span class="lock-icon pro-show">✦</span>
         </a>
 
         <div class="sidebar-divider"></div>
@@ -89,7 +89,7 @@
         <!-- Greeting -->
         <div class="page-header">
             <div>
-                <h1 id="user-greeting">Good morning ðŸ‘‹</h1>
+                <h1 id="user-greeting">Good morning 👋</h1>
                 <p class="text-muted text-sm" style="margin-top:4px;">Here's your resume optimization overview</p>
             </div>
         </div>
@@ -139,7 +139,7 @@
                 <!-- Populated by JS -->
             </div>
             <div class="empty-state hidden" id="empty-state">
-                <div class="empty-state-icon">ðŸ“„</div>
+                <div class="empty-state-icon"><span class="material-symbols-outlined" style="font-size:2rem;color:var(--text-3);">description</span></div>
                 <h3>No scans yet</h3>
                 <p>Upload your first resume to get started with ATS optimization.</p>
                 <a href="/pages/optimize.html" class="btn btn-primary">Scan Your Resume</a>
@@ -149,7 +149,7 @@
         <!-- Plan Status (Pro users) -->
         <div class="card mt-32 pro-show animate-fade-in-up" style="animation-delay:0.3s;background:linear-gradient(135deg,var(--primary-light),var(--surface-2));border-color:var(--primary);">
             <div class="flex items-center gap-12">
-                <span style="font-size:1.5rem;">ðŸš€</span>
+                <span style="font-size:1.5rem;">🚀</span>
                 <div>
                     <h3 style="color:var(--primary);">Pro Plan Active</h3>
                     <p class="text-sm text-muted" style="margin-top:4px;">Unlimited scans, AI rewrites, cover letter generator, and premium templates.</p>
@@ -194,10 +194,10 @@ function updatePlanWidget() {
     if (plan === 'pro') {
         widget.innerHTML = `
             <div class="flex items-center gap-8">
-                <span style="font-size:1.25rem;">âœ¦</span>
+                <span style="font-size:1.25rem;">✦</span>
                 <span class="text-sm font-bold" style="color:var(--primary);">Pro Plan</span>
             </div>
-            <p class="text-xs text-muted" style="margin-top:8px;">Unlimited &mdash; enjoy your benefits ðŸš€</p>
+            <p class="text-xs text-muted" style="margin-top:8px;">Unlimited &mdash; enjoy your benefits 🚀</p>
         `;
     } else if (plan === 'single') {
         const used = 0; // TODO: track from backend
@@ -240,9 +240,9 @@ async function loadRecentScans() {
             empty.classList.remove('hidden');
 
             // Set stats
-            document.getElementById('stat-avg-score').textContent = '&mdash;';
+            document.getElementById('stat-avg-score').innerHTML = '&mdash;';
             document.getElementById('stat-scans-used').textContent = '0';
-            document.getElementById('stat-top-score').textContent = '&mdash;';
+            document.getElementById('stat-top-score').innerHTML = '&mdash;';
             document.getElementById('stat-optimizations').textContent = '0';
             return;
         }
