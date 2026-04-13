@@ -1,6 +1,6 @@
 // ── AutoCV Configuration ─────────────────────────────────
 // Sets window globals BEFORE app.js loads
-window.RESUMEAI_API_URL = window.RESUMEAI_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : '/api');
+window.RESUMEAI_API_URL = window.RESUMEAI_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : 'https://autocv-backend-gms7.onrender.com/api');
 
 // Supabase Auth Configuration (PUBLIC keys - safe for frontend)
 window.SUPABASE_URL = 'https://zegytszmdcpwctwomqge.supabase.co';
