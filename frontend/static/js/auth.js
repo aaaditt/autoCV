@@ -118,16 +118,10 @@ const auth = {
       console.warn("Session sync failed:", err);
     }
 
-    // Page guard: redirect unauthenticated users from private pages
-    const privatePages = ['/pages/dashboard', '/pages/results', '/pages/account', '/pages/student/', '/pages/recruiter/'];
-    const path = window.location.pathname;
-    const isPrivate = privatePages.some(p => path.includes(p));
-    const isOptimize = path.includes('/pages/optimize');
-    const isGuest = new URLSearchParams(window.location.search).get('guest') === 'true';
-    const isCallback = window.location.hash.includes('access_token=');
-
-    if ((isPrivate || (isOptimize && !isGuest)) && !this.user && !isCallback) {
-      window.location.href = '/pages/login.html';
+    // If on a login/signup page and already logged in, go to dashboard
+    const isAuthPage = path.includes('login.html') || path.includes('signup.html');
+    if (isAuthPage && this.user) {
+      this.redirectToDashboard();
       return;
     }
 
@@ -153,7 +147,14 @@ const auth = {
             });
             this.user = res.user || session.user;
           } catch (e) {
-            console.warn("Backend session sync failed (using Supabase session as fallback):", e);
+            console.warn("Backend session sync failed (using Supabase session metadata):", e);
+            // Fallback: merge plan from metadata into this.user if backend is down
+            const metadata = session.user.user_metadata || {};
+            this.user = {
+              ...session.user,
+              plan: metadata.plan || 'free',
+              user_type: metadata.user_type || 'student'
+            };
           }
 
           this._updateUI();
