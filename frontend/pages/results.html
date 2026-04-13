@@ -167,34 +167,59 @@ async function fetchResult(id) {
 
         // Score
         const score = data.optimized_score || data.original_score || 0;
-        renderScoreRing(document.getElementById('final-score'), score, 140);
+        const ringEl = document.getElementById('final-score');
+        ringEl.dataset.score = score;
+        if (window.AutoCVAnim) {
+            window.AutoCVAnim.animateRing(ringEl);
+        } else {
+            renderScoreRing(ringEl, score, 140);
+        }
 
-        // Stats
-        // Note: These would ideally come from the scan response, for now we approximate or assume backend sent them in metadata if we had it.
-        // For a full implementation, the 'optimizations' table should store the keyword lists JSON.
-        // Since Task 1 added these columns, I should check if I have them.
+        // Keywords (if available in database)
+        const matched = data.matched_keywords || [];
+        const missing = data.missing_keywords || [];
+        document.getElementById('matched-stat').textContent = matched.length || 0;
+        document.getElementById('missing-stat').textContent = missing.length || 0;
+
+        const renderPills = (containerId, keywords, type) => {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            if (!keywords || keywords.length === 0) {
+                container.innerHTML = '<span class="text-sm text-muted">No data</span>';
+                return;
+            }
+            container.innerHTML = keywords.map(kw => `<span class="pill pill-${type}">${esc(kw)}</span>`).join('');
+        };
 
         // If I have optimized text, show the comparison section
         if (data.optimized_text) {
             document.getElementById('optimize-section').classList.remove('hidden');
             document.getElementById('simple-keywords-section').classList.add('hidden');
 
-            const diffHtml = generateDiff(data.original_text || '', data.optimized_text);
-            document.getElementById('diff-container').innerHTML = diffHtml;
+            renderPills('res-matched-pills', matched, 'matched');
+            renderPills('res-missing-pills', missing, 'missing');
+
+            document.getElementById('diff-container').textContent = data.optimized_text;
 
             if (auth.isPaid) {
                 document.getElementById('download-btn').classList.remove('hidden');
             }
         } else {
-            // Populate simple pills
-            // (Assuming we had keywords stored, if not we show placeholders or hide)
-            document.getElementById('simple-matched-pills').innerHTML = '<p class="text-sm text-muted">Analysis data unavailable for historical scan.</p>';
+            document.getElementById('optimize-section').classList.add('hidden');
+            document.getElementById('simple-keywords-section').classList.remove('hidden');
+            renderPills('simple-matched-pills', matched, 'matched');
+            renderPills('simple-missing-pills', missing, 'missing');
         }
 
     } catch (err) {
         toast(err.message, 'error');
         console.error(err);
     }
+}
+
+function generateDiff(oldStr, newStr) {
+    // Simple placeholder for comparison, in a real app would use a diff library
+    return newStr; 
 }
 </script>
 

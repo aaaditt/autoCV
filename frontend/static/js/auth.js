@@ -376,9 +376,10 @@ const auth = {
       <div class="modal" style="max-width:520px;position:relative;">
           <button class="modal-close" id="close-modal">✕</button>
           <div style="text-align:center;margin-bottom:28px;">
-              <div style="width:56px;height:56px;border-radius:var(--r-md);background:${isFree ? 'var(--green-light)' : 'var(--primary-light)'};color:${isFree ? 'var(--green)' : 'var(--primary)'};display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.5rem;">
-                  ${isFree ? '🚀' : '💳'}
+              <div style="width:56px;height:56px;border-radius:var(--r-md);background:${isFree ? 'var(--green-light)' : 'var(--primary-light)'};color:${isFree ? 'var(--green)' : 'var(--primary)'};display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+                  <span class="material-symbols-outlined" style="font-size:2rem;">${isFree ? 'rocket_launch' : 'credit_card'}</span>
               </div>
+
               <h2 style="font-size:1.375rem;margin-bottom:8px;">${isFree ? 'Start Building Today' : 'Upgrade to ' + plan}</h2>
               <p class="text-muted">${isFree ? 'Explore AutoCV with your free account.' : 'Unlock premium features for your career.'}</p>
           </div>

@@ -376,8 +376,13 @@ document.addEventListener('click', async (e) => {
 
         try {
             const data = await api.post('/optimize', {});
-            // Redirect to results page with data in session
-            window.location.href = '/pages/results.html';
+            // Redirect to results page with the ID so it can fetch the data
+            if (data.optimization_id) {
+                window.location.href = `/pages/results.html?id=${data.optimization_id}`;
+            } else {
+                window.location.href = '/pages/results.html';
+            }
+
         } catch (err) {
             btn.disabled = false;
             btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:1.125rem;">auto_fix_high</span> Optimize with AI';

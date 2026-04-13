@@ -56,7 +56,8 @@ Rewrite the resume to maximize ATS score while keeping all information truthful.
 Output only the optimized resume text."""
 
     message = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-3-5-sonnet-20240620",
+
         max_tokens=4000,
         system=OPTIMIZE_SYSTEM_PROMPT,
         messages=[{"role": "user", "content": prompt}]
@@ -124,7 +125,8 @@ CANDIDATE'S RESUME:
 Write a compelling cover letter that connects the candidate's experience to this role."""
 
     message = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-3-5-sonnet-20240620",
+
         max_tokens=1500,
         system=COVER_LETTER_SYSTEM_PROMPT,
         messages=[{"role": "user", "content": prompt}]

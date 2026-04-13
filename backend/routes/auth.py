@@ -87,19 +87,24 @@ def sync_session():
         return jsonify({"error": "Invalid token"}), 401
 
     user_id = payload.get("sub")
-    plan, user_type = _fetch_profile(user_id, access_token)
+    db_plan, user_type = _fetch_profile(user_id, access_token)
+
+    # Resolve plan: Metadata > DB (allows for instant manual upgrades)
+    metadata = user_data.get("user_metadata", {})
+    final_plan = metadata.get("plan") or db_plan or "free"
 
     user = {
         "id": user_id,
         "email": user_data.get("email", ""),
-        "name": user_data.get("user_metadata", {}).get("full_name")
+        "name": metadata.get("full_name")
                or user_data.get("email", "user").split("@")[0],
-        "plan": plan,
+        "plan": final_plan,
         "user_type": user_type,
     }
     session["user"] = user
     session.permanent = True
     return jsonify({"success": True, "user": user})
+
 
 
 @auth_bp.route("/logout", methods=["POST"])
