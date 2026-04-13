@@ -45,7 +45,24 @@ def _fetch_profile(user_id: str, token: str) -> tuple[str, str]:
 def require_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        if not session.get("user"):
+        user = session.get("user")
+        
+        # JWT Token Fallback (for cross-origin cookie-less requests)
+        auth_header = request.headers.get("Authorization")
+        if not user and auth_header and auth_header.startswith("Bearer "):
+            token = auth_header.split(" ")[1]
+            payload = _verify_token(token)
+            if payload:
+                # Synchronous local sync (doesn't hit DB for speed, trusts metadata)
+                # metadata = request.headers.get("X-User-Metadata") # Optional
+                user = {
+                    "id": payload.get("sub"),
+                    "plan": "free" # Default, will be checked if require_plan
+                }
+                # To get the real plan without hitting DB, we expect it in metadata or we fetch it
+                # For now, if require_plan is called, we will fetch it there
+        
+        if not user:
             return jsonify({"error": "Unauthorized"}), 401
         return f(*args, **kwargs)
     return decorated
@@ -56,13 +73,28 @@ def require_plan(plans: list[str]):
         @wraps(f)
         def decorated(*args, **kwargs):
             user = session.get("user")
+            
+            # JWT Token Fallback
+            auth_header = request.headers.get("Authorization")
+            if not user and auth_header and auth_header.startswith("Bearer "):
+                token = auth_header.split(" ")[1]
+                payload = _verify_token(token)
+                if payload:
+                    user_id = payload.get("sub")
+                    # We MUST fetch profile for plan requirement
+                    db_plan, ut = _fetch_profile(user_id, token)
+                    user = {"id": user_id, "plan": db_plan, "user_type": ut}
+
             if not user:
                 return jsonify({"error": "Unauthorized"}), 401
+            
             if user.get("plan", "free") not in plans:
                 return jsonify({"error": "Plan upgrade required", "code": "UPGRADE_REQUIRED"}), 402
+            
             return f(*args, **kwargs)
         return decorated
     return decorator
+
 
 
 @auth_bp.route("/me", methods=["GET"])

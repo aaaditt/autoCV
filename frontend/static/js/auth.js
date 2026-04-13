@@ -8,14 +8,27 @@ const API = window.RESUMEAI_API_URL || 'http://localhost:5000/api';
 
 // ── API Client ─────────────────────────────────────────
 const api = {
+  async getHeaders(isFormData = false) {
+      const headers = isFormData ? {} : { 'Content-Type': 'application/json' };
+      if (window.auth && auth.supabase) {
+          const { data: { session } } = await auth.supabase.auth.getSession();
+          if (session) {
+              headers['Authorization'] = `Bearer ${session.access_token}`;
+          }
+      }
+      return headers;
+  },
+
   async post(path, body, isFormData = false) {
-    const opts = { method: 'POST', credentials: 'include' };
+    const headers = await this.getHeaders(isFormData);
+    const opts = { method: 'POST', credentials: 'include', headers };
+    
     if (isFormData) {
       opts.body = body;
     } else {
-      opts.headers = { 'Content-Type': 'application/json' };
       opts.body = JSON.stringify(body);
     }
+    
     let res;
     try {
       res = await fetch(`${API}${path}`, opts);
@@ -28,10 +41,12 @@ const api = {
     if (!res.ok) throw new Error(data.error || 'Request failed');
     return data;
   },
+
   async get(path) {
+    const headers = await this.getHeaders();
     let res;
     try {
-      res = await fetch(`${API}${path}`, { credentials: 'include' });
+      res = await fetch(`${API}${path}`, { credentials: 'include', headers });
     } catch (e) {
       throw new Error('Cannot reach server. Please check your connection.');
     }
@@ -42,6 +57,7 @@ const api = {
     return data;
   }
 };
+
 window.api = api;
 
 // ── Toast ─────────────────────────────────────────────
