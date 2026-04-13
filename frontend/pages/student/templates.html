@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume Templates â€” AutoCV</title>
+    <title>Resume Templates &mdash; AutoCV</title>
     <meta name="description" content="Choose from professionally designed resume templates optimized for ATS compatibility. Available with Single and Pro plans.">
     <link rel="stylesheet" href="/static/css/design-system.css">
     <link rel="stylesheet" href="/static/css/components.css">
@@ -255,7 +255,7 @@ const TEMPLATES = [
     {
         id: 'ats-ultra',
         name: 'ATS Ultra',
-        desc: 'Maximum ATS compatibility â€” simple & effective',
+        desc: 'Maximum ATS compatibility &mdash; simple & effective',
         color: '#dc2626',
         accent: '#fee2e2',
         tier: 'pro',
@@ -299,7 +299,7 @@ function renderTemplates(plan) {
         const locked = !canAccess(t.tier);
         return `
             <div class="template-card ${locked ? 'locked' : ''} animate-fade-in-up">
-                ${locked ? `<div class="lock-badge">ðŸ”’ ${t.tier === 'pro' ? 'Pro' : 'Single+'}</div>` : ''}
+                ${locked ? `<div class="lock-badge">ðŸ&mdash;’ ${t.tier === 'pro' ? 'Pro' : 'Single+'}</div>` : ''}
                 <div class="template-preview">
                     <div class="template-preview-content">
                         <div class="tpc-header" style="background:${t.color};"></div>

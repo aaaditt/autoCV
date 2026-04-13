@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoCV Ã¢â‚¬â€ ATS Resume Scanner for Job Seekers & Recruiters</title>
+    <title>AutoCV &mdash; ATS Resume Scanner for Job Seekers &amp; Recruiters</title>
     <meta name="description" content="Scan your resume against any job description in seconds. Get an ATS compatibility score, keyword analysis, and AI-powered rewrites. Free for job seekers. Batch scanning for recruiters.">
     <link rel="stylesheet" href="/static/css/design-system.css">
     <link rel="stylesheet" href="/static/css/components.css">
@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â Navigation Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+<!-- â€¢â€¢â€¢ Navigation â€¢â€¢â€¢ -->
 <nav class="nav nav-dark" id="main-nav">
     <div class="nav-inner" style="max-width:var(--max-w);">
         <a href="/" class="nav-logo">
@@ -38,8 +38,9 @@
     </div>
 </nav>
 
-<!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â Hero Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+<!-- â€¢Â â€¢Â â€¢Â  Hero â€¢Â â€¢Â â€¢Â  -->
 <section class="hero" id="hero">
+    <canvas id="hero-canvas" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.5;"></canvas>
     <div class="hero-content animate-fade-in-up">
         <div class="hero-badge">
             <span class="dot"></span>
@@ -64,7 +65,7 @@
     <div style="position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(109,40,217,0.1),transparent 70%);bottom:10%;right:-50px;pointer-events:none;"></div>
 </section>
 
-<!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â How It Works Ã¢â‚¬â€ Students Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+<!-- â€¢â€¢â€¢ How It Works &mdash; Students â€¢â€¢â€¢ -->
 <section class="section" id="students" style="background:var(--bg);">
     <div class="container">
         <div class="text-center mb-32">
@@ -78,7 +79,7 @@
                     <span class="material-symbols-outlined">upload_file</span>
                 </div>
                 <h3>Instant ATS Scan</h3>
-                <p>Upload PDF or DOCX Ã¢â‚¬â€ get your ATS compatibility score in seconds. No API costs, 100% local analysis.</p>
+                <p>Upload PDF or DOCX &mdash; get your ATS compatibility score in seconds. No API costs, 100% local analysis.</p>
             </div>
             <div class="feature-card reveal">
                 <div class="feature-icon" style="background:var(--green-light);color:var(--green);">
@@ -99,7 +100,7 @@
     </div>
 </section>
 
-<!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â Score Demo Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+<!-- â€¢â€¢â€¢ Score Demo â€¢â€¢â€¢ -->
 <section class="section-sm" style="background:var(--surface-2);">
     <div class="container">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
@@ -143,7 +144,7 @@
     </div>
 </section>
 
-<!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â Recruiter Section Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+<!-- â€¢â€¢â€¢ Recruiter Section â€¢â€¢â€¢ -->
 <section class="section" id="recruiters" style="background:var(--bg-dark);">
     <div class="container">
         <div class="text-center mb-32">
@@ -177,13 +178,13 @@
         </div>
         <div class="text-center" style="margin-top:48px;">
             <a href="/pages/signup.html?type=recruiter" class="btn btn-lg" style="background:var(--recruiter-primary);color:#fff;box-shadow:0 4px 20px rgba(109,40,217,0.3);">
-                Start Batch Scanning Ã¢â‚¬â€ Free
+                Start Batch Scanning &mdash; Free
             </a>
         </div>
     </div>
 </section>
 
-<!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â Pricing Preview Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+<!-- â€¢â€¢â€¢ Pricing Preview â€¢â€¢â€¢ -->
 <section class="section-sm" id="pricing-preview" style="background:var(--bg);">
     <div class="container">
         <div class="text-center mb-32">
@@ -194,14 +195,14 @@
             <!-- Student Card -->
             <div class="card card-hover" style="text-align:center;padding:32px;">
                 <span class="badge badge-blue mb-8">Job Seekers</span>
-                <h3 style="margin-top:8px;">Free Ã¢â‚¬â€ $19/mo</h3>
+                <h3 style="margin-top:8px;">Free &mdash; $19/mo</h3>
                 <p class="text-sm" style="margin-top:8px;">ATS scanning, keyword analysis, AI resume rewrites, cover letter generator</p>
                 <a href="/pages/pricing.html" class="btn btn-primary btn-sm btn-full" style="margin-top:20px;">View Plans</a>
             </div>
             <!-- Recruiter Card -->
             <div class="card card-hover" style="text-align:center;padding:32px;border-color:var(--recruiter-light);">
                 <span class="badge badge-purple mb-8">Recruiters</span>
-                <h3 style="margin-top:8px;">Free Ã¢â‚¬â€ $49/mo</h3>
+                <h3 style="margin-top:8px;">Free &mdash; $49/mo</h3>
                 <p class="text-sm" style="margin-top:8px;">Batch scanning, ranked results, CSV export, saved keyword presets</p>
                 <a href="/pages/pricing.html" class="btn btn-sm btn-full" style="margin-top:20px;background:var(--recruiter-primary);color:#fff;">View Plans</a>
             </div>
@@ -209,7 +210,7 @@
     </div>
 </section>
 
-<!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â Stats Bar Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+<!-- â€¢â€¢â€¢ Stats Bar â€¢â€¢â€¢ -->
 <section style="background:var(--surface-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
     <div class="container">
         <div class="stats-bar">
@@ -233,7 +234,7 @@
     </div>
 </section>
 
-<!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â CTA Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+<!-- â€¢â€¢â€¢ CTA â€¢â€¢â€¢ -->
 <section class="section" style="background:var(--bg-dark);text-align:center;">
     <div class="container">
         <h2 style="color:#fff;">Ready to Beat the ATS?</h2>
@@ -245,7 +246,7 @@
     </div>
 </section>
 
-<!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â Footer Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
+<!-- â€¢â€¢â€¢ Footer â€¢â€¢â€¢ -->
 <footer class="footer">
     <div class="footer-inner">
         <div>
@@ -277,7 +278,7 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <p>Ã‚Â© 2026 AutoCV. All rights reserved.</p>
+        <p>&copy; 2026 AutoCV. All rights reserved.</p>
     </div>
 </footer>
 
@@ -317,6 +318,66 @@ document.addEventListener('DOMContentLoaded', () => {
         io.observe(hero);
     }
 });
+</script>
+
+<script>
+    // Task A3: Hero Particle Canvas
+    (function () {
+        const canvas = document.getElementById('hero-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let W, H, particles = [];
+
+        const COLORS = ['rgba(0,89,181,', 'rgba(0,113,227,', 'rgba(109,40,217,', 'rgba(56,189,248,'];
+
+        class Particle {
+            constructor() { this.reset(true); }
+            reset(initial) {
+                this.x = Math.random() * W;
+                this.y = initial ? Math.random() * H : H + 10;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.speedY = -(Math.random() * 0.4 + 0.1);
+                this.speedX = (Math.random() - 0.5) * 0.2;
+                this.opacity = Math.random() * 0.6 + 0.1;
+                this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.y < -10) this.reset(false);
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color + this.opacity + ')';
+                ctx.fill();
+            }
+        }
+
+        function resize() {
+            W = canvas.width = canvas.offsetWidth;
+            H = canvas.height = canvas.offsetHeight;
+        }
+
+        function init() {
+            resize();
+            particles = Array.from({ length: 80 }, () => new Particle());
+            loop();
+        }
+
+        function loop() {
+            ctx.clearRect(0, 0, W, H);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(loop);
+        }
+
+        window.addEventListener('resize', resize);
+
+        // Respect reduced motion
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            init();
+        }
+    })();
 </script>
 
 </body>

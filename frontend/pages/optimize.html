@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume Scanner Ã¢â‚¬â€ AutoCV</title>
+    <title>Resume Scanner &mdash; AutoCV</title>
     <meta name="description" content="Upload your resume and paste a job description for instant ATS compatibility scoring and keyword analysis.">
     <link rel="stylesheet" href="/static/css/design-system.css">
     <link rel="stylesheet" href="/static/css/components.css">
@@ -66,15 +66,15 @@
 
             <!-- Dropzone -->
             <div class="upload-zone" id="drop-zone" data-input-id="file-input">
-                <div class="upload-icon">Ã°Å¸â€œâ€ž</div>
+                <div class="upload-icon"><span class="material-symbols-outlined" style="font-size:2rem;">upload_file</span></div>
                 <div class="upload-main">Drop your resume here</div>
-                <div class="upload-sub">or <span class="upload-browse">click to browse</span> Ã‚Â· PDF, DOCX Ã¢â‚¬â€ Max 10MB</div>
+                <div class="upload-sub">or <span class="upload-browse">click to browse</span> &middot; PDF, DOCX &mdash; Max 10MB</div>
                 <input type="file" id="file-input" accept=".pdf,.docx,.doc" hidden>
             </div>
 
             <!-- Job Description -->
             <div class="form-group mt-24">
-                <label class="label">Job Description <span class="label-hint">(optional Ã¢â‚¬â€ improves accuracy)</span></label>
+                <label class="label">Job Description <span class="label-hint">(optional &mdash; improves accuracy)</span></label>
                 <textarea class="textarea" id="jd-input" placeholder="Paste the job description here for targeted keyword analysis..."></textarea>
             </div>
 
@@ -169,7 +169,7 @@
             <!-- Upgrade CTA (for free logged-in users) -->
             <div id="upgrade-cta" class="hidden" style="margin-top:20px;text-align:center;">
                 <div class="card card-sm" style="background:var(--surface-2);border-color:var(--border);">
-                    <span style="font-size:1.25rem;">Ã¢Å“Â¦</span>
+                    <span style="font-size:1.25rem;">Å“Â¦</span>
                     <h3 style="margin-top:8px;">AI Resume Optimization</h3>
                     <p class="text-sm text-muted" style="margin-top:4px;">Upgrade to Single ($9) or Pro ($19/mo) to unlock AI-powered rewrites.</p>
                     <a href="/pages/pricing.html" class="btn btn-primary btn-sm" style="margin-top:12px;">View Plans</a>
@@ -326,7 +326,7 @@ async function analyzeResume() {
                 missingHtml += `<span class="pill">+${blurredMissing - 5} more</span>`;
             }
         }
-        missingPills.innerHTML = missingHtml || '<span class="text-sm text-muted">No missing keywords Ã¢â‚¬â€ great match!</span>';
+        missingPills.innerHTML = missingHtml || '<span class="text-sm text-muted">No missing keywords &mdash; great match!</span>';
 
         // Show correct CTA based on plan
         const features = data.features || {};
@@ -405,9 +405,9 @@ function resetScanner() {
     const zone = document.getElementById('drop-zone');
     zone.classList.remove('has-file');
     zone.innerHTML = `
-        <div class="upload-icon">Ã°Å¸â€œâ€ž</div>
+        <div class="upload-icon"><span class="material-symbols-outlined" style="font-size:2rem;">upload_file</span></div>
         <div class="upload-main">Drop your resume here</div>
-        <div class="upload-sub">or <span class="upload-browse">click to browse</span> Ã‚Â· PDF, DOCX Ã¢â‚¬â€ Max 10MB</div>
+        <div class="upload-sub">or <span class="upload-browse">click to browse</span> &middot; PDF, DOCX &mdash; Max 10MB</div>
     `;
 
     // Re-init dropzone

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard â€” AutoCV</title>
-    <meta name="description" content="Your AutoCV dashboard â€” view scan history, ATS scores, and manage your resume optimization journey.">
+    <title>Dashboard &mdash; AutoCV</title>
+    <meta name="description" content="Your AutoCV dashboard &mdash; view scan history, ATS scores, and manage your resume optimization journey.">
     <link rel="stylesheet" href="/static/css/design-system.css">
     <link rel="stylesheet" href="/static/css/components.css">
     <link rel="stylesheet" href="/static/css/animations.css">
@@ -55,12 +55,12 @@
         <a href="/pages/student/templates.html" class="sidebar-link">
             <span class="material-symbols-outlined" style="font-size:1.125rem;">description</span>
             Templates
-            <span class="lock-icon" id="templates-lock">ðŸ”’</span>
+            <span class="lock-icon" id="templates-lock">ðŸ&mdash;’</span>
         </a>
         <a href="/pages/student/cover-letter.html" class="sidebar-link">
             <span class="material-symbols-outlined" style="font-size:1.125rem;">mail</span>
             Cover Letter
-            <span class="lock-icon" id="cover-letter-lock">ðŸ”’</span>
+            <span class="lock-icon" id="cover-letter-lock">ðŸ&mdash;’</span>
         </a>
 
         <div class="sidebar-divider"></div>
@@ -109,7 +109,7 @@
         <!-- Stats Row -->
         <div class="stats-row mb-24 reveal-group">
             <div class="stat-card reveal">
-                <div class="stat-value" id="stat-avg-score">â€”</div>
+                <div class="stat-value" id="stat-avg-score">&mdash;</div>
                 <div class="stat-label">Avg ATS Score</div>
             </div>
             <div class="stat-card reveal">
@@ -117,7 +117,7 @@
                 <div class="stat-label">Scans Used</div>
             </div>
             <div class="stat-card reveal">
-                <div class="stat-value" id="stat-top-score">â€”</div>
+                <div class="stat-value" id="stat-top-score">&mdash;</div>
                 <div class="stat-label">Top Score</div>
             </div>
             <div class="stat-card reveal">
@@ -197,7 +197,7 @@ function updatePlanWidget() {
                 <span style="font-size:1.25rem;">âœ¦</span>
                 <span class="text-sm font-bold" style="color:var(--primary);">Pro Plan</span>
             </div>
-            <p class="text-xs text-muted" style="margin-top:8px;">Unlimited â€” enjoy your benefits ðŸš€</p>
+            <p class="text-xs text-muted" style="margin-top:8px;">Unlimited &mdash; enjoy your benefits ðŸš€</p>
         `;
     } else if (plan === 'single') {
         const used = 0; // TODO: track from backend
@@ -210,7 +210,7 @@ function updatePlanWidget() {
         `;
     } else {
         const limit = features.weekly_scans || 3;
-        // Scans used from session â€” approximate
+        // Scans used from session &mdash; approximate
         widget.querySelector('.text-sm.font-semibold').textContent = 'Free Plan';
     }
 }
@@ -240,9 +240,9 @@ async function loadRecentScans() {
             empty.classList.remove('hidden');
 
             // Set stats
-            document.getElementById('stat-avg-score').textContent = 'â€”';
+            document.getElementById('stat-avg-score').textContent = '&mdash;';
             document.getElementById('stat-scans-used').textContent = '0';
-            document.getElementById('stat-top-score').textContent = 'â€”';
+            document.getElementById('stat-top-score').textContent = '&mdash;';
             document.getElementById('stat-optimizations').textContent = '0';
             return;
         }
@@ -252,9 +252,9 @@ async function loadRecentScans() {
         const avg = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
         const top = scores.length ? Math.max(...scores) : 0;
 
-        document.getElementById('stat-avg-score').textContent = avg ? `${avg}%` : 'â€”';
+        document.getElementById('stat-avg-score').textContent = avg ? `${avg}%` : '&mdash;';
         document.getElementById('stat-scans-used').textContent = data.length;
-        document.getElementById('stat-top-score').textContent = top ? `${top}%` : 'â€”';
+        document.getElementById('stat-top-score').textContent = top ? `${top}%` : '&mdash;';
         document.getElementById('stat-optimizations').textContent = data.filter(d => d.optimized_text).length;
 
         // Render scan list
