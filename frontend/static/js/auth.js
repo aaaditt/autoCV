@@ -142,21 +142,26 @@ const auth = {
       console.log("Auth Event:", event);
       if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
         if (session) {
+          // Always set a baseline user from Supabase so redirect works
+          // even if backend session sync is slow/down
+          this.user = session.user;
+
           try {
             const res = await api.post('/auth/session', {
               access_token: session.access_token,
               user: session.user,
             });
             this.user = res.user || session.user;
-            this._updateUI();
-
-            // Redirect from auth pages to correct dashboard
-            const path = window.location.pathname;
-            if (path === '/' || path.includes('login.html') || path.includes('home.html') || path.includes('signup.html') || path.includes('index.html')) {
-              this.redirectToDashboard();
-            }
           } catch (e) {
-            console.error("Auth session sync failed:", e);
+            console.warn("Backend session sync failed (using Supabase session as fallback):", e);
+          }
+
+          this._updateUI();
+
+          // Redirect from auth pages to correct dashboard
+          const path = window.location.pathname;
+          if (path === '/' || path.includes('login.html') || path.includes('home.html') || path.includes('signup.html') || path.includes('index.html')) {
+            this.redirectToDashboard();
           }
         }
       } else if (event === 'SIGNED_OUT') {

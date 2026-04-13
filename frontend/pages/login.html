@@ -106,7 +106,16 @@ document.addEventListener('DOMContentLoaded', () => {
             // Show success animation
             document.getElementById('login-form').closest('.auth-card').style.opacity = '0';
             document.getElementById('success-check').style.display = 'block';
-            // Auth listener handles redirect after delay
+            // Auth listener handles redirect — fallback in case it's slow
+            setTimeout(async () => {
+                if (window.location.pathname.includes('login.html')) {
+                    // Still on login page — manually check session and redirect
+                    try {
+                        const { data: { session } } = await auth.supabase.auth.getSession();
+                        if (session) auth.redirectToDashboard();
+                    } catch (_) {}
+                }
+            }, 3000);
         } catch (err) {
             btn.disabled = false;
             btn.textContent = 'Log In';
