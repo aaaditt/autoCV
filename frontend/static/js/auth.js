@@ -8,55 +8,61 @@ const API = window.RESUMEAI_API_URL || 'http://localhost:5000/api';
 
 // ── API Client ─────────────────────────────────────────
 const api = {
-  async getHeaders(isFormData = false) {
-      const headers = isFormData ? {} : { 'Content-Type': 'application/json' };
-      if (window.auth && auth.supabase) {
-          const { data: { session } } = await auth.supabase.auth.getSession();
-          if (session) {
-              headers['Authorization'] = `Bearer ${session.access_token}`;
-          }
+  // Sync helper to get token if possible
+  _getToken() {
+    try {
+      // Look for Supabase session in localStorage directly to avoid async deadlocks
+      for (const key in localStorage) {
+        if (key.includes('supabase.auth.token')) {
+          const session = JSON.parse(localStorage.getItem(key));
+          return session?.access_token;
+        }
       }
-      return headers;
+    } catch (e) {}
+    return null;
+  },
+
+  getHeaders(isFormData = false) {
+    const headers = isFormData ? {} : { 'Content-Type': 'application/json' };
+    const token = this._getToken();
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    return headers;
   },
 
   async post(path, body, isFormData = false) {
-    const headers = await this.getHeaders(isFormData);
+    const headers = this.getHeaders(isFormData);
     const opts = { method: 'POST', credentials: 'include', headers };
+    opts.body = isFormData ? body : JSON.stringify(body);
     
-    if (isFormData) {
-      opts.body = body;
-    } else {
-      opts.body = JSON.stringify(body);
-    }
-    
-    let res;
     try {
-      res = await fetch(`${API}${path}`, opts);
+      const res = await fetch(`${API}${path}`, opts);
+      const text = await res.text();
+      let data;
+      try { data = JSON.parse(text); } catch { throw new Error(`Server error (${res.status})`); }
+      if (!res.ok) throw new Error(data.error || 'Request failed');
+      return data;
     } catch (e) {
-      throw new Error('Cannot reach server. Please check your connection.');
+      throw e;
     }
-    const text = await res.text();
-    let data;
-    try { data = JSON.parse(text); } catch { throw new Error(res.status === 404 ? `API endpoint not found: ${path}` : `Server error (${res.status})`); }
-    if (!res.ok) throw new Error(data.error || 'Request failed');
-    return data;
   },
 
   async get(path) {
-    const headers = await this.getHeaders();
-    let res;
+    const headers = this.getHeaders();
     try {
-      res = await fetch(`${API}${path}`, { credentials: 'include', headers });
+      const res = await fetch(`${API}${path}`, { credentials: 'include', headers });
+      const text = await res.text();
+      let data;
+      try { data = JSON.parse(text); } catch { throw new Error(`Server error (${res.status})`); }
+      if (!res.ok) throw new Error(data.error || 'Request failed');
+      return data;
     } catch (e) {
-      throw new Error('Cannot reach server. Please check your connection.');
+      throw e;
     }
-    const text = await res.text();
-    let data;
-    try { data = JSON.parse(text); } catch { throw new Error(res.status === 404 ? `API endpoint not found: ${path}` : `Server error (${res.status})`); }
-    if (!res.ok) throw new Error(data.error || 'Request failed');
-    return data;
   }
 };
+
 
 window.api = api;
 
