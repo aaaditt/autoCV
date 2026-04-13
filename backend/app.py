@@ -16,7 +16,18 @@ def create_app():
     app.config['SESSION_COOKIE_HTTPONLY'] = True
     app.config['PERMANENT_SESSION_LIFETIME'] = 3600
 
-    CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True, allow_headers=["Content-Type", "Authorization", "X-Requested-With"], methods=["GET", "POST", "OPTIONS"])
+    CORS(app, resources={r"/api/*": {
+        "origins": [
+            r"https://.*\.vercel\.app",
+            "https://autocv-ai.vercel.app",
+            "http://localhost:3000",
+            "http://localhost:5173",
+            "http://127.0.0.1:3000",
+            "http://127.0.0.1:5173"
+        ]
+    }}, supports_credentials=True, allow_headers=["Content-Type", "Authorization", "X-Requested-With"], methods=["GET", "POST", "OPTIONS"])
+
+
 
     limiter = Limiter(
         get_remote_address,
