@@ -253,7 +253,10 @@ async function analyzeResume() {
         if (auth.isLoggedIn && auth.supabase) {
             const { data: { session } } = await auth.supabase.auth.getSession();
             if (session) {
-                await auth.syncSessionWithBackend(session.access_token, session.user);
+                await api.post('/auth/session', {
+                    access_token: session.access_token,
+                    user: session.user,
+                });
             }
         }
     } catch (e) {

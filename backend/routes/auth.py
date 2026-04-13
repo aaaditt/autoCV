@@ -14,26 +14,18 @@ SUPABASE_SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY", "")
 SUPABASE_JWT_SECRET = os.environ.get("SUPABASE_JWT_SECRET", "")
 
 
+from supabase import create_client
+
 def _verify_token(token: str) -> dict | None:
     try:
-        # 1. Fast local decode without verifying signature (for payload)
-        payload = pyjwt.decode(token, options={"verify_signature": False})
-        
-        # 2. Verify with Supabase API directly (bulletproof)
-        res = http.get(
-            f"{SUPABASE_URL}/auth/v1/user",
-            headers={"apikey": SUPABASE_SERVICE_KEY, "Authorization": f"Bearer {token}"},
-            timeout=5
-        )
-        if res.status_code == 200:
-            return payload
-            
-        print(f"Token verification rejected by Supabase API: {res.status_code}")
-        return None
-        
+        supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+        user_response = supabase.auth.get_user(token)
+        if user_response and user_response.user:
+            return {"sub": user_response.user.id}
     except Exception as e:
         print(f"Token verification failed entirely: {e}")
-        return None
+    return None
+
 
 
 
