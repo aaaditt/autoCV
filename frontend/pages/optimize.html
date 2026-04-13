@@ -169,7 +169,7 @@
             <!-- Upgrade CTA (for free logged-in users) -->
             <div id="upgrade-cta" class="hidden" style="margin-top:20px;text-align:center;">
                 <div class="card card-sm" style="background:var(--surface-2);border-color:var(--border);">
-                    <span style="font-size:1.25rem;">Å“Â¦</span>
+                    <span style="font-size:1.25rem;color:var(--primary);">✦</span>
                     <h3 style="margin-top:8px;">AI Resume Optimization</h3>
                     <p class="text-sm text-muted" style="margin-top:4px;">Upgrade to Single ($9) or Pro ($19/mo) to unlock AI-powered rewrites.</p>
                     <a href="/pages/pricing.html" class="btn btn-primary btn-sm" style="margin-top:12px;">View Plans</a>
@@ -329,13 +329,14 @@ async function analyzeResume() {
         missingPills.innerHTML = missingHtml || '<span class="text-sm text-muted">No missing keywords &mdash; great match!</span>';
 
         // Show correct CTA based on plan
-        const features = data.features || {};
         if (auth.isLoggedIn) {
             document.getElementById('guest-cta')?.classList.add('hidden');
-            if (features.ai_rewrite) {
+            if (auth.isPaid) {
                 document.getElementById('optimize-cta').classList.remove('hidden');
+                document.getElementById('upgrade-cta').classList.add('hidden');
             } else {
                 document.getElementById('upgrade-cta').classList.remove('hidden');
+                document.getElementById('optimize-cta').classList.add('hidden');
             }
         }
 
