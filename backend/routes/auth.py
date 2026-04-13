@@ -16,13 +16,25 @@ SUPABASE_JWT_SECRET = os.environ.get("SUPABASE_JWT_SECRET", "")
 
 def _verify_token(token: str) -> dict | None:
     try:
-        return pyjwt.decode(
-            token, SUPABASE_JWT_SECRET,
-            algorithms=["HS256"],
-            options={"verify_aud": False}
+        # 1. Fast local decode without verifying signature (for payload)
+        payload = pyjwt.decode(token, options={"verify_signature": False})
+        
+        # 2. Verify with Supabase API directly (bulletproof)
+        res = http.get(
+            f"{SUPABASE_URL}/auth/v1/user",
+            headers={"apikey": SUPABASE_SERVICE_KEY, "Authorization": f"Bearer {token}"},
+            timeout=5
         )
-    except Exception:
+        if res.status_code == 200:
+            return payload
+            
+        print(f"Token verification rejected by Supabase API: {res.status_code}")
         return None
+        
+    except Exception as e:
+        print(f"Token verification failed entirely: {e}")
+        return None
+
 
 
 def _fetch_profile(user_id: str, token: str) -> tuple[str, str]:
