@@ -119,7 +119,9 @@ const auth = {
     }
 
     // If on a login/signup page and already logged in, go to dashboard
+    const path = window.location.pathname;
     const isAuthPage = path.includes('login.html') || path.includes('signup.html');
+
     if (isAuthPage && this.user) {
       this.redirectToDashboard();
       return;
