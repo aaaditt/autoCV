@@ -160,6 +160,7 @@ const auth = {
           }
 
           this._updateUI();
+          window.dispatchEvent(new CustomEvent('autocv:authenticated', { detail: { user: this.user } }));
 
           // Redirect from auth pages to correct dashboard
           const path = window.location.pathname;

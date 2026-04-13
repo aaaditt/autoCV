@@ -248,7 +248,20 @@ document.addEventListener('autocv:authenticated', revealBlurredPills);
 async function analyzeResume() {
     if (!selectedFile) return toast('Please upload a resume first', 'error');
 
+    try {
+        // Force session sync to ensure backend knows user is Pro
+        if (auth.isLoggedIn && auth.supabase) {
+            const { data: { session } } = await auth.supabase.auth.getSession();
+            if (session) {
+                await auth.syncSessionWithBackend(session.access_token, session.user);
+            }
+        }
+    } catch (e) {
+        console.warn("Pre-analysis sync failed:", e);
+    }
+
     const btn = document.getElementById('analyze-btn');
+
     btn.disabled = true;
     btn.innerHTML = '<div class="spinner spinner-sm" style="border-top-color:#fff;border-color:rgba(255,255,255,0.3);"></div> Analyzing...';
 
