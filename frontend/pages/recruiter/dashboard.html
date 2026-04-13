@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruiter Dashboard â€” AutoCV</title>
+    <link rel="stylesheet" href="/static/css/design-system.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/animations.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="/static/js/config.js" defer></script>
+    <script src="/static/js/auth.js" defer></script>
+    <script src="/static/js/animations.js" defer></script>
+</head>
+<body class="theme-recruiter">
+
+<!-- Nav -->
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">
+            <div class="nav-logo-mark" style="background:var(--recruiter-primary)">A</div>
+            AutoCV <span class="badge badge-purple" style="margin-left:8px;font-size:0.6rem;">RECRUITER</span>
+        </a>
+        <div class="nav-links">
+            <span class="plan-badge badge badge-purple"></span>
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--recruiter-primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.875rem;font-weight:700;cursor:pointer;margin-left:8px;" id="nav-avatar">R</div>
+        </div>
+    </div>
+</nav>
+
+<div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-label">Recruiter Suite</div>
+        <a href="/pages/recruiter/dashboard.html" class="sidebar-link active">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">dashboard</span>
+            Dashboard
+        </a>
+        <a href="/pages/recruiter/batch.html" class="sidebar-link">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">batch_prediction</span>
+            Batch Scan
+        </a>
+        <a href="/pages/recruiter/presets.html" class="sidebar-link">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">bookmarks</span>
+            Job Presets
+            <span class="lock-icon pro-show">âœ¦</span>
+        </a>
+
+        <div class="sidebar-divider"></div>
+        <a href="/pages/account.html" class="sidebar-link">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">settings</span>
+            Settings
+        </a>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-plan">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-semibold" id="plan-name">Recruiter Free</span>
+                    <span class="badge badge-gray text-xs" id="scan-count">0 / 5</span>
+                </div>
+                <div class="plan-bar">
+                    <div class="plan-bar-fill" id="scan-bar" style="width:0%"></div>
+                </div>
+                <!-- Overage Notice -->
+                <div id="overage-info" class="hidden" style="margin-top:12px;font-size:0.75rem;color:var(--text-2);">
+                  Overage: <span class="badge badge-orange font-bold">$1/resume</span>
+                </div>
+                <a href="/pages/pricing.html" class="btn btn-recruiter btn-sm btn-full" style="margin-top:12px;">Upgrade Suite</a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="app-main">
+        <div class="page-header">
+            <div>
+                <h1 id="user-greeting">Welcome, Recruiter ðŸ‘‹</h1>
+                <p class="text-muted text-sm">Efficiently rank your candidate pipeline</p>
+            </div>
+        </div>
+
+        <!-- Quick Action -->
+        <div class="quick-action mb-24 animate-fade-in-up" style="background:linear-gradient(135deg, var(--recruiter-primary), var(--recruiter-accent));">
+            <div>
+                <h3>Upload Candidate Batch</h3>
+                <p>Process up to 50 resumes at once and rank them by relevance.</p>
+            </div>
+            <a href="/pages/recruiter/batch.html" class="btn btn-white">
+                <span class="material-symbols-outlined" style="font-size:1.125rem;">upload_file</span>
+                Start Batch
+            </a>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row mb-24 stagger">
+            <div class="stat-card">
+              <div class="stat-value" id="total-batches">0</div>
+              <div class="stat-label">Batches Processed</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="total-resumes">0</div>
+              <div class="stat-label">Candidates Scanned</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">92%</div>
+              <div class="stat-label">Screening Accuracy</div>
+            </div>
+        </div>
+
+        <!-- Recent Batches Table -->
+        <h3>Recent Batches</h3>
+        <div class="table-wrap mt-16 animate-fade-in-up" style="animation-delay:0.2s;">
+            <table class="table" id="batch-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Job Title</th>
+                        <th>Resumes</th>
+                        <th>Avg Score</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="batch-tbody">
+                  <!-- JS Populated -->
+                </tbody>
+            </table>
+            <div id="batch-empty" class="empty-state hidden">
+                <div class="empty-state-icon">ðŸ“‹</div>
+                <p>You haven't processed any batches yet.</p>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('auth:ready', async () => {
+        if (!auth.isRecruiter) {
+            window.location.href = '/pages/dashboard.html';
+            return;
+        }
+
+        updateRecruiterDashboard();
+        await loadBatches();
+    });
+});
+
+function updateRecruiterDashboard() {
+    const features = auth.getFeatures();
+    const plan = auth.plan;
+
+    document.getElementById('plan-name').textContent = plan === 'pro' ? 'Recruiter Pro' : 'Recruiter Free';
+
+    // Update batch limits
+    const limit = features.batch_size;
+    const used = 0; // TODO: fetch from backend
+    document.getElementById('scan-count').textContent = `${used} / ${limit} included`;
+    document.getElementById('scan-bar').style.width = `${(used/limit)*100}%`;
+
+    if (features.overage_allowed) {
+      document.getElementById('overage-info').classList.remove('hidden');
+    }
+}
+
+async function loadBatches() {
+    if (!auth.supabase || !auth.user) return;
+
+    try {
+        const { data, error } = await auth.supabase
+            .from('recruiter_scans')
+            .select('*')
+            .eq('recruiter_id', auth.user.id)
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        const tbody = document.getElementById('batch-tbody');
+        const empty = document.getElementById('batch-empty');
+
+        if (!data || data.length === 0) {
+            empty.classList.remove('hidden');
+            return;
+        }
+
+        document.getElementById('total-batches').textContent = data.length;
+        document.getElementById('total-resumes').textContent = data.reduce((acc, curr) => acc + (curr.resume_count || 0), 0);
+
+        tbody.innerHTML = data.map(batch => `
+          <tr>
+            <td>${new Date(batch.created_at).toLocaleDateString()}</td>
+            <td><strong>${esc(batch.job_title)}</strong></td>
+            <td>${batch.resume_count}</td>
+            <td class="score-mid">${batch.average_score || 0}%</td>
+            <td><span class="badge badge-green">Completed</span></td>
+            <td><a href="/pages/recruiter/results.html?id=${batch.batch_id}" class="btn btn-ghost btn-xs">View</a></td>
+          </tr>
+        `).join('');
+
+    } catch (err) {
+        console.error('Batch load error:', err);
+    }
+}
+</script>
+
+</body>
+</html>

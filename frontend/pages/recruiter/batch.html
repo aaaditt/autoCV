@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Scan â€” AutoCV</title>
+    <link rel="stylesheet" href="/static/css/design-system.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/animations.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="/static/js/config.js" defer></script>
+    <script src="/static/js/auth.js" defer></script>
+    <script src="/static/js/animations.js" defer></script>
+</head>
+<body class="theme-recruiter">
+
+<!-- Nav -->
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">
+            <div class="nav-logo-mark" style="background:var(--recruiter-primary)">A</div>
+            AutoCV
+        </a>
+        <div class="nav-links">
+            <a href="/pages/recruiter/dashboard.html" class="nav-link">Dashboard</a>
+            <span class="plan-badge badge badge-purple"></span>
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--recruiter-primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;" id="nav-avatar">R</div>
+        </div>
+    </div>
+</nav>
+
+<div class="container-narrow" style="padding-top:40px;padding-bottom:80px;">
+    <!-- Head -->
+    <div class="text-center mb-32">
+        <h1 class="text-gradient-recruiter">Batch Scan Candidates</h1>
+        <p class="text-muted">Upload up to <span id="max-batch-label">5</span> resumes at once to rank them.</p>
+    </div>
+
+    <!-- Step 1: Upload -->
+    <div id="batch-upload-ui" class="animate-fade-in-up">
+        <div class="card card-lg" style="border-top:4px solid var(--recruiter-primary);">
+            <div class="form-group mb-24">
+                <label class="label">Job Title / Role</label>
+                <input type="text" id="batch-job-title" class="input" placeholder="e.g. Senior Frontend Engineer">
+            </div>
+
+            <div class="form-group mb-24">
+                <label class="label">Job Requirements / Description</label>
+                <textarea id="batch-jd" class="textarea" placeholder="Paste requirements here for the ATS scoring system..."></textarea>
+            </div>
+
+            <!-- Multi Dropzone -->
+            <div class="upload-zone" id="multi-drop-zone">
+                <div class="upload-icon">ðŸ“</div>
+                <div class="upload-main">Drop multiple resumes here</div>
+                <div class="upload-sub">or <span class="upload-browse">click to browse</span> Â· PDF, DOCX only</div>
+                <input type="file" id="multi-file-input" multiple accept=".pdf,.docx" hidden>
+            </div>
+
+            <!-- File List -->
+            <div id="file-list" class="mt-24 hidden" style="max-height:200px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--r-md);padding:8px;">
+              <!-- JS Populated -->
+            </div>
+
+            <!-- Overage Notice -->
+            <div id="overage-calc" class="overage-notice mt-24 hidden">
+              <span class="material-symbols-outlined">info</span>
+              <div>
+                <strong>Overage Alert:</strong> You are scanning <span id="count-total">0</span> resumes.
+                <span id="overage-included">0</span> included in your plan.
+                Total Estimated cost: <strong id="overage-total-cost">$0.00</strong>
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <button class="btn btn-recruiter btn-full btn-lg mt-32" id="start-batch-btn" disabled>
+                Process Batch Scans
+            </button>
+        </div>
+    </div>
+
+    <!-- Step 2: Processing -->
+    <div id="batch-loading-ui" class="hidden" style="text-align:center;padding:80px 0;">
+        <div class="spinner" style="margin:0 auto 24px;border-top-color:var(--recruiter-primary);"></div>
+        <h3>Scanning candidates...</h3>
+        <p class="text-muted text-sm" id="progress-text">Processing 0 of 0 resumes</p>
+        <div class="batch-limit-bar mt-24" style="max-width:400px;margin-left:auto;margin-right:auto;">
+            <div class="progress">
+                <div class="progress-fill" id="batch-progress-bar" style="width:0%;background:var(--recruiter-primary);"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let batchFiles = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('auth:ready', () => {
+        if (!auth.isRecruiter) {
+            window.location.href = '/pages/dashboard.html';
+            return;
+        }
+
+        const features = auth.getFeatures();
+        document.getElementById('max-batch-label').textContent = features.batch_size;
+
+        setupMultiDropzone('multi-drop-zone', 'multi-file-input', (files) => {
+            batchFiles = files;
+            updateFileList();
+            calculateOverage();
+            document.getElementById('start-batch-btn').disabled = batchFiles.length === 0;
+        });
+    });
+
+    document.getElementById('start-batch-btn').onclick = processBatch;
+});
+
+function updateFileList() {
+    const list = document.getElementById('file-list');
+    if (batchFiles.length === 0) {
+        list.classList.add('hidden');
+        return;
+    }
+    list.classList.remove('hidden');
+    list.innerHTML = batchFiles.map((f, i) => `
+        <div style="display:flex;justify-content:between;align-items:center;padding:8px;border-bottom:1px solid var(--border-light);">
+            <div class="text-sm truncate" style="flex:1;">${f.name}</div>
+            <span class="text-xs text-muted">${(f.size/1024).toFixed(0)} KB</span>
+            <button onclick="removeFile(${i})" style="background:none;border:none;color:var(--red);cursor:pointer;margin-left:12px;">âœ•</button>
+        </div>
+    `).join('');
+}
+
+window.removeFile = (idx) => {
+    batchFiles.splice(idx, 1);
+    updateFileList();
+    calculateOverage();
+    document.getElementById('start-batch-btn').disabled = batchFiles.length === 0;
+};
+
+function calculateOverage() {
+    const notice = document.getElementById('overage-calc');
+    const features = auth.getFeatures();
+
+    const total = batchFiles.length;
+    const included = features.batch_size;
+    const costPer = features.overage_cost_per_resume || 0;
+
+    if (total > included && features.overage_allowed) {
+        notice.classList.remove('hidden');
+        document.getElementById('count-total').textContent = total;
+        document.getElementById('overage-included').textContent = included;
+        document.getElementById('overage-total-cost').textContent = '$' + ((total - included) * costPer).toFixed(2);
+    } else if (total > included && !features.overage_allowed) {
+        // Limit enforced by frontend
+        toast(`Your plan is limited to ${included} resumes per batch.`, 'warning');
+        batchFiles = batchFiles.slice(0, included);
+        updateFileList();
+        notice.classList.add('hidden');
+    } else {
+        notice.classList.add('hidden');
+    }
+}
+
+async function processBatch() {
+    const jobTitle = document.getElementById('batch-job-title').value || 'Unspecified Role';
+    const jd = document.getElementById('batch-jd').value;
+
+    document.getElementById('batch-upload-ui').classList.add('hidden');
+    document.getElementById('batch-loading-ui').classList.remove('hidden');
+
+    const progressText = document.getElementById('progress-text');
+    const progressBar = document.getElementById('batch-progress-bar');
+
+    try {
+        const formData = new FormData();
+        formData.append('job_title', jobTitle);
+        formData.append('job_description', jd);
+        batchFiles.forEach(f => formData.append('resumes', f));
+
+        // Note: In a real app, we might want to use individual requests for massive batches to show granular progress
+        // But for Task 6 backend implementation, we have a single bulk processing endpoint.
+        const res = await api.post('/recruiter/batch', formData, true);
+
+        // Success -> Results
+        window.location.href = `/pages/recruiter/results.html?id=${res.batch_id}`;
+
+    } catch (err) {
+        toast(err.message, 'error');
+        document.getElementById('batch-loading-ui').classList.add('hidden');
+        document.getElementById('batch-upload-ui').classList.remove('hidden');
+    }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cover Letter Generator â€” AutoCV</title>
+    <meta name="description" content="Generate a tailored cover letter using AI. Paste your resume and job details to get a professional cover letter in seconds.">
+    <link rel="stylesheet" href="/static/css/design-system.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/animations.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="/static/js/config.js" defer></script>
+    <script src="/static/js/auth.js" defer></script>
+    <script src="/static/js/animations.js" defer></script>
+    <style>
+        .cover-result {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9375rem;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 32px;
+            min-height: 300px;
+            color: var(--text);
+        }
+        .copy-float {
+            position: sticky;
+            top: 8px;
+            float: right;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">
+            <div class="nav-logo-mark">A</div>
+            AutoCV
+        </a>
+        <div class="nav-links">
+            <a href="/pages/dashboard.html" class="nav-link">Dashboard</a>
+            <span class="plan-badge badge badge-gray"></span>
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;margin-left:8px;" id="nav-avatar">U</div>
+        </div>
+    </div>
+</nav>
+
+<!-- App Layout -->
+<div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-label">Navigation</div>
+        <a href="/pages/dashboard.html" class="sidebar-link">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">dashboard</span>
+            Dashboard
+        </a>
+        <a href="/pages/optimize.html" class="sidebar-link">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">document_scanner</span>
+            Scan Resume
+        </a>
+
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-label">Pro Features</div>
+        <a href="/pages/student/templates.html" class="sidebar-link">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">description</span>
+            Templates
+        </a>
+        <a href="/pages/student/cover-letter.html" class="sidebar-link active">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">mail</span>
+            Cover Letter
+        </a>
+
+        <div class="sidebar-divider"></div>
+        <a href="/pages/account.html" class="sidebar-link">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">settings</span>
+            Settings
+        </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="app-main">
+        <div class="page-header">
+            <div>
+                <h1>Cover Letter Generator</h1>
+                <p class="text-muted text-sm" style="margin-top:4px;">AI-powered cover letters tailored to the job</p>
+            </div>
+            <span class="badge badge-pro">PRO FEATURE</span>
+        </div>
+
+        <!-- Pro lock for non-pro users -->
+        <div id="pro-lock" class="hidden">
+            <div class="card card-lg text-center" style="padding:64px 32px;">
+                <div style="font-size:3rem;margin-bottom:16px;">âœ¦</div>
+                <h2>Pro Feature</h2>
+                <p class="text-muted" style="margin-top:8px;max-width:400px;margin-left:auto;margin-right:auto;">
+                    The Cover Letter Generator is available exclusively to Pro plan subscribers. Upgrade to start generating tailored cover letters with AI.
+                </p>
+                <a href="/pages/pricing.html" class="btn btn-primary btn-lg" style="margin-top:24px;">
+                    <span class="material-symbols-outlined" style="font-size:1.125rem;">rocket_launch</span>
+                    Upgrade to Pro â€” $19/mo
+                </a>
+            </div>
+        </div>
+
+        <!-- Generator Form -->
+        <div id="generator-form" class="hidden animate-fade-in-up">
+            <div class="card card-lg" style="max-width:720px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+                    <div class="form-group">
+                        <label class="label" for="cl-job-title">Job Title</label>
+                        <input type="text" id="cl-job-title" class="input" placeholder="e.g. Software Engineer" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="label" for="cl-company">Company Name</label>
+                        <input type="text" id="cl-company" class="input" placeholder="e.g. Google" required>
+                    </div>
+                </div>
+
+                <div class="form-group mb-24">
+                    <label class="label" for="cl-resume">Your Resume Text <span class="label-hint">(paste key sections)</span></label>
+                    <textarea class="textarea" id="cl-resume" placeholder="Paste your resume content or key experience highlights here..." style="min-height:160px;"></textarea>
+                </div>
+
+                <div class="form-group mb-24">
+                    <label class="label" for="cl-jd">Job Description <span class="label-hint">(optional â€” improves quality)</span></label>
+                    <textarea class="textarea" id="cl-jd" placeholder="Paste the job description for a more targeted cover letter..." style="min-height:120px;"></textarea>
+                </div>
+
+                <div class="form-group mb-24">
+                    <label class="label" for="cl-tone">Tone</label>
+                    <select class="select" id="cl-tone">
+                        <option value="professional">Professional</option>
+                        <option value="enthusiastic">Enthusiastic</option>
+                        <option value="conversational">Conversational</option>
+                        <option value="formal">Formal / Corporate</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary btn-full btn-lg" id="generate-btn">
+                    <span class="material-symbols-outlined" style="font-size:1.125rem;">auto_awesome</span>
+                    Generate Cover Letter
+                </button>
+            </div>
+
+            <!-- Loading -->
+            <div id="cl-loading" class="hidden" style="text-align:center;padding:64px 0;">
+                <div class="spinner" style="margin:0 auto 24px;"></div>
+                <h3>Generating your cover letter...</h3>
+                <p class="text-muted text-sm" style="margin-top:8px;">Claude AI is crafting a tailored letter. This takes ~15 seconds.</p>
+            </div>
+
+            <!-- Result -->
+            <div id="cl-result" class="hidden animate-fade-in-up" style="margin-top:32px;">
+                <div class="flex items-center justify-between mb-16">
+                    <h3>Your Cover Letter</h3>
+                    <div class="flex gap-8">
+                        <button class="btn btn-secondary btn-sm" id="copy-btn">
+                            <span class="material-symbols-outlined" style="font-size:1rem;">content_copy</span>
+                            Copy
+                        </button>
+                        <button class="btn btn-ghost btn-sm" onclick="regenerate()">
+                            <span class="material-symbols-outlined" style="font-size:1rem;">refresh</span>
+                            Regenerate
+                        </button>
+                    </div>
+                </div>
+                <div class="cover-result" id="cl-output"></div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('auth:ready', () => {
+        if (!auth.user) {
+            window.location.href = '/pages/login.html';
+            return;
+        }
+
+        const features = auth.getFeatures();
+        if (!features.cover_letter) {
+            document.getElementById('pro-lock').classList.remove('hidden');
+        } else {
+            document.getElementById('generator-form').classList.remove('hidden');
+        }
+    });
+
+    // Generate button
+    document.getElementById('generate-btn').addEventListener('click', generateCoverLetter);
+
+    // Copy button
+    document.getElementById('copy-btn').addEventListener('click', () => {
+        const text = document.getElementById('cl-output').textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            toast('Cover letter copied to clipboard!', 'success');
+        }).catch(() => {
+            // Fallback
+            const range = document.createRange();
+            range.selectNode(document.getElementById('cl-output'));
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            toast('Copied!', 'success');
+        });
+    });
+});
+
+async function generateCoverLetter() {
+    const jobTitle = document.getElementById('cl-job-title').value.trim();
+    const company = document.getElementById('cl-company').value.trim();
+    const resume = document.getElementById('cl-resume').value.trim();
+    const jd = document.getElementById('cl-jd').value.trim();
+    const tone = document.getElementById('cl-tone').value;
+
+    if (!jobTitle || !company) {
+        return toast('Please enter the job title and company name.', 'error');
+    }
+    if (!resume) {
+        return toast('Please paste your resume text.', 'error');
+    }
+
+    const btn = document.getElementById('generate-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<div class="spinner spinner-sm" style="border-top-color:#fff;border-color:rgba(255,255,255,0.3);"></div> Generating...';
+
+    // Show loading
+    document.querySelector('.card.card-lg').classList.add('hidden');
+    document.getElementById('cl-loading').classList.remove('hidden');
+    document.getElementById('cl-result').classList.add('hidden');
+
+    try {
+        const data = await api.post('/cover-letter', {
+            job_title: jobTitle,
+            company: company,
+            resume_text: resume,
+            job_description: jd,
+            tone: tone,
+        });
+
+        document.getElementById('cl-loading').classList.add('hidden');
+        document.getElementById('cl-result').classList.remove('hidden');
+        document.getElementById('cl-output').textContent = data.cover_letter;
+
+    } catch (err) {
+        document.getElementById('cl-loading').classList.add('hidden');
+        document.querySelector('.card.card-lg').classList.remove('hidden');
+        btn.disabled = false;
+        btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:1.125rem;">auto_awesome</span> Generate Cover Letter';
+
+        if (err.message.includes('UPGRADE_REQUIRED')) {
+            toast('Cover letter generation requires Pro plan.', 'warning');
+        } else {
+            toast(err.message || 'Generation failed. Please try again.', 'error');
+        }
+    }
+}
+
+function regenerate() {
+    document.getElementById('cl-result').classList.add('hidden');
+    document.querySelector('.card.card-lg').classList.remove('hidden');
+    const btn = document.getElementById('generate-btn');
+    btn.disabled = false;
+    btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:1.125rem;">auto_awesome</span> Generate Cover Letter';
+}
+</script>
+
+</body>
+</html>

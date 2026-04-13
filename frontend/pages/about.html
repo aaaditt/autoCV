@@ -1,170 +1,91 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>About Us | AutoCV</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-    <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        primary: "#0059b5",
-                        "primary-container": "#0071e3",
-                        background: "#faf8fe",
-                        surface: "#ffffff",
-                        "on-surface": "#1a1b1f",
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body { background-color: #faf8fe; color: #1a1b1f; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        .glass-header { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); }
-        .glass-card { background: white; border: 1px solid rgba(0,0,0,0.05); border-radius: 2rem; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .glass-card:hover { transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,0.08); }
-        
-        @keyframes reveal {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-reveal { animation: reveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-200 { animation-delay: 0.2s; }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About AutoCV â€” The AI-Powered ATS Solution</title>
+    <link rel="stylesheet" href="/static/css/design-system.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/animations.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="/static/js/config.js" defer></script>
+    <script src="/static/js/auth.js" defer></script>
+    <script src="/static/js/animations.js" defer></script>
 </head>
-<body class="antialiased font-sans">
-    <!-- Navbar -->
-    <nav class="fixed top-0 w-full z-50 glass-header border-b border-black/5">
-        <div class="max-w-7xl mx-auto px-8 h-16 flex items-center justify-between">
-            <a href="../home.html" class="text-xl font-black italic tracking-tighter">Auto<span class="text-primary tracking-normal">CV</span></a>
-            <div class="hidden md:flex items-center gap-8 text-sm font-bold">
-                <a href="../home.html#features" class="hover:text-primary transition-colors">Features</a>
-                <a href="pricing.html" class="hover:text-primary transition-colors">Pricing</a>
-                <a href="about.html" class="text-primary transition-colors">About</a>
-                <a href="support.html" class="hover:text-primary transition-colors">Support</a>
-                
-                <!-- Unauthenticated -->
-                <div class="auth-hide flex items-center gap-6">
-                    <a href="login.html" class="px-5 py-2 glass-card border-none hover:translate-y-0 hover:shadow-none bg-black/5 rounded-full">Login</a>
-                    <button onclick="auth.loginWithGoogle()" class="px-6 py-2 bg-primary text-white rounded-full hover:opacity-90 active:scale-95 transition-all">Get Started</button>
-                </div>
+<body>
 
-                <!-- Authenticated (Dropdown) -->
-                <div class="auth-show hidden relative group">
-                    <button class="flex items-center gap-2 hover:opacity-80 transition-all">
-                        <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shadow-lg shadow-primary/20" id="nav-avatar">U</div>
-                    </button>
-                    <div class="absolute right-0 top-full pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-[100]">
-                        <div class="w-56 bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] border border-black/5 overflow-hidden p-2 text-left">
-                            <div class="px-4 py-3 border-b border-black/5 mb-1 bg-slate-50/50">
-                                <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Account</p>
-                                <p class="text-xs font-bold text-slate-900 truncate" id="nav-username">User</p>
-                            </div>
-                            <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors rounded-xl">
-                                <span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard
-                            </a>
-                            <a href="account.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors rounded-xl">
-                                <span class="material-symbols-outlined text-[20px]">settings</span> Settings
-                            </a>
-                            <a href="pricing.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-blue-600 hover:bg-blue-50 transition-colors rounded-xl">
-                                <span class="material-symbols-outlined text-[20px]">workspace_premium</span> Upgrade Pro
-                            </a>
-                            <div class="h-[1px] bg-black/5 my-1"></div>
-                            <button onclick="auth.logout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors rounded-xl text-left">
-                                <span class="material-symbols-outlined text-[20px]">logout</span> Sign Out
-                            </button>
-                        </div>
-                    </div>
-                </div>
+<!-- Nav -->
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">
+            <div class="nav-logo-mark">A</div>
+            AutoCV
+        </a>
+        <div class="nav-links">
+            <a href="/pages/pricing.html" class="nav-link">Pricing</a>
+            <div class="auth-hide" style="display:flex;gap:8px;">
+                <a href="/pages/login.html" class="btn btn-outline btn-sm">Log in</a>
+                <a href="/pages/signup.html" class="btn btn-primary btn-sm">Sign Up Free</a>
             </div>
+            <div class="auth-show" style="display:flex;align-items:center;gap:8px;">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;" id="nav-avatar">U</div>
+          </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <!-- Hero Section -->
-    <header class="pt-40 pb-20 px-8 max-w-7xl mx-auto text-center">
-        <div class="animate-reveal">
-            <span class="px-4 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-black uppercase tracking-[0.2em] mb-6 inline-block">Our Mission</span>
-            <h1 class="text-[64px] md:text-[84px] font-[900] tracking-tight leading-[0.95] mb-8">
-                Empowering your <br/><span class="text-primary italic">career journey.</span>
-            </h1>
-            <p class="text-xl text-slate-500 font-medium max-w-2xl mx-auto leading-relaxed">
-                We believe that landing your dream job shouldn't be a game of chance. AutoCV uses advanced AI to level the playing field for every candidate.
-            </p>
+<section class="section">
+    <div class="container-narrow">
+        <h1 class="mb-24">The Story Behind AutoCV</h1>
+        <p class="text-lg text-muted mb-32">We built AutoCV to level the playing field between candidates and Applicant Tracking Systems (ATS).</p>
+
+        <div class="card mb-48">
+            <h3 class="mb-16">Our Mission</h3>
+            <p>Today, over 95% of Fortune 500 companies use ATS to screen resumes. Unfortunately, great candidates often get filtered out simply because their resume isn't formatted correctly or is missing specific keywords that the system is looking for.</p>
+            <p class="mt-16">AutoCV uses advanced parsing logic and AI to help job seekers see exactly what these systems see, and more importantly, how to fix it before hitting "Apply".</p>
         </div>
-    </header>
 
-    <!-- Content Grid -->
-    <main class="px-8 max-w-7xl mx-auto pb-32">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-32">
-            <div class="glass-card p-12 bg-primary text-white animate-reveal delay-100 flex flex-col justify-end min-h-[400px]">
-                <h2 class="text-4xl font-bold mb-6 italic tracking-tight">The Problem</h2>
-                <p class="text-lg text-white/80 font-medium leading-relaxed">
-                    Applicant Tracking Systems (ATS) reject over 75% of qualified resumes before a human ever sees them. This "black hole" of recruitment prevents talented people from making their mark.
-                </p>
+        <h2>Dual-Sided Efficiency</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-24 mt-24 mb-48">
+            <div class="card card-sm">
+                <div class="badge badge-blue mb-8">For Students</div>
+                <p class="text-sm">Land more interviews by ensuring your resume is a perfect match for the roles you want. No more guessing what the recruiter is looking for.</p>
             </div>
-            <div class="glass-card p-12 bg-white animate-reveal delay-200 flex flex-col justify-end min-h-[400px]">
-                <h2 class="text-4xl font-bold mb-6 text-on-surface italic tracking-tight">Our Solution</h2>
-                <p class="text-lg text-slate-500 font-medium leading-relaxed">
-                    AutoCV provides the same intelligence used by recruiters to candidates. We analyze your resume against real-world ATS benchmarks and provide actionable, instant optimizations.
-                </p>
+            <div class="card card-sm">
+                <div class="badge badge-purple mb-8">For Recruiters</div>
+                <p class="text-sm">Screen large volumes of applicants instantly. Sort by relevance and focus your energy on the candidates who actually meet the requirements.</p>
             </div>
         </div>
 
-        <!-- Values Section -->
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-black italic mb-12">Built on Core Values</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-8 bg-white/50 rounded-[2rem] border border-black/5">
-                    <div class="w-12 h-12 rounded-2xl bg-blue-50 text-primary flex items-center justify-center mx-auto mb-6">
-                        <span class="material-symbols-outlined">verified_user</span>
-                    </div>
-                    <h3 class="font-bold text-lg mb-3">Integrity First</h3>
-                    <p class="text-sm text-slate-500 leading-relaxed font-medium">We never compromise on the quality of our results. Your career data is your most precious asset.</p>
-                </div>
-                <div class="p-8 bg-white/50 rounded-[2rem] border border-black/5">
-                    <div class="w-12 h-12 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center mx-auto mb-6">
-                        <span class="material-symbols-outlined">auto_fix_high</span>
-                    </div>
-                    <h3 class="font-bold text-lg mb-3">AI for Good</h3>
-                    <p class="text-sm text-slate-500 leading-relaxed font-medium">Technical intelligence should serve human potential. We use AI to bridge the gap, not widen it.</p>
-                </div>
-                <div class="p-8 bg-white/50 rounded-[2rem] border border-black/5">
-                    <div class="w-12 h-12 rounded-2xl bg-green-50 text-green-600 flex items-center justify-center mx-auto mb-6">
-                        <span class="material-symbols-outlined">group</span>
-                    </div>
-                    <h3 class="font-bold text-lg mb-3">Candidate Centric</h3>
-                    <p class="text-sm text-slate-500 leading-relaxed font-medium">Every feature we build starts with a simple question: "Does this help the job seeker today?"</p>
-                </div>
+        <div class="divider"></div>
+
+        <div class="text-center mt-48">
+            <h3>Ready to get started?</h3>
+            <div class="flex gap-16 justify-center mt-24">
+                <a href="/pages/signup.html" class="btn btn-primary">Create Your Account</a>
+                <a href="/pages/optimize.html?guest=true" class="btn btn-secondary">Try Free Scanner</a>
             </div>
         </div>
-    </main>
+    </div>
+</section>
 
-    <!-- Footer -->
-    <footer class="py-12 px-8 border-t border-black/5 bg-white">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="flex items-center gap-2">
-                <span class="text-xl font-black italic tracking-tighter">Auto<span class="text-primary tracking-normal">CV</span></span>
-                <span class="text-xs text-slate-400 ml-4">© 2025. Empowering careers everywhere.</span>
-            </div>
-            <div class="flex gap-8">
-                <a class="text-xs font-bold text-slate-500 hover:text-primary transition-colors" href="privacy.html">Privacy</a>
-                <a class="text-xs font-bold text-slate-500 hover:text-primary transition-colors" href="terms.html">Terms</a>
-                <a class="text-xs font-bold text-slate-500 hover:text-primary transition-colors" href="support.html">Support</a>
-            </div>
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <div>
+            <div class="footer-brand">AutoCV</div>
+            <p class="footer-desc">ATS-optimized resume scanning and AI rewrites.</p>
         </div>
-    </footer>
+        <div>
+            <div class="footer-heading">Support</div>
+            <ul class="footer-links">
+                <li><a href="/pages/support.html">Help Center</a></li>
+                <li><a href="mailto:work.aadit@gmail.com">Contact Us</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
 
-    <script src="../static/js/config.js?v=2.4"></script>
-    <script src="../static/js/app.js?v=2.4"></script>
 </body>
 </html>

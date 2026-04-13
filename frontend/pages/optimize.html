@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume Scanner — AutoCV</title>
+    <title>Resume Scanner Ã¢â‚¬â€ AutoCV</title>
     <meta name="description" content="Upload your resume and paste a job description for instant ATS compatibility scoring and keyword analysis.">
     <link rel="stylesheet" href="/static/css/design-system.css">
     <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/animations.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
     <script src="/static/js/config.js" defer></script>
     <script src="/static/js/auth.js" defer></script>
+    <script src="/static/js/animations.js" defer></script>
 </head>
 <body>
 
@@ -64,15 +66,15 @@
 
             <!-- Dropzone -->
             <div class="upload-zone" id="drop-zone" data-input-id="file-input">
-                <div class="upload-icon">📄</div>
+                <div class="upload-icon">Ã°Å¸â€œâ€ž</div>
                 <div class="upload-main">Drop your resume here</div>
-                <div class="upload-sub">or <span class="upload-browse">click to browse</span> · PDF, DOCX — Max 10MB</div>
+                <div class="upload-sub">or <span class="upload-browse">click to browse</span> Ã‚Â· PDF, DOCX Ã¢â‚¬â€ Max 10MB</div>
                 <input type="file" id="file-input" accept=".pdf,.docx,.doc" hidden>
             </div>
 
             <!-- Job Description -->
             <div class="form-group mt-24">
-                <label class="label">Job Description <span class="label-hint">(optional — improves accuracy)</span></label>
+                <label class="label">Job Description <span class="label-hint">(optional Ã¢â‚¬â€ improves accuracy)</span></label>
                 <textarea class="textarea" id="jd-input" placeholder="Paste the job description here for targeted keyword analysis..."></textarea>
             </div>
 
@@ -84,20 +86,42 @@
         </div>
     </div>
 
-    <!-- Loading Section -->
+    <!-- Loading Section (A5: Multi-stage animated loader) -->
     <div id="loading-section" class="hidden" style="text-align:center;padding:80px 0;">
-        <div class="spinner" style="margin:0 auto 24px;"></div>
-        <h3>Analyzing your resume...</h3>
-        <p class="text-muted text-sm" style="margin-top:8px;">Extracting keywords and calculating ATS score</p>
+        <!-- Stage progress bar -->
+        <div style="max-width:320px;margin:0 auto 32px;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                <span class="text-xs text-muted" id="stage-label">Reading resume...</span>
+                <span class="text-xs text-muted" id="stage-pct">0%</span>
+            </div>
+            <div style="height:4px;background:var(--surface-3);border-radius:var(--r-pill);overflow:hidden;">
+                <div id="stage-bar" style="height:100%;width:0%;background:var(--primary);border-radius:var(--r-pill);transition:width 0.6s var(--ease-out);"></div>
+            </div>
+        </div>
+        <!-- Animated dots -->
+        <div class="loading-dots" style="margin-bottom:20px;">
+            <span></span><span></span><span></span>
+        </div>
+        <h3 id="stage-title">Analyzing your resume...</h3>
+        <p class="text-muted text-sm" style="margin-top:8px;" id="stage-subtitle">Extracting keywords and calculating ATS score</p>
     </div>
 
     <!-- Results Section -->
     <div id="results-section" class="hidden animate-fade-in-up">
         <div class="card card-lg" style="max-width:720px;margin:0 auto;">
-            <!-- Score -->
+            <!-- Score (A4: animated SVG ring) -->
             <div class="text-center mb-32">
                 <div class="score-ring-wrap">
-                    <div class="score-ring score-ring-lg" id="result-score"></div>
+                    <div class="score-ring score-ring-lg" id="result-score">
+                        <svg viewBox="0 0 100 100" width="160" height="160">
+                            <circle class="score-ring-bg" cx="50" cy="50" r="45"/>
+                            <circle class="score-ring-fill" cx="50" cy="50" r="45"/>
+                        </svg>
+                        <div class="score-ring-text">
+                            <span class="score-ring-num">0</span>
+                            <span style="font-size:0.875rem;font-weight:500;color:var(--text-3);">%</span>
+                        </div>
+                    </div>
                     <div class="score-label" id="result-label">ATS Compatibility Score</div>
                 </div>
             </div>
@@ -108,7 +132,7 @@
                     <span class="material-symbols-outlined" style="color:var(--green);font-size:1.125rem;">check_circle</span>
                     <h3>Matched Keywords <span class="text-muted text-sm font-medium" id="matched-count"></span></h3>
                 </div>
-                <div class="pill-group" id="matched-pills">
+                <div class="pill-group animate-pills" id="matched-pills">
                     <!-- Populated by JS -->
                 </div>
             </div>
@@ -119,7 +143,7 @@
                     <span class="material-symbols-outlined" style="color:var(--red);font-size:1.125rem;">cancel</span>
                     <h3>Missing Keywords <span class="text-muted text-sm font-medium" id="missing-count"></span></h3>
                 </div>
-                <div class="pill-group" id="missing-pills">
+                <div class="pill-group animate-pills" id="missing-pills">
                     <!-- Populated by JS -->
                 </div>
             </div>
@@ -145,7 +169,7 @@
             <!-- Upgrade CTA (for free logged-in users) -->
             <div id="upgrade-cta" class="hidden" style="margin-top:20px;text-align:center;">
                 <div class="card card-sm" style="background:var(--surface-2);border-color:var(--border);">
-                    <span style="font-size:1.25rem;">✦</span>
+                    <span style="font-size:1.25rem;">Ã¢Å“Â¦</span>
                     <h3 style="margin-top:8px;">AI Resume Optimization</h3>
                     <p class="text-sm text-muted" style="margin-top:4px;">Upgrade to Single ($9) or Pro ($19/mo) to unlock AI-powered rewrites.</p>
                     <a href="/pages/pricing.html" class="btn btn-primary btn-sm" style="margin-top:12px;">View Plans</a>
@@ -177,6 +201,50 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('analyze-btn').addEventListener('click', analyzeResume);
 });
 
+// A5: Multi-stage loading progress
+const STAGES = [
+    { label: 'Reading resume...', pct: 15, subtitle: 'Parsing document structure' },
+    { label: 'Extracting text...', pct: 35, subtitle: 'Identifying content blocks' },
+    { label: 'Analyzing keywords...', pct: 60, subtitle: 'Matching against job description' },
+    { label: 'Calculating ATS score...', pct: 80, subtitle: 'Scoring compatibility' },
+    { label: 'Finalizing results...', pct: 95, subtitle: 'Preparing your report' },
+];
+let stageInterval = null;
+
+function startLoadingStages() {
+    let i = 0;
+    const bar = document.getElementById('stage-bar');
+    const label = document.getElementById('stage-label');
+    const pct = document.getElementById('stage-pct');
+    const title = document.getElementById('stage-title');
+    const sub = document.getElementById('stage-subtitle');
+    stageInterval = setInterval(() => {
+        if (i >= STAGES.length) { clearInterval(stageInterval); return; }
+        const s = STAGES[i++];
+        if (bar) bar.style.width = s.pct + '%';
+        if (label) label.textContent = s.label;
+        if (pct) pct.textContent = s.pct + '%';
+        if (title) title.textContent = s.label;
+        if (sub) sub.textContent = s.subtitle;
+    }, 900);
+}
+
+// A8: Blur-to-clear pill reveal on sign-in
+function revealBlurredPills() {
+    const blurred = document.querySelectorAll('.pill-blurred');
+    blurred.forEach((pill, i) => {
+        setTimeout(() => {
+            pill.style.transition = 'filter 0.4s ease, opacity 0.4s ease';
+            pill.style.filter = 'blur(0)';
+            pill.classList.remove('pill-blurred');
+            pill.style.transform = 'scale(1.1)';
+            setTimeout(() => { pill.style.transform = 'none'; }, 200);
+        }, i * 50);
+    });
+}
+// Listen for auth state login
+document.addEventListener('autocv:authenticated', revealBlurredPills);
+
 async function analyzeResume() {
     if (!selectedFile) return toast('Please upload a resume first', 'error');
 
@@ -188,9 +256,10 @@ async function analyzeResume() {
     document.getElementById('step-1').classList.add('done');
     document.getElementById('step-2').classList.add('active');
 
-    // Show loading
+    // Show loading with stage animation
     document.getElementById('upload-section').classList.add('hidden');
     document.getElementById('loading-section').classList.remove('hidden');
+    startLoadingStages();
 
     const formData = new FormData();
     formData.append('resume', selectedFile);
@@ -204,11 +273,21 @@ async function analyzeResume() {
         document.getElementById('step-3').classList.add('active');
 
         // Show results
-        document.getElementById('loading-section').classList.add('hidden');
-        document.getElementById('results-section').classList.remove('hidden');
+        clearInterval(stageInterval);
+        const bar = document.getElementById('stage-bar');
+        if (bar) { bar.style.width = '100%'; }
+        setTimeout(() => {
+            document.getElementById('loading-section').classList.add('hidden');
+            document.getElementById('results-section').classList.remove('hidden');
+        }, 300);
 
-        // Render score
-        renderScoreRing(document.getElementById('result-score'), data.score, 140);
+        // A4: Set data-score so animations.js handles the ring animation
+        const ringEl = document.getElementById('result-score');
+        ringEl.dataset.score = data.score;
+        // Trigger ring animation after reveal (re-run observer manually)
+        setTimeout(() => { if (window.AutoCVAnim) window.AutoCVAnim.animateRing(ringEl); }, 400);
+        // Legacy fallback
+        if (!ringEl.querySelector('svg')) renderScoreRing(ringEl, data.score, 160);
 
         // Score label
         const labels = { strong: 'Strong match! Ready to apply.', moderate: 'Needs improvement. Add missing keywords.', weak: 'Low match. Significant gaps found.' };
@@ -247,7 +326,7 @@ async function analyzeResume() {
                 missingHtml += `<span class="pill">+${blurredMissing - 5} more</span>`;
             }
         }
-        missingPills.innerHTML = missingHtml || '<span class="text-sm text-muted">No missing keywords — great match!</span>';
+        missingPills.innerHTML = missingHtml || '<span class="text-sm text-muted">No missing keywords Ã¢â‚¬â€ great match!</span>';
 
         // Show correct CTA based on plan
         const features = data.features || {};
@@ -326,9 +405,9 @@ function resetScanner() {
     const zone = document.getElementById('drop-zone');
     zone.classList.remove('has-file');
     zone.innerHTML = `
-        <div class="upload-icon">📄</div>
+        <div class="upload-icon">Ã°Å¸â€œâ€ž</div>
         <div class="upload-main">Drop your resume here</div>
-        <div class="upload-sub">or <span class="upload-browse">click to browse</span> · PDF, DOCX — Max 10MB</div>
+        <div class="upload-sub">or <span class="upload-browse">click to browse</span> Ã‚Â· PDF, DOCX Ã¢â‚¬â€ Max 10MB</div>
     `;
 
     // Re-init dropzone

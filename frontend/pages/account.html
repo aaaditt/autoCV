@@ -1,403 +1,129 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "secondary-fixed-dim": "#c8c6c8",
-                        "surface-container-highest": "#e3e2e7",
-                        "primary": "#0059b5",
-                        "primary-fixed": "#d7e2ff",
-                        "error": "#ba1a1a",
-                        "tertiary-container": "#008633",
-                        "on-surface-variant": "#414753",
-                        "primary-container": "#0071e3",
-                        "surface-container": "#efedf3",
-                        "on-background": "#1a1b1f",
-                        "inverse-surface": "#2f3034",
-                        "surface-container-high": "#e9e7ed",
-                        "primary-fixed-dim": "#abc7ff",
-                        "on-secondary-fixed-variant": "#474649",
-                        "surface-container-low": "#f4f3f8",
-                        "on-tertiary-fixed": "#002107",
-                        "surface-tint": "#005cbb",
-                        "tertiary-fixed-dim": "#53e16f",
-                        "on-surface": "#1a1b1f",
-                        "error-container": "#ffdad6",
-                        "tertiary-fixed": "#72fe88",
-                        "on-secondary-fixed": "#1b1b1d",
-                        "outline": "#717785",
-                        "on-tertiary-container": "#f1ffec",
-                        "on-error-container": "#93000a",
-                        "secondary": "#5f5e60",
-                        "secondary-container": "#e2dfe1",
-                        "on-primary-fixed": "#001b3f",
-                        "inverse-primary": "#abc7ff",
-                        "outline-variant": "#c1c6d6",
-                        "on-primary-fixed-variant": "#00458f",
-                        "on-error": "#ffffff",
-                        "on-secondary": "#ffffff",
-                        "background": "#faf8fe",
-                        "on-primary-container": "#fcfbff",
-                        "on-tertiary-fixed-variant": "#00531c",
-                        "inverse-on-surface": "#f1f0f6",
-                        "on-secondary-container": "#636264",
-                        "surface-container-lowest": "#ffffff",
-                        "surface": "#faf8fe",
-                        "tertiary": "#006a26",
-                        "surface-variant": "#e3e2e7",
-                        "on-primary": "#ffffff",
-                        "surface-dim": "#dbd9df",
-                        "on-tertiary": "#ffffff",
-                        "surface-bright": "#faf8fe",
-                        "secondary-fixed": "#e4e2e4"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "1rem",
-                        "lg": "2rem",
-                        "xl": "3rem",
-                        "full": "9999px"
-                    },
-                    "fontFamily": {
-                        "headline": ["Inter", "sans-serif"],
-                        "body": ["Inter", "sans-serif"],
-                        "label": ["Inter", "sans-serif"]
-                    }
-                },
-            },
-        }
-    </script>
-<style>
-    /* Nuclear Auth/Pro Visibility System */
-    body.is-pro .pro-hide { display: none !important; }
-    body:not(.is-pro) .pro-show { display: none !important; }
-    body.is-logged-in .auth-hide { display: none !important; }
-    body:not(.is-logged-in) .auth-show { display: none !important; }
-
-    body { font-family: 'Inter', sans-serif; }
-    .material-symbols-outlined {
-        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    }
-    .ghost-border { outline: 1px solid rgba(193, 198, 214, 0.15); }
-    </style>
-
-<style>
-    /* Global Animations */
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-page {
-        animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    
-    /* Button Hover Enhancements */
-    button, a.btn, a[class*="bg-primary"], a[class*="bg-surface"] {
-        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, opacity 0.2s ease !important;
-    }
-    button:hover, a.btn:hover {
-        transform: translateY(-2px);
-    }
-</style>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings â€” AutoCV</title>
+    <link rel="stylesheet" href="/static/css/design-system.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/animations.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="/static/js/config.js" defer></script>
+    <script src="/static/js/auth.js" defer></script>
+    <script src="/static/js/animations.js" defer></script>
 </head>
-<body class="bg-surface text-on-surface antialiased">
-<!-- TopNavBar -->
-<nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl">
-<div class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
-<div class="text-xl font-semibold tracking-tighter text-slate-900">AutoCV</div>
-<div class="hidden md:flex gap-8 items-center">
-<a class="font-sans tracking-tight text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors duration-200" href="../home.html#features">Features</a>
-<a class="font-sans tracking-tight text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors duration-200" href="pricing.html">Pricing</a>
-<a class="font-sans tracking-tight text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors duration-200" href="about.html">About</a>
-<a class="font-sans tracking-tight text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors duration-200" href="support.html">Support</a>
+<body>
 
-<div class="auth-hide flex items-center gap-6">
-    <button onclick="window.location.href='login.html'" class="text-slate-500 font-medium hover:text-blue-600 transition-colors">Login</button>
-    <button onclick="auth.loginWithGoogle()" class="bg-primary text-white px-5 py-2 rounded-full font-medium hover:opacity-90">Get Started</button>
-</div>
+<!-- Nav -->
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">
+            <div class="nav-logo-mark">A</div>
+            AutoCV
+        </a>
+        <div class="nav-links">
+            <a href="/pages/dashboard.html" class="nav-link">Dashboard</a>
+            <span class="plan-badge badge badge-gray"></span>
+        </div>
+    </div>
+</nav>
 
-<!-- Authenticated (Dropdown) -->
-<div class="auth-show hidden relative group">
-    <button class="flex items-center gap-2 hover:opacity-80 transition-all">
-        <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shadow-lg shadow-primary/20" id="nav-avatar">U</div>
-    </button>
-    <!-- Dropdown Menu -->
-    <div class="absolute right-0 top-full pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-[100]">
-        <div class="w-56 bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] border border-black/5 overflow-hidden p-2 text-left">
-            <div class="px-4 py-3 border-b border-black/5 mb-1 bg-slate-50/50">
-                <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Account</p>
-                <p class="text-xs font-bold text-slate-900 truncate" id="nav-username">User</p>
+<div class="container-narrow" style="padding-top:48px;padding-bottom:80px;">
+    <h1 class="mb-32">Account Settings</h1>
+
+    <div class="animate-fade-in-up">
+        <!-- Profile info -->
+        <div class="card mb-24">
+            <h3 class="mb-16">Profile Information</h3>
+            <div class="form-group mb-16">
+                <label class="label">Full Name</label>
+                <input type="text" id="acc-name" class="input" readonly>
             </div>
-            <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors rounded-xl">
-                <span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard
-            </a>
-            <a href="account.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors rounded-xl">
-                <span class="material-symbols-outlined text-[20px]">settings</span> Settings
-            </a>
-            <a href="pricing.html" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-blue-600 hover:bg-blue-50 transition-colors rounded-xl">
-                <span class="material-symbols-outlined text-[20px]">workspace_premium</span> Upgrade Pro
-            </a>
-            <div class="h-[1px] bg-black/5 my-1"></div>
-            <button onclick="auth.logout()" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors rounded-xl text-left">
-                <span class="material-symbols-outlined text-[20px]">logout</span> Sign Out
+            <div class="form-group">
+                <label class="label">Email Address</label>
+                <input type="email" id="acc-email" class="input" readonly>
+            </div>
+        </div>
+
+        <!-- Plan Status -->
+        <div class="card mb-24">
+            <div class="flex items-center justify-between mb-16">
+                <h3>Subscription & Plan</h3>
+                <span class="plan-badge badge" id="acc-plan-badge">Free</span>
+            </div>
+            <div style="background:var(--surface-2);border-radius:var(--r-md);padding:16px;">
+                <div class="flex items-center justify-between text-sm">
+                    <span class="text-muted">Account Type</span>
+                    <strong id="acc-type">Student</strong>
+                </div>
+                <div class="divider" style="margin:12px 0;"></div>
+                <div class="flex items-center justify-between text-sm">
+                    <span class="text-muted">Scans Used This Week</span>
+                    <strong id="acc-scans">0</strong>
+                </div>
+            </div>
+            <div class="flex gap-12 mt-20">
+                <a href="/pages/pricing.html" class="btn btn-primary btn-sm">Upgrade Plan</a>
+                <button class="btn btn-secondary btn-sm" onclick="toast('Billing portal coming soon. Message support if needed.', 'info')">Manage Billing</button>
+            </div>
+        </div>
+
+        <!-- Sessions / Security -->
+        <div class="card mb-24">
+            <h3 class="mb-16">Security</h3>
+            <p class="text-sm text-muted">Manage your account access and security settings.</p>
+            <div class="flex gap-12 mt-16">
+              <button class="btn btn-secondary btn-sm">Change Password</button>
+              <button class="btn btn-secondary btn-sm" onclick="toast('Sessions cleared.', 'success')">Log out all devices</button>
+            </div>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="card" style="border-color:var(--red-light);">
+            <h3 class="text-danger mb-8">Danger Zone</h3>
+            <p class="text-sm text-muted">Permanently delete your account and all optimization history.</p>
+            <button class="btn btn-danger mt-16" onclick="confirm('Are you sure you want to delete your account? This cannot be undone.') && toast('Request sent to support.', 'info')">
+                Delete Account
+            </button>
+        </div>
+
+        <!-- Logout -->
+        <div class="text-center mt-48">
+            <button class="btn btn-secondary" onclick="auth.logout()">
+                <span class="material-symbols-outlined" style="font-size:1.125rem;">logout</span>
+                Sign Out
             </button>
         </div>
     </div>
 </div>
-</div>
-</div>
-</nav>
-<div class="flex pt-16 min-h-screen">
-<!-- SideNavBar -->
-<aside class="h-[calc(100vh-64px)] w-64 border-r border-slate-100 bg-slate-50 sticky top-16 hidden md:flex flex-col p-4 gap-2">
-<div class="px-4 py-6 mb-2">
-<div class="text-lg font-bold text-slate-900">AutoCV</div>
-<div class="text-xs text-on-secondary-container font-medium uppercase tracking-wider">Pro Plan</div>
-</div>
-<nav class="flex-1 flex flex-col gap-1">
-<a class="flex items-center gap-3 text-slate-500 px-4 py-2 hover:bg-slate-100 transition-all font-sans text-sm font-medium" href="dashboard.html">
-<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
-                    Dashboard
-                </a>
-<a class="flex items-center gap-3 text-slate-500 px-4 py-2 hover:bg-slate-100 transition-all font-sans text-sm font-medium" href="optimize.html">
-<span class="material-symbols-outlined" data-icon="description">description</span>
-                    Resumes
-                </a>
-<a class="flex items-center gap-3 text-slate-500 px-4 py-2 hover:bg-slate-100 transition-all font-sans text-sm font-medium" href="history.html">
-<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
-                    History
-                </a>
-<!-- Active Item: Settings/Account -->
-<a class="flex items-center gap-3 bg-white text-blue-600 shadow-sm rounded-lg px-4 py-2 font-sans text-sm font-semibold border-l-4 border-primary" href="#">
-<span class="material-symbols-outlined text-blue-600" data-icon="settings">settings</span>
-                    Settings
-                </a>
-<a class="flex items-center gap-3 text-slate-500 px-4 py-2 hover:bg-slate-100 transition-all font-sans text-sm font-medium" href="support.html">
-<span class="material-symbols-outlined" data-icon="help">help</span>
-                    Help
-                </a>
-</nav>
-<div class="mt-auto pt-6 border-t border-slate-200">
-<div class="bg-primary-container/10 p-4 rounded-xl mb-4">
-<p class="text-xs font-semibold text-primary mb-2">Power User</p>
-<p class="text-[10px] text-slate-600 mb-3 leading-relaxed">Unlock advanced AI analysis and unlimited exports.</p>
-<button class="w-full py-2 bg-primary text-white text-xs rounded-full font-bold">Upgrade Now</button>
-</div>
-<div class="flex flex-col gap-1">
-<a class="flex items-center gap-3 text-slate-400 px-4 py-1 text-xs hover:underline" href="terms.html">
-<span class="material-symbols-outlined text-sm" data-icon="gavel">gavel</span>
-                        Legal
-                    </a>
-<a class="flex items-center gap-3 text-slate-400 px-4 py-1 text-xs hover:underline" href="privacy.html">
-<span class="material-symbols-outlined text-sm" data-icon="lock">lock</span>
-                        Privacy
-                    </a>
-</div>
-</div>
-</aside>
-<!-- Main Content Area -->
-<main class="flex-1 overflow-y-auto px-8 md:px-24 py-10 bg-surface">
-<div class="max-w-[800px] mx-auto space-y-16">
-<!-- Breadcrumb -->
-<div onclick="window.location.href='dashboard.html'" class="flex items-center gap-2 text-primary-container font-medium hover:opacity-70 transition-opacity cursor-pointer mb-8 animate-page">
-    <span class="material-symbols-outlined text-[20px]">arrow_back</span>
-    <span class="text-sm font-bold tracking-tight">Back to Dashboard</span>
-</div>
-
-<!-- Section 1: Profile -->
-<section class="space-y-6">
-<h2 class="text-[2rem] font-bold tracking-tight text-on-surface">Profile</h2>
-<div class="bg-surface-container-lowest rounded-lg p-8 flex items-center justify-between ghost-border">
-<div class="flex items-center gap-6">
-<div class="w-20 h-20 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center text-3xl font-bold">
-                                J
-                            </div>
-<div class="space-y-1">
-<h3 class="text-xl font-bold text-on-surface">Julianne Smith</h3>
-<p class="text-on-secondary-container text-sm font-medium">julianne.smith@example.com</p>
-</div>
-</div>
-<button class="px-6 py-2 border border-outline-variant rounded-full text-sm font-semibold text-on-surface hover:bg-surface-container-low transition-colors">
-                            Edit Profile
-                        </button>
-</div>
-</section>
-<!-- Section 2: Current Plan -->
-<section class="space-y-6">
-<h2 class="text-[2rem] font-bold tracking-tight text-on-surface">Subscription</h2>
-<div class="bg-surface-container-lowest rounded-lg p-8 space-y-8 ghost-border">
-<div class="flex justify-between items-start">
-<div class="space-y-4">
-<span class="inline-flex items-center px-4 py-1 rounded-full text-xs font-bold bg-primary-container text-on-primary-container">
-                                    Pro Plan
-                                </span>
-<p class="text-sm font-medium text-on-secondary-container">Next billing date: May 1, 2026</p>
-</div>
-</div>
-<div class="space-y-3">
-<div class="flex justify-between items-end">
-<span class="text-sm font-bold text-on-surface">Usage bar</span>
-<span class="text-xs font-medium text-primary">Unlimited optimizations</span>
-</div>
-<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
-<div class="w-full h-full bg-primary"></div>
-</div>
-</div>
-<div class="flex items-center gap-4 pt-4">
-<button class="px-6 py-2 border border-outline-variant rounded-full text-sm font-semibold text-on-surface hover:bg-surface-container-low transition-colors">
-                                View Invoices
-                            </button>
-<button class="text-sm font-semibold text-[#FF3B30] hover:underline px-2 transition-all">
-                                Cancel Subscription
-                            </button>
-</div>
-</div>
-</section>
-<!-- Section 3: Payment Method -->
-<section class="space-y-6">
-<h2 class="text-[2rem] font-bold tracking-tight text-on-surface">Payment</h2>
-<div id="payment-container" class="animate-page">
-    <!-- Loading placeholder -->
-    <div class="bg-surface-container-lowest rounded-lg p-12 flex flex-col items-center justify-center text-center ghost-border italic text-on-secondary-container">
-        Checking payment status...
-    </div>
-</div>
-</section>
-<!-- Section 4: Danger Zone -->
-<section class="space-y-6 pb-24">
-<h2 class="text-[2rem] font-bold tracking-tight text-on-surface">Data &amp; Privacy</h2>
-<div class="bg-surface-container-lowest rounded-lg p-8 space-y-4 border-l-4 border-error ghost-border">
-<div class="flex flex-col gap-4">
-<a class="text-sm font-semibold text-primary hover:underline flex items-center gap-2" href="#">
-<span class="material-symbols-outlined text-base" data-icon="download">download</span>
-                                Download my data
-                            </a>
-<a class="text-sm font-semibold text-[#FF3B30] hover:underline flex items-center gap-2" href="#">
-<span class="material-symbols-outlined text-base" data-icon="delete">delete</span>
-                                Delete my account
-                            </a>
-</div>
-</div>
-</section>
-</div>
-</main>
-</div>
-<!-- Footer -->
-<footer class="w-full py-12 bg-white border-t border-slate-100">
-<div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-<p class="text-xs font-light text-slate-400">© 2025 AutoCV. All rights reserved.</p>
-<div class="flex gap-6">
-<a class="text-xs font-light text-slate-400 hover:underline" href="privacy.html">Privacy Policy</a>
-<a class="text-xs font-light text-slate-400 hover:underline" href="terms.html">Terms of Service</a>
-<a class="text-xs font-light text-slate-400 hover:underline" href="privacy.html">Cookie Policy</a>
-<a class="text-xs font-light text-slate-400 hover:underline" href="support.html">Support</a>
-</div>
-</div>
-</footer>
-
-<script src="../static/js/config.js?v=2.8"></script>
-<script src="../static/js/app.js?v=2.8"></script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const checkAuth = setInterval(() => {
-            if (window.auth && window.auth.user) {
-                clearInterval(checkAuth);
-                renderAccountUI();
-            }
-        }, 500);
-    });
+document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('auth:ready', () => {
+        if (!auth.user) {
+            window.location.href = '/pages/login.html';
+            return;
+        }
 
-    function renderAccountUI() {
         const user = auth.user;
-        const meta = user.user_metadata || {};
-        const fullName = meta.full_name || user.email.split('@')[0];
-        // For dev/admin, we treat specific email as Pro
-        const isPro = meta.plan === 'pro' || user.email === 'aaditchandra2212@gmail.com';
+        document.getElementById('acc-name').value = user.name || user.user_metadata?.full_name || '';
+        document.getElementById('acc-email').value = user.email || '';
 
-        // 1. Update Profile Card
-        const avatar = document.querySelector('section .w-20.h-20');
-        const nameEl = document.querySelector('section h3.text-xl');
-        const emailEl = document.querySelector('section p.text-on-secondary-container');
-        
-        if (avatar) avatar.textContent = fullName[0].toUpperCase();
-        if (nameEl) nameEl.textContent = fullName;
-        if (emailEl) emailEl.textContent = user.email;
+        const badge = document.getElementById('acc-plan-badge');
+        badge.textContent = auth.plan.toUpperCase();
+        if (auth.isPro) badge.classList.add('badge-pro');
+        else if (auth.isPaid) badge.classList.add('badge-blue');
+        else badge.classList.add('badge-gray');
 
-        // 2. Update Subscription Card
-        const planBadge = document.querySelector('section span.bg-primary-container') || document.querySelector('section span.bg-tertiary-container');
-        if (planBadge) {
-            planBadge.textContent = isPro ? 'Pro Member' : 'Free Member';
-            planBadge.className = isPro ? 'inline-flex items-center px-4 py-1 rounded-full text-xs font-bold bg-tertiary-container/10 text-tertiary' : 'inline-flex items-center px-4 py-1 rounded-full text-xs font-bold bg-surface-container-high text-on-secondary-container';
+        document.getElementById('acc-type').textContent = auth.isRecruiter ? 'Recruiter' : 'Student';
+        document.getElementById('acc-scans').textContent = user.scans_used_this_week || 0;
+
+        if (auth.isRecruiter) {
+            document.body.classList.add('theme-recruiter');
         }
-
-        const usageText = document.querySelector('section span.text-primary');
-        if (usageText) usageText.textContent = isPro ? 'Unlimited optimizations' : '1/3 optimizations used';
-
-        // 3. Update Payment Container (Empty State)
-        const paymentContainer = document.getElementById('payment-container');
-        if (isPro) {
-            paymentContainer.innerHTML = `
-                <div class="bg-surface-container-lowest rounded-lg p-8 flex items-center justify-between ghost-border">
-                    <div class="flex items-center gap-5">
-                        <div class="w-12 h-8 bg-surface-container rounded-md flex items-center justify-center border border-outline-variant/20 text-tertiary">
-                            <span class="material-symbols-outlined font-bold">check_circle</span>
-                        </div>
-                        <div>
-                            <p class="text-sm font-bold text-on-surface">Pro Subscription Active</p>
-                            <p class="text-xs font-medium text-on-secondary-container">Payment via Manual Upgrade (Lifetime)</p>
-                        </div>
-                    </div>
-                    <button onclick="window.location.href='pricing.html'" class="px-6 py-2 border border-outline-variant rounded-full text-sm font-semibold text-on-surface hover:bg-surface-container-low transition-colors">
-                        Manage Subscription
-                    </button>
-                </div>
-            `;
-        } else {
-            paymentContainer.innerHTML = `
-                <div class="bg-surface-container-lowest rounded-lg p-10 flex flex-col items-center justify-center text-center ghost-border gap-6">
-                    <div class="w-16 h-16 bg-surface-container rounded-full flex items-center justify-center text-primary-container">
-                        <span class="material-symbols-outlined text-3xl">add_card</span>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-on-surface mb-1">No payment method added</h3>
-                        <p class="text-sm text-on-secondary-container max-w-xs">Upgrade to a Pro plan to unlock unlimited resume optimizations and advanced AI analysis.</p>
-                    </div>
-                    <button onclick="window.location.href='pricing.html'" class="bg-primary text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-all">
-                        Add Payment Method to Get Started
-                    </button>
-                </div>
-            `;
-        }
-    }
-
-    // Reveal animations
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('section, .animate-page').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(15px)';
-        el.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-        observer.observe(el);
     });
+});
 </script>
 
 </body>

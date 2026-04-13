@@ -1,0 +1,693 @@
+/* ═══════════════════════════════════════════════════════════
+   AutoCV Animations — Keyframe Library
+   Import on every page. Classes applied via JS or HTML.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Page Load Entrance ── */
+@keyframes heroFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes heroFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-32px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes slideFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(32px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ── Score Ring Count-Up ── */
+@keyframes ringReveal {
+    from {
+        stroke-dashoffset: 283;
+    }
+}
+
+/* ── Floating / Idle ── */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes floatSlow {
+
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-12px) rotate(2deg);
+    }
+}
+
+/* ── Pulse Glow ── */
+@keyframes glowPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 89, 181, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 0 12px rgba(0, 89, 181, 0.12);
+    }
+}
+
+@keyframes glowPulseRecruiter {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(109, 40, 217, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 0 12px rgba(109, 40, 217, 0.12);
+    }
+}
+
+/* ── Shake (form errors) ── */
+@keyframes shakeX {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-10px);
+    }
+
+    40% {
+        transform: translateX(10px);
+    }
+
+    60% {
+        transform: translateX(-6px);
+    }
+
+    80% {
+        transform: translateX(6px);
+    }
+}
+
+/* ── Pop In ── */
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.6);
+    }
+
+    70% {
+        transform: scale(1.06);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ── Pill Stagger Reveal ── */
+@keyframes pillReveal {
+    from {
+        opacity: 0;
+        transform: scale(0.7) translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ── Success Checkmark Draw ── */
+@keyframes checkDraw {
+    from {
+        stroke-dashoffset: 60;
+    }
+
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes checkCircle {
+    from {
+        stroke-dashoffset: 160;
+    }
+
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* ── Progress Bar Fill ── */
+@keyframes barFill {
+    from {
+        width: 0%;
+    }
+}
+
+/* ── Typewriter Cursor Blink ── */
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* ── Dot Typing (analyze loading) ── */
+@keyframes dotBounce {
+
+    0%,
+    80%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.4;
+    }
+
+    40% {
+        transform: translateY(-8px);
+        opacity: 1;
+    }
+}
+
+/* ── Gradient Shift (hero background) ── */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ── Particle Drift ── */
+@keyframes drift {
+    from {
+        transform: rotate(0deg) translateX(60px) rotate(0deg);
+        opacity: 0.4;
+    }
+
+    to {
+        transform: rotate(360deg) translateX(60px) rotate(-360deg);
+        opacity: 0.15;
+    }
+}
+
+/* ── Ripple ── */
+@keyframes rippleAnim {
+    to {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+/* ── Toast Notifications ── */
+@keyframes slideToastIn {
+    from {
+        opacity: 0;
+        transform: translateX(40px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes slideToastOut {
+    from {
+        opacity: 1;
+        transform: none;
+        max-height: 80px;
+        margin-bottom: 8px;
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(40px) scale(0.95);
+        max-height: 0;
+        margin-bottom: 0;
+    }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   Utility Classes
+   ═══════════════════════════════════════════════════════════ */
+
+.anim-float {
+    animation: float 3.5s var(--ease-inout) infinite;
+}
+
+.anim-float-slow {
+    animation: floatSlow 5s var(--ease-inout) infinite;
+}
+
+.anim-glow-pulse {
+    animation: glowPulse 2.5s ease infinite;
+}
+
+.anim-shake {
+    animation: shakeX 0.45s var(--ease-out);
+}
+
+.anim-pop {
+    animation: popIn 0.5s var(--ease-spring) both;
+}
+
+.anim-hero {
+    animation: heroFadeUp 0.7s var(--ease-out) both;
+}
+
+.anim-fade {
+    animation: heroFadeIn 0.5s var(--ease-out) both;
+}
+
+/* Delay utilities */
+.delay-100 {
+    animation-delay: 100ms;
+}
+
+.delay-200 {
+    animation-delay: 200ms;
+}
+
+.delay-300 {
+    animation-delay: 300ms;
+}
+
+.delay-400 {
+    animation-delay: 400ms;
+}
+
+.delay-500 {
+    animation-delay: 500ms;
+}
+
+.delay-600 {
+    animation-delay: 600ms;
+}
+
+.delay-700 {
+    animation-delay: 700ms;
+}
+
+.delay-800 {
+    animation-delay: 800ms;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   Loading Dots
+   ═══════════════════════════════════════════════════════════ */
+
+.loading-dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.loading-dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary);
+    display: block;
+    animation: dotBounce 1.2s ease-in-out infinite;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.loading-dots span:nth-child(3) {
+    animation-delay: 0.30s;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   Upload Zone Animations
+   ═══════════════════════════════════════════════════════════ */
+
+.upload-zone.dragover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    box-shadow: 0 0 0 4px rgba(0, 89, 181, 0.1), var(--s-glow);
+    animation: glowPulse 1.5s ease infinite;
+}
+
+.upload-zone .upload-icon {
+    transition: transform 0.3s var(--ease-spring);
+}
+
+.upload-zone.dragover .upload-icon {
+    transform: scale(1.2) translateY(-4px);
+}
+
+.upload-zone.has-file {
+    border-color: var(--green);
+    background: var(--green-light);
+    animation: popIn 0.4s var(--ease-spring);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   Pricing Panel Transitions
+   ═══════════════════════════════════════════════════════════ */
+
+.pricing-panel {
+    transition: opacity 0.25s ease, transform 0.25s var(--ease-out);
+    transform-origin: top center;
+}
+
+.pricing-panel.hiding {
+    opacity: 0;
+    transform: scale(0.98) translateY(-8px);
+    pointer-events: none;
+}
+
+.pricing-panel.entering {
+    animation: heroFadeUp 0.35s var(--ease-out) both;
+}
+
+.pricing-card.featured.glow-anim {
+    animation: glowPulseRecruiter 3s ease infinite;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   Detail Panel (Recruiter)
+   ═══════════════════════════════════════════════════════════ */
+
+.detail-panel {
+    position: fixed;
+    right: 0;
+    top: var(--nav-h);
+    bottom: 0;
+    width: 400px;
+    background: var(--bg);
+    border-left: 1px solid var(--border);
+    padding: 32px;
+    overflow-y: auto;
+    z-index: 50;
+    transform: translateX(100%);
+    transition: transform 0.35s var(--ease-out);
+    box-shadow: var(--s-xl);
+}
+
+.detail-panel.open {
+    transform: none;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   Nav Scroll States
+   ═══════════════════════════════════════════════════════════ */
+
+.nav {
+    transition: height 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+}
+
+.nav.scrolled {
+    height: 48px;
+    box-shadow: var(--s-sm);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Sidebar active link indicator */
+.sidebar-link {
+    position: relative;
+}
+
+.sidebar-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scaleY(0);
+    width: 3px;
+    height: 60%;
+    background: var(--primary);
+    border-radius: 0 2px 2px 0;
+    transition: transform 0.2s var(--ease-spring);
+}
+
+.sidebar-link.active::before {
+    transform: translateY(-50%) scaleY(1);
+}
+
+/* Recruiter sidebar active */
+.theme-recruiter .sidebar-link::before {
+    background: var(--recruiter-primary);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   Toast Notifications — Enhanced
+   ═══════════════════════════════════════════════════════════ */
+
+.toast {
+    animation: slideToastIn 0.3s var(--ease-spring) both;
+}
+
+.toast.removing {
+    animation: slideToastOut 0.25s var(--ease-in) both;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   Score Ring SVG
+   ═══════════════════════════════════════════════════════════ */
+
+.score-ring {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.score-ring svg {
+    transform: rotate(-90deg);
+}
+
+.score-ring-bg {
+    fill: none;
+    stroke: var(--surface-3);
+    stroke-width: 8;
+}
+
+.score-ring-fill {
+    fill: none;
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 283;
+    stroke-dashoffset: 283;
+}
+
+.score-ring-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.score-ring-num {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--text);
+}
+
+.score-ring-lg .score-ring-num {
+    font-size: 2.5rem;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   User Type Card Selection (Signup)
+   ═══════════════════════════════════════════════════════════ */
+
+.user-type-card {
+    border: 2px solid var(--border);
+    border-radius: var(--r-xl);
+    padding: 32px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s var(--ease-spring);
+}
+
+.user-type-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--s-md);
+}
+
+.user-type-card.selected {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    box-shadow: var(--s-glow);
+    transform: scale(1.02);
+}
+
+.user-type-card.selected .card-icon {
+    animation: popIn 0.4s var(--ease-spring);
+}
+
+.user-type-card.recruiter.selected {
+    border-color: var(--recruiter-primary, #7c3aed);
+    background: rgba(109, 40, 217, 0.06);
+    box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.15);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   A13: Check SVG Keyframes (Login Success)
+   ═══════════════════════════════════════════════════════════ */
+
+@keyframes checkCircle {
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes checkDraw {
+    to { stroke-dashoffset: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   A14: Glow Animation (Pricing Featured Card)
+   ═══════════════════════════════════════════════════════════ */
+
+@keyframes glowPulse {
+    0%, 100% { box-shadow: var(--s-glow, 0 0 0 3px rgba(0,113,227,0.2)); }
+    50% { box-shadow: 0 0 32px rgba(0, 113, 227, 0.35), 0 0 0 3px rgba(0,113,227,0.3); }
+}
+
+.glow-anim {
+    animation: glowPulse 2.5s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Reveal Group (staggered child reveals)
+   ═══════════════════════════════════════════════════════════ */
+
+.reveal-group > * {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.4s ease, transform 0.4s var(--ease-out);
+}
+
+.reveal-group.visible > *,
+.reveal-group > .reveal.visible {
+    opacity: 1;
+    transform: none;
+}
+
+.reveal-group > *:nth-child(1) { transition-delay: 0ms; }
+.reveal-group > *:nth-child(2) { transition-delay: 70ms; }
+.reveal-group > *:nth-child(3) { transition-delay: 140ms; }
+.reveal-group > *:nth-child(4) { transition-delay: 210ms; }
+
+/* ═══════════════════════════════════════════════════════════
+   Loading Dots (A5: Multi-stage loader)
+   ═══════════════════════════════════════════════════════════ */
+
+@keyframes dotBounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40% { transform: scale(1.1); opacity: 1; }
+}
+
+.loading-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.loading-dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary);
+    display: inline-block;
+    animation: dotBounce 1.2s ease-in-out infinite;
+}
+
+.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+/* ═══════════════════════════════════════════════════════════
+   Delay Utilities
+   ═══════════════════════════════════════════════════════════ */
+
+.delay-100 { animation-delay: 0.1s !important; }
+.delay-200 { animation-delay: 0.2s !important; }
+.delay-300 { animation-delay: 0.3s !important; }
+
+/* ── Reduced Motion overrides ── */
+@media (prefers-reduced-motion: reduce) {
+    .glow-anim,
+    .loading-dots span,
+    .user-type-card,
+    .user-type-card.selected .card-icon {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .reveal-group > * {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}

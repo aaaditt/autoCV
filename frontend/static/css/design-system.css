@@ -76,6 +76,18 @@
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --transition: 0.2s var(--ease);
   --transition-slow: 0.4s var(--ease);
+
+  /* ── Animation Tokens ── */
+  --dur-fast:   150ms;
+  --dur-base:   250ms;
+  --dur-slow:   400ms;
+  --dur-slower: 600ms;
+  --dur-anim:   800ms;
+
+  --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:      cubic-bezier(0.4, 0, 1, 1);
+  --ease-inout:   cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 /* ── Recruiter Theme Override ── */
@@ -794,4 +806,30 @@ p  { font-size: 1rem; line-height: 1.7; color: var(--text-2); }
   .stats-row { grid-template-columns: 1fr; }
   h1 { font-size: 2rem; }
   h2 { font-size: 1.6rem; }
+}
+
+/* ── Scroll-Triggered Reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--dur-slower) var(--ease-out),
+              transform var(--dur-slower) var(--ease-out);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+.reveal-group > *:nth-child(1) { transition-delay: 0ms; }
+.reveal-group > *:nth-child(2) { transition-delay: 60ms; }
+.reveal-group > *:nth-child(3) { transition-delay: 120ms; }
+.reveal-group > *:nth-child(4) { transition-delay: 180ms; }
+.reveal-group > *:nth-child(5) { transition-delay: 240ms; }
+.reveal-group > *:nth-child(6) { transition-delay: 300ms; }
+.reveal-group > *:nth-child(7) { transition-delay: 360ms; }
+.reveal-group > *:nth-child(8) { transition-delay: 420ms; }
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  * { animation-duration: 1ms !important; transition-duration: 1ms !important; }
 }

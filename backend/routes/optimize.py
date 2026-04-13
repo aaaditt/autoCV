@@ -65,3 +65,43 @@ def optimize():
     except Exception as e:
         current_app.logger.error(f"Optimize error: {e}")
         return jsonify({"error": "Optimization failed. Please contact support."}), 500
+
+
+@optimize_bp.route("/cover-letter", methods=["POST"])
+@require_auth
+@require_plan(["pro"])
+def cover_letter():
+    """
+    Generate a tailored cover letter using Claude AI.
+    Requires: authenticated user with pro plan.
+    """
+    try:
+        data = request.json or {}
+        job_title = data.get("job_title", "").strip()
+        company = data.get("company", "").strip()
+        resume_text = data.get("resume_text", "").strip()
+        jd_text = data.get("job_description", "").strip()
+        tone = data.get("tone", "professional")
+
+        if not job_title or not company:
+            return jsonify({"error": "Job title and company are required"}), 400
+        if not resume_text:
+            return jsonify({"error": "Resume text is required"}), 400
+
+        from services.claude_service import generate_cover_letter
+        result = generate_cover_letter(
+            job_title=job_title,
+            company=company,
+            resume_text=resume_text,
+            jd_text=jd_text,
+            tone=tone,
+        )
+
+        return jsonify({
+            "success": True,
+            "cover_letter": result["cover_letter"],
+        })
+
+    except Exception as e:
+        current_app.logger.error(f"Cover letter error: {e}")
+        return jsonify({"error": "Cover letter generation failed. Please try again."}), 500

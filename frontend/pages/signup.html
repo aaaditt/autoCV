@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up — AutoCV</title>
+    <title>Sign Up â€” AutoCV</title>
     <meta name="description" content="Create your free AutoCV account. Choose between Job Seeker or Recruiter to get started with ATS resume scanning.">
     <link rel="stylesheet" href="/static/css/design-system.css">
     <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/animations.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
     <script src="/static/js/config.js" defer></script>
     <script src="/static/js/auth.js" defer></script>
+    <script src="/static/js/animations.js" defer></script>
 </head>
 <body>
 
@@ -34,17 +36,17 @@
         <h1>Create Your Account</h1>
         <p class="subtitle">Choose your account type to get started</p>
 
-        <!-- Step 1: Pick user type -->
-        <div class="type-picker" id="type-picker">
-            <div class="type-card" id="type-student" data-type="student">
-                <div class="type-icon">🎓</div>
-                <div class="type-name">Job Seeker</div>
-                <div class="type-desc">ATS scanning & AI resume rewrites</div>
+        <!-- Step 1: Pick user type (A11: spring card selection) -->
+        <div class="type-picker" id="type-picker" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
+            <div class="user-type-card" id="type-student" data-type="student">
+                <div class="type-icon card-icon" style="font-size:2rem;margin-bottom:12px;">🎓</div>
+                <div class="type-name" style="font-weight:700;font-size:1rem;">Job Seeker</div>
+                <div class="type-desc" style="font-size:0.8rem;color:var(--text-2);margin-top:4px;">ATS scanning & AI resume rewrites</div>
             </div>
-            <div class="type-card" id="type-recruiter" data-type="recruiter">
-                <div class="type-icon">💼</div>
-                <div class="type-name">Recruiter / HR</div>
-                <div class="type-desc">Batch scan & rank candidates</div>
+            <div class="user-type-card" id="type-recruiter" data-type="recruiter">
+                <div class="type-icon card-icon" style="font-size:2rem;margin-bottom:12px;">💼</div>
+                <div class="type-name" style="font-weight:700;font-size:1rem;">Recruiter / HR</div>
+                <div class="type-desc" style="font-size:0.8rem;color:var(--text-2);margin-top:4px;">Batch scan & rank candidates</div>
             </div>
         </div>
 
@@ -76,7 +78,7 @@
         </form>
 
         <div id="signup-success" class="hidden" style="text-align:center;padding:24px 0;">
-            <div style="font-size:2.5rem;margin-bottom:12px;">📧</div>
+            <div style="font-size:2.5rem;margin-bottom:12px;">ðŸ“§</div>
             <h3>Check Your Email</h3>
             <p class="text-muted text-sm" style="margin-top:8px;">We sent a confirmation link to your email. Click it to activate your account.</p>
             <a href="/pages/login.html" class="btn btn-primary" style="margin-top:20px;">Go to Login</a>
@@ -102,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTypeSelection();
 
     // Type picker click handlers
-    document.querySelectorAll('.type-card').forEach(card => {
+    document.querySelectorAll('.user-type-card').forEach(card => {
         card.addEventListener('click', () => {
             selectedType = card.dataset.type;
             updateTypeSelection();
@@ -110,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function updateTypeSelection() {
-        document.querySelectorAll('.type-card').forEach(c => {
+        document.querySelectorAll('.user-type-card').forEach(c => {
             c.classList.remove('selected', 'recruiter');
         });
         const active = document.getElementById(`type-${selectedType}`);
@@ -132,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Google signup
     document.getElementById('google-signup-btn').addEventListener('click', () => {
-        // Google OAuth doesn't support metadata on signup — user_type defaults to student
+        // Google OAuth doesn't support metadata on signup â€” user_type defaults to student
         // We can set it after via the account page
         auth.loginWithGoogle();
     });
@@ -168,6 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             btn.disabled = false;
             btn.textContent = 'Create Account';
+            window.shakeElement && window.shakeElement(document.querySelector('.auth-card'));
         }
     });
 });

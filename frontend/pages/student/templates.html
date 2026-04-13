@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Templates â€” AutoCV</title>
+    <meta name="description" content="Choose from professionally designed resume templates optimized for ATS compatibility. Available with Single and Pro plans.">
+    <link rel="stylesheet" href="/static/css/design-system.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/animations.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="/static/js/config.js" defer></script>
+    <script src="/static/js/auth.js" defer></script>
+    <script src="/static/js/animations.js" defer></script>
+    <style>
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .template-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            overflow: hidden;
+            transition: all var(--transition);
+            position: relative;
+        }
+        .template-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--s-md);
+            transform: translateY(-4px);
+        }
+        .template-preview {
+            height: 320px;
+            background: var(--surface-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .template-preview-content {
+            width: 85%;
+            height: 90%;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .tpc-header {
+            height: 10px;
+            border-radius: 2px;
+            width: 60%;
+        }
+        .tpc-line {
+            height: 5px;
+            border-radius: 2px;
+            background: var(--surface-3);
+        }
+        .tpc-line-short { width: 40%; }
+        .tpc-line-mid { width: 70%; }
+        .tpc-line-long { width: 90%; }
+        .tpc-section {
+            height: 6px;
+            border-radius: 2px;
+            width: 35%;
+            margin-top: 8px;
+        }
+        .tpc-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .template-info {
+            padding: 16px;
+        }
+        .template-info h4 {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .template-info p {
+            font-size: 0.8125rem;
+            color: var(--text-2);
+            margin-top: 4px;
+        }
+        .template-actions {
+            padding: 0 16px 16px;
+        }
+        /* Locked overlay for free users */
+        .template-card.locked .template-preview::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(3px);
+        }
+        .template-card.locked .lock-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 1;
+            background: var(--text);
+            color: #fff;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: var(--r-pill);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">
+            <div class="nav-logo-mark">A</div>
+            AutoCV
+        </a>
+        <div class="nav-links">
+            <a href="/pages/dashboard.html" class="nav-link">Dashboard</a>
+            <span class="plan-badge badge badge-gray"></span>
+            <div style="width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;margin-left:8px;" id="nav-avatar">U</div>
+        </div>
+    </div>
+</nav>
+
+<!-- App Layout -->
+<div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-label">Navigation</div>
+        <a href="/pages/dashboard.html" class="sidebar-link">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">dashboard</span>
+            Dashboard
+        </a>
+        <a href="/pages/optimize.html" class="sidebar-link">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">document_scanner</span>
+            Scan Resume
+        </a>
+
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-label">Pro Features</div>
+        <a href="/pages/student/templates.html" class="sidebar-link active">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">description</span>
+            Templates
+        </a>
+        <a href="/pages/student/cover-letter.html" class="sidebar-link">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">mail</span>
+            Cover Letter
+        </a>
+
+        <div class="sidebar-divider"></div>
+        <a href="/pages/account.html" class="sidebar-link">
+            <span class="material-symbols-outlined" style="font-size:1.125rem;">settings</span>
+            Settings
+        </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="app-main">
+        <div class="page-header">
+            <div>
+                <h1>Resume Templates</h1>
+                <p class="text-muted text-sm" style="margin-top:4px;">Choose a professionally designed template for your resume</p>
+            </div>
+            <span class="badge badge-pro" id="pro-badge" style="display:none;">PRO</span>
+        </div>
+
+        <!-- Upgrade banner for free users -->
+        <div id="upgrade-banner" class="banner banner-info mb-24 animate-fade-in-up" style="display:none;">
+            <span style="font-size:1.25rem;">âœ¦</span>
+            <div>
+                <strong>Upgrade to unlock all templates</strong>
+                <p class="text-sm" style="margin-top:2px;">Single plan gives you 1 premium template. Pro gives you all 8.</p>
+            </div>
+            <a href="/pages/pricing.html" class="btn btn-primary btn-sm" style="margin-left:auto;flex-shrink:0;">View Plans</a>
+        </div>
+
+        <!-- Template Grid -->
+        <div class="template-grid stagger animate-fade-in-up" id="template-grid">
+            <!-- Templates populated by JS -->
+        </div>
+    </main>
+</div>
+
+<script>
+const TEMPLATES = [
+    {
+        id: 'modern-clean',
+        name: 'Modern Clean',
+        desc: 'Minimalist layout with clean typography',
+        color: '#0059b5',
+        accent: '#e8f0fe',
+        tier: 'free',
+    },
+    {
+        id: 'executive',
+        name: 'Executive',
+        desc: 'Bold header with professional structure',
+        color: '#1e293b',
+        accent: '#f1f5f9',
+        tier: 'single',
+    },
+    {
+        id: 'creative-edge',
+        name: 'Creative Edge',
+        desc: 'Modern sidebar layout with color accents',
+        color: '#7c3aed',
+        accent: '#f3e8ff',
+        tier: 'single',
+    },
+    {
+        id: 'tech-stack',
+        name: 'Tech Stack',
+        desc: 'Optimized for software engineering roles',
+        color: '#059669',
+        accent: '#dcfce7',
+        tier: 'pro',
+    },
+    {
+        id: 'minimal-mono',
+        name: 'Minimal Mono',
+        desc: 'Typography-focused, classic black & white',
+        color: '#374151',
+        accent: '#f3f4f6',
+        tier: 'pro',
+    },
+    {
+        id: 'corporate-navy',
+        name: 'Corporate Navy',
+        desc: 'Traditional business format with modern flair',
+        color: '#1e3a5f',
+        accent: '#e0ecf8',
+        tier: 'pro',
+    },
+    {
+        id: 'data-driven',
+        name: 'Data Driven',
+        desc: 'Skills-first layout with visual metrics',
+        color: '#b45309',
+        accent: '#fef3c7',
+        tier: 'pro',
+    },
+    {
+        id: 'ats-ultra',
+        name: 'ATS Ultra',
+        desc: 'Maximum ATS compatibility â€” simple & effective',
+        color: '#dc2626',
+        accent: '#fee2e2',
+        tier: 'pro',
+    },
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('auth:ready', () => {
+        if (!auth.user) {
+            window.location.href = '/pages/login.html';
+            return;
+        }
+
+        const features = auth.getFeatures();
+        const plan = auth.plan;
+
+        // Show pro badge for pro users
+        if (auth.isPro) {
+            document.getElementById('pro-badge').style.display = '';
+        }
+
+        // Show upgrade banner for free users
+        if (plan === 'free' || plan === 'guest') {
+            document.getElementById('upgrade-banner').style.display = '';
+        }
+
+        renderTemplates(plan);
+    });
+});
+
+function renderTemplates(plan) {
+    const grid = document.getElementById('template-grid');
+    const canAccess = (tier) => {
+        if (tier === 'free') return true;
+        if (tier === 'single' && (plan === 'single' || plan === 'pro')) return true;
+        if (tier === 'pro' && plan === 'pro') return true;
+        return false;
+    };
+
+    grid.innerHTML = TEMPLATES.map(t => {
+        const locked = !canAccess(t.tier);
+        return `
+            <div class="template-card ${locked ? 'locked' : ''} animate-fade-in-up">
+                ${locked ? `<div class="lock-badge">ðŸ”’ ${t.tier === 'pro' ? 'Pro' : 'Single+'}</div>` : ''}
+                <div class="template-preview">
+                    <div class="template-preview-content">
+                        <div class="tpc-header" style="background:${t.color};"></div>
+                        <div class="tpc-line tpc-line-mid" style="margin-top:2px;"></div>
+                        <div class="tpc-line tpc-line-short"></div>
+                        <div class="tpc-section" style="background:${t.color};"></div>
+                        <div class="tpc-line tpc-line-long"></div>
+                        <div class="tpc-line tpc-line-mid"></div>
+                        <div class="tpc-line tpc-line-long"></div>
+                        <div class="tpc-section" style="background:${t.color};"></div>
+                        <div class="tpc-line tpc-line-long"></div>
+                        <div class="tpc-line tpc-line-mid"></div>
+                        <div class="tpc-line tpc-line-short"></div>
+                        <div class="tpc-section" style="background:${t.color};"></div>
+                        <div class="tpc-line tpc-line-mid"></div>
+                        <div class="tpc-line tpc-line-long"></div>
+                    </div>
+                </div>
+                <div class="template-info">
+                    <h4>${t.name}</h4>
+                    <p>${t.desc}</p>
+                </div>
+                <div class="template-actions">
+                    ${locked
+                        ? `<a href="/pages/pricing.html" class="btn btn-secondary btn-sm btn-full">Unlock with ${t.tier === 'pro' ? 'Pro' : 'Single'}</a>`
+                        : `<button class="btn btn-primary btn-sm btn-full" onclick="useTemplate('${t.id}')">Use Template</button>`
+                    }
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function useTemplate(id) {
+    toast(`Template "${id}" selected! This feature is coming soon.`, 'success');
+    // TODO: Integrate with resume builder flow
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Results â€” AutoCV</title>
+    <link rel="stylesheet" href="/static/css/design-system.css">
+    <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/animations.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="/static/js/config.js" defer></script>
+    <script src="/static/js/auth.js" defer></script>
+    <script src="/static/js/animations.js" defer></script>
+</head>
+<body class="theme-recruiter">
+
+<!-- Nav -->
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">
+            <div class="nav-logo-mark" style="background:var(--recruiter-primary)">A</div>
+            AutoCV
+        </a>
+        <div class="nav-links">
+            <a href="/pages/recruiter/dashboard.html" class="nav-link">Dashboard</a>
+            <span class="plan-badge badge badge-purple"></span>
+        </div>
+    </div>
+</nav>
+
+<div class="container" style="padding-top:40px;padding-bottom:80px;">
+    <div id="loading-batch" style="text-align:center;padding:80px 0;">
+        <div class="spinner" style="margin:0 auto 24px;"></div>
+        <h3>Loading batch results...</h3>
+    </div>
+
+    <div id="batch-results-content" class="hidden animate-fade-in-up">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-32">
+            <div>
+                <h1 id="batch-title">Batch Results</h1>
+                <p class="text-muted" id="batch-meta">Processed 0 candidates</p>
+            </div>
+            <div class="flex gap-12">
+                <button class="btn btn-secondary btn-sm" id="csv-export-btn">
+                    <span class="material-symbols-outlined" style="font-size:1rem;">download</span>
+                    Export CSV
+                </button>
+            </div>
+        </div>
+
+        <!-- Ranked Table -->
+        <div class="card" style="padding:0;overflow:hidden;">
+            <table class="table" style="margin-bottom:0;">
+                <thead>
+                    <tr>
+                        <th class="sortable">Rank</th>
+                        <th class="sortable">Candidate Name</th>
+                        <th class="sortable">ATS Score</th>
+                        <th>Key Matches</th>
+                        <th>Missing</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="candidates-tbody">
+                    <!-- JS Populated -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Slide Panel for Detail View -->
+<div class="slide-panel-backdrop" id="panel-backdrop"></div>
+<div class="slide-panel" id="detail-panel">
+    <div class="flex items-center justify-between mb-24">
+        <h3>Candidate Detail</h3>
+        <button class="btn btn-icon btn-ghost" id="close-panel">âœ•</button>
+    </div>
+    <div id="panel-content">
+        <!-- JS Populated -->
+    </div>
+</div>
+
+<script>
+let currentBatchData = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('auth:ready', async () => {
+        const id = new URLSearchParams(window.location.search).get('id');
+        if (!id) {
+            window.location.href = '/pages/recruiter/dashboard.html';
+            return;
+        }
+
+        await loadBatchResults(id);
+    });
+
+    document.getElementById('close-panel').onclick = closePanel;
+    document.getElementById('panel-backdrop').onclick = closePanel;
+});
+
+async function loadBatchResults(id) {
+    if (!auth.supabase) return;
+
+    try {
+        const { data, error } = await auth.supabase
+            .from('recruiter_scans')
+            .select('*')
+            .eq('batch_id', id)
+            .single();
+
+        if (error) throw error;
+        currentBatchData = data;
+
+        document.getElementById('loading-batch').classList.add('hidden');
+        document.getElementById('batch-results-content').classList.remove('hidden');
+
+        document.getElementById('batch-title').textContent = data.job_title;
+        document.getElementById('batch-meta').textContent = `Processed ${data.resume_count} candidates on ${new Date(data.created_at).toLocaleDateString()}`;
+
+        // RESULTS is expected to be a JSON array in the DB
+        const results = Array.isArray(data.results) ? data.results : JSON.parse(data.results || '[]');
+
+        // Sort by score descending
+        results.sort((a,b) => b.score - a.score);
+
+        const tbody = document.getElementById('candidates-tbody');
+        results.forEach((res, i) => {
+            const scoreClass = res.score >= 75 ? 'score-high' : res.score >= 50 ? 'score-mid' : 'score-low';
+            const tr = document.createElement('tr');
+            tr.style.opacity = '0';
+            tr.style.transform = 'translateX(-8px)';
+            tr.innerHTML = `
+                <td><strong>#${i+1}</strong></td>
+                <td><strong>${esc(res.filename)}</strong></td>
+                <td class="${scoreClass}">${res.score}%</td>
+                <td><span class="badge badge-green">${res.matched.length} matches</span></td>
+                <td><span class="badge badge-red">${res.missing.length} missing</span></td>
+                <td><button class="btn btn-ghost btn-xs" onclick="showDetail(${i})">Analyze</button></td>
+            `;
+            tbody.appendChild(tr);
+            // Stagger reveal — 60ms per row
+            setTimeout(() => {
+                tr.style.transition = 'opacity 0.35s ease, transform 0.35s var(--ease-out)';
+                tr.style.opacity = '1';
+                tr.style.transform = 'none';
+            }, i * 60 + 100);
+        });
+
+        // CSV Export check
+        const features = auth.getFeatures();
+        if (!features.csv_export) {
+            document.getElementById('csv-export-btn').onclick = () => {
+                toast('CSV Export is a Pro feature. Upgrade to unlock.', 'warning');
+            };
+        } else {
+             document.getElementById('csv-export-btn').onclick = exportToCSV;
+        }
+
+    } catch (err) {
+        toast(err.message, 'error');
+    }
+}
+
+function showDetail(index) {
+    const results = Array.isArray(currentBatchData.results) ? currentBatchData.results : JSON.parse(currentBatchData.results || '[]');
+    results.sort((a,b) => b.score - a.score); // Re-sort to match table
+    const res = results[index];
+
+    const content = document.getElementById('panel-content');
+    content.innerHTML = `
+        <div class="text-center mb-24">
+            <div class="score-ring" id="panel-score" data-score="${res.score}">
+                <svg viewBox="0 0 100 100" width="96" height="96">
+                    <circle class="score-ring-bg" cx="50" cy="50" r="45"/>
+                    <circle class="score-ring-fill" cx="50" cy="50" r="45"/>
+                </svg>
+                <div class="score-ring-text">
+                    <span class="score-ring-num">0</span>
+                    <span style="font-size:0.75rem;color:var(--text-3);">%</span>
+                </div>
+            </div>
+            <h4 style="margin-top:8px;">${esc(res.filename)}</h4>
+            </div>
+        </div>
+
+        <div class="mb-24">
+            <h4 class="mb-12">Top Matches</h4>
+            <div class="pill-group">
+                ${res.matched.slice(0, 10).map(k => `<span class="pill pill-matched">${esc(k)}</span>`).join('')}
+            </div>
+        </div>
+
+        <div>
+            <h4 class="mb-12">Critical Gaps</h4>
+            <div class="pill-group">
+                ${res.missing.slice(0, 10).map(k => `<span class="pill pill-missing">${esc(k)}</span>`).join('')}
+            </div>
+        </div>
+
+        <div class="divider"></div>
+        <p class="text-xs text-muted">A full individual report can be generated from the main scanner if needed.</p>
+    `;
+
+    document.getElementById('detail-panel').classList.add('open');
+    document.getElementById('panel-backdrop').classList.add('open');
+    // Animate score ring via animations.js
+    const panelScoreEl = document.getElementById('panel-score');
+    panelScoreEl.dataset.score = res.score;
+    setTimeout(() => { if (window.AutoCVAnim) window.AutoCVAnim.animateRing(panelScoreEl); }, 100);
+    // Legacy fallback
+    if (!panelScoreEl.querySelector('svg')) renderScoreRing(panelScoreEl, res.score, 96);
+}
+
+function closePanel() {
+    document.getElementById('detail-panel').classList.remove('open');
+    document.getElementById('panel-backdrop').classList.remove('open');
+}
+
+function exportToCSV() {
+    const results = Array.isArray(currentBatchData.results) ? currentBatchData.results : JSON.parse(currentBatchData.results || '[]');
+    let csv = 'Rank,Candidate,Score,Matched,Missing\n';
+    results.sort((a,b) => b.score - a.score).forEach((r, i) => {
+        csv += `${i+1},"${r.filename}",${r.score},${r.matched.length},${r.missing.length}\n`;
+    });
+
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Results_${currentBatchData.job_title.replace(/\s+/g, '_')}.csv`;
+    a.click();
+}
+</script>
+
+</body>
+</html>

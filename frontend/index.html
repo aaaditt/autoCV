@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoCV — ATS Resume Scanner for Job Seekers & Recruiters</title>
+    <title>AutoCV Ã¢â‚¬â€ ATS Resume Scanner for Job Seekers & Recruiters</title>
     <meta name="description" content="Scan your resume against any job description in seconds. Get an ATS compatibility score, keyword analysis, and AI-powered rewrites. Free for job seekers. Batch scanning for recruiters.">
     <link rel="stylesheet" href="/static/css/design-system.css">
     <link rel="stylesheet" href="/static/css/components.css">
+    <link rel="stylesheet" href="/static/css/animations.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
     <script src="/static/js/config.js" defer></script>
     <script src="/static/js/auth.js" defer></script>
+    <script src="/static/js/animations.js" defer></script>
 </head>
 <body>
 
-<!-- ═══ Navigation ═══ -->
+<!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â Navigation Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
 <nav class="nav nav-dark" id="main-nav">
     <div class="nav-inner" style="max-width:var(--max-w);">
         <a href="/" class="nav-logo">
@@ -36,7 +38,7 @@
     </div>
 </nav>
 
-<!-- ═══ Hero ═══ -->
+<!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â Hero Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
 <section class="hero" id="hero">
     <div class="hero-content animate-fade-in-up">
         <div class="hero-badge">
@@ -44,7 +46,7 @@
             Used by 10,000+ professionals
         </div>
         <h1>Land More Interviews<br>with <span class="text-gradient">ATS-Optimized</span> Resumes</h1>
-        <p>Scan your resume against any job description. Get an instant ATS score, keyword gaps, and AI-powered rewrites — all in seconds.</p>
+        <p>Scan your resume against any job description. Get an instant ATS score, keyword gaps, and AI-powered rewrites &mdash; all in seconds. Trusted by <span class="typer" data-words='["engineers","designers","marketers","analysts","managers"]'>engineers</span>.</p>
         <div class="hero-ctas">
             <a href="/pages/signup.html?type=student" class="btn btn-white btn-lg" id="cta-student">
                 <span class="material-symbols-outlined" style="font-size:1.125rem;">person</span>
@@ -62,7 +64,7 @@
     <div style="position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(109,40,217,0.1),transparent 70%);bottom:10%;right:-50px;pointer-events:none;"></div>
 </section>
 
-<!-- ═══ How It Works — Students ═══ -->
+<!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â How It Works Ã¢â‚¬â€ Students Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
 <section class="section" id="students" style="background:var(--bg);">
     <div class="container">
         <div class="text-center mb-32">
@@ -71,21 +73,21 @@
             <p style="max-width:520px;margin:12px auto 0;">Upload your resume, paste a job description, and get instant ATS analysis with keyword recommendations.</p>
         </div>
         <div class="feature-grid stagger">
-            <div class="feature-card animate-fade-in-up">
+            <div class="feature-card reveal">
                 <div class="feature-icon">
                     <span class="material-symbols-outlined">upload_file</span>
                 </div>
                 <h3>Instant ATS Scan</h3>
-                <p>Upload PDF or DOCX — get your ATS compatibility score in seconds. No API costs, 100% local analysis.</p>
+                <p>Upload PDF or DOCX Ã¢â‚¬â€ get your ATS compatibility score in seconds. No API costs, 100% local analysis.</p>
             </div>
-            <div class="feature-card animate-fade-in-up">
+            <div class="feature-card reveal">
                 <div class="feature-icon" style="background:var(--green-light);color:var(--green);">
                     <span class="material-symbols-outlined">spellcheck</span>
                 </div>
                 <h3>Keyword Analysis</h3>
                 <p>See exactly which keywords match and which are missing. Know the gaps before HR sees them.</p>
             </div>
-            <div class="feature-card animate-fade-in-up">
+            <div class="feature-card reveal">
                 <div class="feature-icon" style="background:var(--orange-light);color:var(--orange);">
                     <span class="material-symbols-outlined">auto_fix_high</span>
                 </div>
@@ -97,7 +99,7 @@
     </div>
 </section>
 
-<!-- ═══ Score Demo ═══ -->
+<!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â Score Demo Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
 <section class="section-sm" style="background:var(--surface-2);">
     <div class="container">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
@@ -112,9 +114,17 @@
             </div>
             <div style="display:flex;justify-content:center;">
                 <div class="card card-lg" style="text-align:center;max-width:280px;">
-                    <div class="score-ring-wrap">
-                        <div class="score-ring" id="demo-score" style="width:140px;height:140px;"></div>
-                        <p class="score-label">ATS Compatibility Score</p>
+                    <div class="score-ring score-ring-lg" id="demo-score" data-score="78" style="margin:0 auto 16px;">
+                        <svg viewBox="0 0 100 100" width="140" height="140">
+                            <circle class="score-ring-bg" cx="50" cy="50" r="45"/>
+                            <circle class="score-ring-fill" cx="50" cy="50" r="45"/>
+                        </svg>
+                        <div class="score-ring-text">
+                            <span class="score-ring-num">0</span>
+                            <span style="font-size:0.875rem;font-weight:500;color:var(--text-3);">%</span>
+                        </div>
+                    </div>
+                    <p class="score-label">ATS Compatibility Score</p>
                     </div>
                     <div style="margin-top:20px;display:flex;flex-direction:column;gap:8px;">
                         <div class="pill-group" style="justify-content:center;">
@@ -133,7 +143,7 @@
     </div>
 </section>
 
-<!-- ═══ Recruiter Section ═══ -->
+<!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â Recruiter Section Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
 <section class="section" id="recruiters" style="background:var(--bg-dark);">
     <div class="container">
         <div class="text-center mb-32">
@@ -167,13 +177,13 @@
         </div>
         <div class="text-center" style="margin-top:48px;">
             <a href="/pages/signup.html?type=recruiter" class="btn btn-lg" style="background:var(--recruiter-primary);color:#fff;box-shadow:0 4px 20px rgba(109,40,217,0.3);">
-                Start Batch Scanning — Free
+                Start Batch Scanning Ã¢â‚¬â€ Free
             </a>
         </div>
     </div>
 </section>
 
-<!-- ═══ Pricing Preview ═══ -->
+<!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â Pricing Preview Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
 <section class="section-sm" id="pricing-preview" style="background:var(--bg);">
     <div class="container">
         <div class="text-center mb-32">
@@ -184,14 +194,14 @@
             <!-- Student Card -->
             <div class="card card-hover" style="text-align:center;padding:32px;">
                 <span class="badge badge-blue mb-8">Job Seekers</span>
-                <h3 style="margin-top:8px;">Free — $19/mo</h3>
+                <h3 style="margin-top:8px;">Free Ã¢â‚¬â€ $19/mo</h3>
                 <p class="text-sm" style="margin-top:8px;">ATS scanning, keyword analysis, AI resume rewrites, cover letter generator</p>
                 <a href="/pages/pricing.html" class="btn btn-primary btn-sm btn-full" style="margin-top:20px;">View Plans</a>
             </div>
             <!-- Recruiter Card -->
             <div class="card card-hover" style="text-align:center;padding:32px;border-color:var(--recruiter-light);">
                 <span class="badge badge-purple mb-8">Recruiters</span>
-                <h3 style="margin-top:8px;">Free — $49/mo</h3>
+                <h3 style="margin-top:8px;">Free Ã¢â‚¬â€ $49/mo</h3>
                 <p class="text-sm" style="margin-top:8px;">Batch scanning, ranked results, CSV export, saved keyword presets</p>
                 <a href="/pages/pricing.html" class="btn btn-sm btn-full" style="margin-top:20px;background:var(--recruiter-primary);color:#fff;">View Plans</a>
             </div>
@@ -199,7 +209,7 @@
     </div>
 </section>
 
-<!-- ═══ Stats Bar ═══ -->
+<!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â Stats Bar Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
 <section style="background:var(--surface-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
     <div class="container">
         <div class="stats-bar">
@@ -223,7 +233,7 @@
     </div>
 </section>
 
-<!-- ═══ CTA ═══ -->
+<!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â CTA Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
 <section class="section" style="background:var(--bg-dark);text-align:center;">
     <div class="container">
         <h2 style="color:#fff;">Ready to Beat the ATS?</h2>
@@ -235,7 +245,7 @@
     </div>
 </section>
 
-<!-- ═══ Footer ═══ -->
+<!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â Footer Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
 <footer class="footer">
     <div class="footer-inner">
         <div>
@@ -267,7 +277,7 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <p>© 2026 AutoCV. All rights reserved.</p>
+        <p>Ã‚Â© 2026 AutoCV. All rights reserved.</p>
     </div>
 </footer>
 
