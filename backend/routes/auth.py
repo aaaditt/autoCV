@@ -30,9 +30,10 @@ def _fetch_profile(user_id: str, token: str) -> tuple[str, str]:
     try:
         res = http.get(
             f"{SUPABASE_URL}/rest/v1/profiles?id=eq.{user_id}&select=plan,user_type",
-            headers={"apikey": SUPABASE_SERVICE_KEY, "Authorization": f"Bearer {token}"},
+            headers={"apikey": SUPABASE_SERVICE_KEY, "Authorization": f"Bearer {SUPABASE_SERVICE_KEY}"},
             timeout=5
         )
+
         rows = res.json()
         if rows and isinstance(rows, list):
             return rows[0].get("plan", "free"), rows[0].get("user_type", "student")

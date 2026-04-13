@@ -160,9 +160,12 @@ const auth = {
 
           // Redirect from auth pages to correct dashboard
           const path = window.location.pathname;
-          if (path === '/' || path.includes('login.html') || path.includes('home.html') || path.includes('signup.html') || path.includes('index.html')) {
+          const isLoginPage = path.includes('login.html') || path.includes('signup.html');
+          
+          if (isLoginPage) {
             this.redirectToDashboard();
           }
+
         }
       } else if (event === 'SIGNED_OUT') {
         this.user = null;
